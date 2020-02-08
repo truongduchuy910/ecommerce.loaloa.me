@@ -6,7 +6,6 @@ const {
   Integer,
   Select
 } = require("@keystonejs/fields");
-const { Markdown } = require("@keystonejs/fields-markdown");
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const fileAdapter = new LocalFileAdapter({
   src: "./app/public/store",
@@ -76,9 +75,10 @@ module.exports = {
       label: "Hình ảnh thêm"
     },
     description: {
-      type: Markdown,
+      type: Text,
       label: "Mô tả",
-      schemaDoc: "Mô tả giới thiệu về sản phẩm"
+      schemaDoc: "Mô tả giới thiệu về sản phẩm",
+	    isMultiline: true
     },
     detail: {
       type: File,
@@ -90,9 +90,10 @@ module.exports = {
       label: "Chi tiết"
     },
     guide: {
-      type: Markdown,
+      type: Text,
       label: "Hướng dẫn",
-      schemaDoc: "Hướng dẫn sử dụng"
+      schemaDoc: "Hướng dẫn sử dụng",
+	    isMultiline: true
     },
     suggestions: {
       type: Select,

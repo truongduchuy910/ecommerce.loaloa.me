@@ -1,6 +1,4 @@
 const { Text, Relationship, Slug, File } = require("@keystonejs/fields");
-const { Markdown } = require('@keystonejs/fields-markdown');
-
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const fileAdapter = new LocalFileAdapter({
   src: "./app/public/store",
@@ -32,8 +30,9 @@ module.exports = {
       }
     },
     body: {
-      type: Markdown,
-      label: "Nội dung"
+      type: Text,
+      label: "Nội dung",
+	    isMultiline: true
     },
     hashtag: {
       type: Relationship,
