@@ -12,7 +12,8 @@ const keystone = new Keystone({
   secureCookies: false,
   name: PROJECT_NAME,
   adapter: new MongooseAdapter(),
-  onConnect: initialiseData
+  onConnect: initialiseData,
+  secureCookies: false
 });
 
 keystone.createList("User", require("./lists/users"));
