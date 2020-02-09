@@ -7,7 +7,7 @@ const { StaticApp } = require("@keystonejs/app-static");
 const initialiseData = require("./initial-data");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 
-const PROJECT_NAME = "shopwheydanang";
+const PROJECT_NAME = "quangdacamera";
 const keystone = new Keystone({
   secureCookies: false,
   name: PROJECT_NAME,

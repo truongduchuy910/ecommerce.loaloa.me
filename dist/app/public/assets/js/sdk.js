@@ -3,8 +3,8 @@
 $(document).ready(function() {
   console.log("RUN SDK");
   const uri = "";
-  const productImage = "assets/img//tech/image2.jpg";
-  const bannerImage = "assets/img//scenery/image3.jpg";
+  const productImage = "assets/img//minibus.jpeg";
+  const bannerImage = "assets/img/scenery/image3.jpg";
   function searchToObject() {
     let pairs = window.location.search.substring(1).split("&"),
       obj = {},
@@ -84,15 +84,21 @@ $(document).ready(function() {
 		}
   }`).then(res => {
       products.empty();
-      res.data.allProducts.map(p => {
-        products.append(
-          productsItem
-            .replace(productImage, uri + p.image.publicUrl)
-            .replace(/san-pham/g, p.name)
-            .replace(/duong-dan/g, p.url)
-            .replace(/gia/g, formatMoney(Number(p.price), 0))
-        );
-      });
+      if (res.data.allProducts) {
+        console.log(res.data.allProducts);
+        res.data.allProducts.map(p => {
+          if (p.image)
+            products.append(
+              productsItem
+                .replace(productImage, uri + p.image.publicUrl)
+                .replace(/san-pham/g, p.name)
+                .replace(/duong-dan/g, p.url)
+                .replace(/gia/g, formatMoney(Number(p.price), 0))
+            );
+        });
+      } else {
+        products.append("<p>Không có kết quả</p>");
+      }
     });
   }
   function productsWithBrand(brand) {
