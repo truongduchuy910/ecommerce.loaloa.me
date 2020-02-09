@@ -1,7 +1,7 @@
 const { Text, Relationship, Slug, File } = require("@keystonejs/fields");
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const fileAdapter = new LocalFileAdapter({
-  src: "./app/public/store",
+  src: "./dist/app/public/store",
   path: "/store"
 });
 
