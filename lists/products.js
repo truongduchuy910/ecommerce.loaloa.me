@@ -2,17 +2,12 @@ const {
   Text,
   Relationship,
   Slug,
-  File,
   Integer,
-  Select
+  Select,
+  File
 } = require("@keystonejs/fields");
-const { LocalFileAdapter } = require("@keystonejs/file-adapters");
-const fileAdapter = new LocalFileAdapter({
-  src: "./dist/app/public/store",
-  path: "/store"
-});
-
-module.exports = {
+const { hooks, owner } = require("./config");
+module.exports = fileAdapter => ({
   fields: {
     name: {
       type: Text,
@@ -27,15 +22,12 @@ module.exports = {
       label: "Giá (Bắt buộc)",
       schemaDoc: "Giá bán thông thường"
     },
-    image: {
-      type: File,
-      adapter: fileAdapter,
-      //isRequired: true,
-      hooks: {
-        beforeChange: ({ existingItem = {} }) =>
-          fileAdapter.delete(existingItem)
-      },
-      label: "Hình hiển thị (Bắt buộc)"
+    images: {
+      type: Relationship,
+      ref: "Gallery.product",
+      isRequired: true,
+      label: "Hình hiển thị (Bắt buộc)",
+      many: true
     },
     brand: {
       type: Relationship,
@@ -47,40 +39,13 @@ module.exports = {
       ref: "Category",
       label: "Danh mục"
     },
-    orther_image: {
-      type: File,
-      adapter: fileAdapter,
-      hooks: {
-        beforeChange: ({ existingItem = {} }) =>
-          fileAdapter.delete(existingItem)
-      },
-      label: "Hình ảnh thêm"
-    },
-    orther_image_1: {
-      type: File,
-      adapter: fileAdapter,
-      hooks: {
-        beforeChange: ({ existingItem = {} }) =>
-          fileAdapter.delete(existingItem)
-      },
-      label: "Hình ảnh thêm"
-    },
-    orther_image_2: {
-      type: File,
-      adapter: fileAdapter,
-      hooks: {
-        beforeChange: ({ existingItem = {} }) =>
-          fileAdapter.delete(existingItem)
-      },
-      label: "Hình ảnh thêm"
-    },
     description: {
       type: Text,
       label: "Mô tả",
       schemaDoc: "Mô tả giới thiệu về sản phẩm",
-	    isMultiline: true
+      isMultiline: true
     },
-    detail: {
+    file: {
       type: File,
       adapter: fileAdapter,
       hooks: {
@@ -93,7 +58,12 @@ module.exports = {
       type: Text,
       label: "Hướng dẫn",
       schemaDoc: "Hướng dẫn sử dụng",
-	    isMultiline: true
+      isMultiline: true
+    },
+    attributes: {
+      type: Relationship,
+      ref: "Attribute",
+      label: "Thuộc tính khác"
     },
     suggestions: {
       type: Select,
@@ -107,10 +77,14 @@ module.exports = {
       type: Slug,
       from: "name",
       schemaDoc: "Đường dẫn"
+    },
+    seller: {
+      type: Relationship,
+      ref: "User"
     }
   },
-  hooks: {
-    afterDelete: ({ existingItem = {} }) => fileAdapter.delete(existingItem)
-  },
-  label: "Sản phẩm"
-};
+  hooks: hooks(fileAdapter),
+  access: owner,
+  label: "Sản phẩm",
+  labelField: "name"
+});

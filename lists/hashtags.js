@@ -1,5 +1,5 @@
-const { Text, Slug } = require("@keystonejs/fields");
-
+const { Relationship, Text, Slug } = require("@keystonejs/fields");
+const { hooks, owner } = require("./config");
 module.exports = {
   fields: {
     name: {
@@ -11,7 +11,13 @@ module.exports = {
       type: Slug,
       from: "name",
       schemaDoc: "Đường dẫn"
+    },
+    seller: {
+      type: Relationship,
+      ref: "User"
     }
   },
-  label: "Thẻ bài viết"
+  label: "Thẻ bài viết",
+  hooks: hooks(),
+  access: owner
 };

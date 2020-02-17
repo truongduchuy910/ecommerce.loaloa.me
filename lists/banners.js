@@ -1,21 +1,23 @@
-const { File } = require("@keystonejs/fields");
-const { LocalFileAdapter } = require("@keystonejs/file-adapters");
-const fileAdapter = new LocalFileAdapter({
-  src: "./dist/app/public/store",
-  path: "/store"
-});
-module.exports = {
+const { Relationship, File } = require("@keystonejs/fields");
+const { hooks, owner } = require("./config");
+module.exports = fileAdapter => ({
   fields: {
-    image: {
+    file: {
       type: File,
       adapter: fileAdapter,
-      isRequired: true,
       hooks: {
-        beforeChange: ({ existingItem = {} }) =>
-          fileAdapter.delete(existingItem)
+        beforeChange: ({ existingItem = {} }) => {
+          if (existingItem) fileAdapter.delete(existingItem);
+        }
       },
-      label: "Hình hiển thị (Bắt buộc)"
+      isRequired: true
     },
+    seller: {
+      type: Relationship,
+      ref: "User"
+    }
   },
+  hooks: hooks(fileAdapter),
+  access: owner,
   label: "Ảnh bìa"
-};
+});

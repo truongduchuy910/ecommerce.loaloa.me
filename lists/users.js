@@ -9,6 +9,11 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
   }
   return { id: user.id };
 };
+const notThisAdmin = ({ authentication: { item: user } }) => {
+  if (user && user.isAdmin) {
+    return { not_id: user.id };
+  } else return false;
+};
 const userIsAdminOrOwner = auth => {
   const isAdmin = access.userIsAdmin(auth);
   const isOwner = access.userOwnsItem(auth);
@@ -18,7 +23,7 @@ const access = { userIsAdmin, userOwnsItem, userIsAdminOrOwner };
 
 module.exports = {
   fields: {
-    name: { type: Text },
+    seller: { type: Text },
     email: {
       type: Text,
       isUnique: true
@@ -26,11 +31,13 @@ module.exports = {
     isAdmin: { type: Checkbox },
     password: {
       type: Password
-    }
+    },
+    pages_access_token: { type: Text },
+    psid: { type: Text }
   },
   access: {
     read: access.userIsAdminOrOwner,
-    update: access.userIsAdminOrOwner,
+    update: access.userIsAdmin,
     create: access.userIsAdmin,
     delete: access.userIsAdmin,
     auth: true
