@@ -1,0 +1,45 @@
+.oldPrice {
+  text-decoration: line-through;
+}
+
+.logo {
+  width: 40px;
+}
+
+.productBasis {
+  min-height: 95px;
+}
+
+:root {
+  --myColor: #D4AC5C;
+}
+
+.bg-myColor {
+  background-color: var(--myColor);
+}
+
+.border-myColor {
+  background-color: var(--myColor);
+  border-color: var(--myColor)!important;
+}
+
+.text-myColor {
+  color: var(--myColor) !important;
+}
+
+.list-group-item.list-group-item-action.border.rounded-0 {
+  background-color: #343a40;
+  color: white;
+  border-color: #343a40 !important;
+}
+
+.list-group-item.list-group-item-action.border.rounded-0:hover {
+  background-color: var(--myColor);
+  color: white;
+  border-color: var(--myColor)!important;
+}
+
+.productBasis {
+  padding-top: 15px;
+}
+

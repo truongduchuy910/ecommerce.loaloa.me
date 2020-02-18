@@ -1,0 +1,16 @@
+<div class="simple-slider">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+	    <% if (data.allBanners) data.allBanners.forEach(b=>{%>
+			    <div
+        class="swiper-slide"
+	style='background-image: url("http://localhost:6006<%=b.file.publicUrl%>");'
+      ></div>
+<%})%>
+
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</div>
