@@ -52,7 +52,7 @@ function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
 
 $(document).ready(function() {
   console.log("RUN SDK");
-  const uri = "http://localhost:6006";
+  const uri = "https://ad.loaloa.me";
   const port = "7000";
   const productImage = "duong-dan-hinh-anh";
   const bannerImage = "assets/img/scenery/image3.jpg";
