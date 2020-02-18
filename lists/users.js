@@ -33,7 +33,8 @@ module.exports = {
       type: Password
     },
     pages_access_token: { type: Text },
-    psid: { type: Text }
+    psid: { type: Text },
+    port: { type: Text }
   },
   access: {
     read: access.userIsAdminOrOwner,

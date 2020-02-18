@@ -63,7 +63,8 @@ module.exports = fileAdapter => ({
     attributes: {
       type: Relationship,
       ref: "Attribute",
-      label: "Thuộc tính khác"
+      label: "Thuộc tính khác",
+      many: true
     },
     suggestions: {
       type: Select,

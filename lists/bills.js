@@ -16,6 +16,10 @@ module.exports = {
     done: {
       type: Checkbox,
       label: "Đã hoàn thành?"
+    },
+    seller: {
+      type: Relationship,
+      ref: "User"
     }
   },
   hooks: hooks(),
