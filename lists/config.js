@@ -5,7 +5,8 @@ module.exports.hooks = (fileAdapter = {}) => ({
   resolveInput: ({ existingItem, resolvedData, context }) => {
     if (resolvedData.file && !resolvedData.name)
       resolvedData.name = resolvedData.file.originalFilename;
-    resolvedData.seller = context.authedItem.id;
+    if (!context.authedItem.isAdmin)
+      resolvedData.seller = context.authedItem.id;
     return resolvedData;
   }
 });
