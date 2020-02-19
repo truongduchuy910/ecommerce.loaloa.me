@@ -84,7 +84,7 @@ module.exports = fileAdapter => ({
       ref: "User"
     }
   },
-  //  hooks: hooks(fileAdapter),
+  hooks: hooks(fileAdapter),
   access: true,
   label: "Sản phẩm",
   labelField: "name"
