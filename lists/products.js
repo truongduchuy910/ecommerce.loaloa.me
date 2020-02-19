@@ -85,7 +85,7 @@ module.exports = fileAdapter => ({
     }
   },
   hooks: hooks(fileAdapter),
-  access: owner,
+  access: true,
   label: "Sản phẩm",
   labelField: "name"
 });
