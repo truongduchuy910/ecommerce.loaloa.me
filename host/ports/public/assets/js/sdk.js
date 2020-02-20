@@ -1,63 +1,86 @@
 // XIN CHAO
-const gobackBtn = document.getElementById("go-back");
-if (gobackBtn)
-  gobackBtn.onclick = () => {
-    window.history.back();
-  };
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function(e) {
-    e.preventDefault();
+const port = 7000;
+const url = "https://ad.loaloa.me";
+let graph = {
+  allProducts: {
+    newArrival: () => `query {
+    allProducts(first: 6, where: { suggestions: new,
+    , AND: {seller:{port:"${port}"}}}) {
+      name
+      price
+      images {
+        file {
+          publicUrl
+        }
+      }
+      url
+    }
+  }`,
+    bestSeller: () => `query {
+    allProducts(first: 6, where: { suggestions: bestSeller,
+    , AND: {seller:{port:"${port}"}}}) {
+      name
+      price
+      images {
+        file {
+          publicUrl
+        }
+      }
+      url
+    }
+  }`,
+    brand: ({ brand }) => `query {
+    allProducts(where: {brand: {url}: "${brand}"}
+    , AND: {seller:{port:"${port}"}}}) {
+      images {
+        file {
+          publicUrl
+        }
+      }
+      name
+      price
+      url
+    }
+  }`,
+    category: ({ category }) => `query {
+    allProducts(where: {category: {url: "${category}"}
+    , AND: {seller:{port:"${port}"}}}) {
+      images {
+        file {
+          publicUrl
+        }
+      }
+      name
+      price
+      url
+    }
+  }`,
+    search: ({ keyword }) => `query {
+    allProducts(where: {name_contains_i: "${keyword}",
+    ,AND: {seller:{port:"${port}"}}}) {
+    name,
+    price,
+    images {file{publicUrl}},
+    url  }
+  }`
+  },
+  allBrands: () => `query {
+    allBrands(where:{seller:{port:"${port}"}}) {
+      name,
+      url
+    }
+  }`,
+  allCategories: () => `query {
+    allCategories(where:{seller:{port:"${port}"}}) {
+      name,
+      url
+    }
+  }`
+};
 
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth"
-    });
-  });
-});
-function searchToObject() {
-  let pairs = window.location.search.substring(1).split("&"),
-    obj = {},
-    pair,
-    i;
-  for (i in pairs) {
-    if (pairs[i] === "") continue;
-    pair = pairs[i].split("=");
-    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-  }
-  return obj;
-}
-function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
-  try {
-    decimalCount = Math.abs(decimalCount);
-    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
-    const negativeSign = amount < 0 ? "-" : "";
-    let i = parseInt(
-      (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
-    ).toString();
-    let j = i.length > 3 ? i.length % 3 : 0;
-    return (
-      negativeSign +
-      (j ? i.substr(0, j) + thousands : "") +
-      i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
-      (decimalCount
-        ? decimal +
-          Math.abs(amount - i)
-            .toFixed(decimalCount)
-            .slice(2)
-        : "")
-    );
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-$(document).ready(function() {
-  console.log("RUN SDK");
-  const uri = "https://ad.loaloa.me";
-  const port = "7000";
-  const productImage = "duong-dan-hinh-anh";
-  const bannerImage = "assets/img/scenery/image3.jpg";
-  async function request(query) {
-    const response = await fetch(uri + "/admin/api", {
+class Components {
+  static async query({ query }) {
+    const response = await fetch(url + "/admin/api", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -71,187 +94,180 @@ $(document).ready(function() {
     });
     return await response.json();
   }
-
-  /* 
-	PRODUCT 
-	For main products filter by brands or categories
-*/
-
-  let products = $("#products-main");
-  let presentFilter = $("#present-filter");
-  if (presentFilter) presentFilter.text("");
-  let productsItem;
-  if (products.length) {
-    productsItem = products.html();
-    products.empty();
+  constructor() {
+    this.isExist = false;
   }
-  function replateProducts({ allProducts }) {
-    if (allProducts) {
-      console.log(allProducts);
-      allProducts.map(p => {
-        if (p.images.length)
-          products.append(
-            productsItem
-              .replace(productImage, uri + p.images[0].file.publicUrl)
-              .replace(/san-pham/g, p.name)
-              .replace(/duong-dan/g, "/detail/" + p.url)
-              .replace(/gia/g, formatMoney(Number(p.price), 0))
-          );
+  assign({ id }) {
+    this.box = $(`#${id}`);
+    this.item = this.box.html();
+    if (this.box.length) this.isExist = true;
+  }
+  add(data) {
+    if (this.isExist) {
+      let html = this.item;
+      data.forEach(({ template, value }) => {
+        const regExp = new RegExp(template, "g");
+        html = html.replace(regExp, value);
       });
-    } else {
-      products.append("<p>Không có kết quả</p>");
+      this.box.append(html);
     }
   }
-  function productsWithBrand(brand) {
-    products.empty();
-    products.append("<p>Đang tải...</p>");
-    request(`query {
-		allProducts(where: {brand: {name: "${brand}"}
-		, AND: {seller:{port:"${port}"}}}) {
-      images {
-        file {
-          publicUrl
-        }
-      }
-      name
-      price
-      url	
-		}
-	}`).then(res => {
-      products.empty();
-      const { allProducts } = res.data;
-      replateProducts({ allProducts });
-      if (presentFilter) presentFilter[0].innerText = brand;
+}
+class Products extends Components {
+  constructor({ id }) {
+    super();
+    this.assign({ id });
+    this.box.empty();
+  }
+  async load({ query }) {
+    const {
+      data: { allProducts }
+    } = await Components.query({ query });
+    this.show(allProducts);
+  }
+  show(data) {
+    this.box.empty();
+    data.forEach(p => {
+      this.add([
+        {
+          template: "duong-dan-hinh-anh",
+          value: url + p.images[0].file.publicUrl
+        },
+        { template: "san-pham", value: p.name },
+        { template: "gia", value: Products.formatMoney(p.price, 0) },
+        { template: "duong-dan", value: p.url }
+      ]);
     });
   }
-
-  function productsWithCategory(category) {
-    products.empty();
-    products.append("<p>Đang tải...</p>");
-    request(`query {
-		allProducts(where: {category: {name: "${category}"}
-		, AND: {seller:{port:"${port}"}}}) {
-      images {
-        file {
-          publicUrl
-        }
-      }
-      name
-      price
-      url
-    }
-	}`).then(res => {
-      products.empty();
-      const { allProducts } = res.data;
-      replateProducts({ allProducts });
-      if (presentFilter) presentFilter.text(category);
-    });
-  }
-  let req = searchToObject();
-  if (req.category) productsWithCategory(req.category);
-  if (req.brand) productsWithBrand(req.brand);
-  /* 
-	RELATED PRODUCT 
-	For main products filter by brands or categories
-*/
-
-  function showProducts({ allProducts, box, item }) {
-    if (box.length) {
-      if (allProducts) {
-        allProducts.map(p => {
-          box.append(
-            item
-              .replace(/duong-dan-hinh-anh/g, uri + p.images[0].file.publicUrl)
-              .replace(/san-pham/g, p.name)
-              .replace(/duong-dan/g, "/detail/" + p.url)
-              .replace(/gia/g, formatMoney(Number(p.price), 0))
-          );
-        });
-      } else {
-        box.append("<p>Không có kết quả</p>");
-      }
+  static formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",") {
+    try {
+      decimalCount = Math.abs(decimalCount);
+      decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+      const negativeSign = amount < 0 ? "-" : "";
+      let i = parseInt(
+        (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+      ).toString();
+      let j = i.length > 3 ? i.length % 3 : 0;
+      return (
+        negativeSign +
+        (j ? i.substr(0, j) + thousands : "") +
+        i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+        (decimalCount
+          ? decimal +
+            Math.abs(amount - i)
+              .toFixed(decimalCount)
+              .slice(2)
+          : "")
+      );
+    } catch (e) {
+      console.log(e);
     }
   }
-  let newProducts = $("#new-products");
-  if (newProducts.length) {
-    let item = newProducts.html();
-    newProducts.empty();
-    newProducts.append("<p>Đang tải...</p>");
-    request(`query {
-      allProducts(first: 6, where: { suggestions: new,
-      , AND: {seller:{port:"${port}"}}}) {
-        name
-        price
-        images {
-          file {
-            publicUrl
-          }
-        }
-        url
-      }
-    }`).then(res => {
-      newProducts.empty();
-      const { allProducts } = res.data;
-      showProducts({ allProducts: allProducts, box: newProducts, item: item });
+}
+class Brands extends Components {
+  constructor({ id }) {
+    super();
+    this.assign({ id });
+    this.box.empty();
+  }
+  async load({ query }) {
+    const {
+      data: { allBrands }
+    } = await Components.query({ query });
+    this.show(allBrands);
+  }
+  show(data) {
+    this.box.empty();
+    data.forEach(p => {
+      this.add([
+        { template: "thuong-hieu", value: p.name },
+        { template: "duong-dan", value: p.url }
+      ]);
     });
   }
-  let bestSeller = $("#bestSeller-products");
-  if (bestSeller.length) {
-    let item = bestSeller.html();
-    bestSeller.empty();
-    bestSeller.append("<p>Đang tải...</p>");
-    request(`query {
-      allProducts(first: 6, where: { suggestions: bestSeller,
-      , AND: {seller:{port:"${port}"}}}) {
-        name
-        price
-        images {
-          file {
-            publicUrl
-          }
-        }
-        url
-      }
-    }`).then(res => {
-      bestSeller.empty();
-      const { allProducts } = res.data;
-      showProducts({ allProducts: allProducts, box: bestSeller, item: item });
+}
+class Categories extends Components {
+  constructor({ id }) {
+    super();
+    this.assign({ id });
+    this.box.empty();
+  }
+  async load({ query }) {
+    const {
+      data: { allCategories }
+    } = await Components.query({ query });
+    this.show(allCategories);
+  }
+  show(data) {
+    this.box.empty();
+
+    data.forEach(p => {
+      this.add([
+        { template: "danh-muc", value: p.name },
+        { template: "duong-dan", value: p.url }
+      ]);
     });
   }
+}
 
-  /*
-	SEARCH PRODUCT
-	*/
-  let searchProducts = $("#products-search");
-  let searchProductsItem = searchProducts.html();
-  searchProducts.empty();
+const newArrival = new Products({ id: "new-products" });
+newArrival.load({ query: graph.allProducts.newArrival() });
 
-  /*
-	SEARCH INPUT
-*/
-  let searchInput = $("#input-search");
-  searchInput.keyup(input => {
-    let keyword = input.target.value;
-    searchProducts.empty();
-    if (searchProducts.length && keyword.length > 1)
-      request(`query {
-			allProducts(where: {name_contains_i: "${keyword}",
-			, AND: {seller:{port:"${port}"}}}) {
-      name,
-      price,
-      images {file{publicUrl}},
-      url  }
-    }`).then(res => {
-        searchProducts.empty();
-        res.data.allProducts.map(p => {
-          searchProducts.append(
-            searchProductsItem
-              .replace(/duong-dan-hinh-anh/g, uri + p.images[0].file.publicUrl)
-              .replace(/san-pham/g, p.name)
-              .replace(/duong-dan/g, "/detail/" + p.url)
-              .replace(/gia/g, formatMoney(Number(p.price), 0))
-          );
-        });
-      });
+const bestSeller = new Products({ id: "bestSeller-products" });
+bestSeller.load({ query: graph.allProducts.bestSeller() });
+
+let filter = new Products({ id: "products-main" });
+
+let search = new Products({ id: "products-search" });
+
+let categories = new Categories({ id: "categories" });
+categories.load({ query: graph.allCategories() });
+
+let categoriesNav = new Categories({ id: "categories-navbar" });
+categoriesNav.load({ query: graph.allCategories() });
+
+let brands = new Brands({ id: "brands" });
+brands.load({ query: graph.allBrands() });
+
+const gobackBtn = document.getElementById("go-back");
+if (gobackBtn)
+  gobackBtn.onclick = () => {
+    window.history.back();
+  };
+
+function searchToObject() {
+  let pairs = window.location.search.substring(1).split("&"),
+    obj = {},
+    pair,
+    i;
+  for (i in pairs) {
+    if (pairs[i] === "") continue;
+    pair = pairs[i].split("=");
+    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+  }
+  return obj;
+}
+
+let condition = searchToObject();
+if (condition.category) {
+  $("#present-filter").text("KẾT QUẢ TÌM KIẾM");
+  filter.load({
+    query: graph.allProducts.category({ category: condition.category })
   });
+}
+
+/* SMOOTH */
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute("href")).scrollIntoView({
+      behavior: "smooth"
+    });
+  });
+});
+$("#input-search").keyup(input => {
+  const keyword = input.target.value;
+  search.load({ query: graph.allProducts.search({ keyword }) });
 });
