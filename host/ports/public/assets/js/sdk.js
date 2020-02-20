@@ -181,7 +181,7 @@ class Brands extends Components {
     data.forEach(p => {
       this.add([
         { template: "thuong-hieu", value: p.name },
-        { template: "duong-dan", value: p.url }
+        { template: "duong-dan", value: "/" + p.url }
       ]);
     });
   }
@@ -204,7 +204,7 @@ class Categories extends Components {
     data.forEach(p => {
       this.add([
         { template: "danh-muc", value: p.name },
-        { template: "duong-dan", value: p.url }
+        { template: "duong-dan", value: "/" + p.url }
       ]);
     });
   }
