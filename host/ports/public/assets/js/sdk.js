@@ -135,7 +135,7 @@ class Products extends Components {
         },
         { template: "san-pham", value: p.name },
         { template: "gia", value: Products.formatMoney(p.price, 0) },
-        { template: "duong-dan", value: p.url }
+        { template: "duong-dan", value: "/detail/" + p.url }
       ]);
     });
   }
