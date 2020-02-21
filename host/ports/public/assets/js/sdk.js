@@ -1,12 +1,6 @@
 // XIN CHAO
-const port = 7000;
 let seller = { id: "5e4c2235ea30da18df1c210f" };
 let url = "https://ad.loaloa.me";
-if (window.location.hostname === "localhost") {
-  url = "http://localhost:6006";
-  seller = { id: "5e4a546f6417693c1a5bc923" };
-}
-
 class Graph {
   static async execute({ query }) {
     const response = await fetch(url + "/admin/api", {
