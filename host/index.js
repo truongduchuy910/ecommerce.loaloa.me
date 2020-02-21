@@ -78,39 +78,10 @@ class Server {
         res.redirect("/");
       })
 
-      .get("/detail/:url", async (req, res) => {
+      .get("/detail/", async (req, res) => {
         let port = req.socket.localPort;
-        let data = await keystone.executeQuery(
-          `query {
-		  allProducts(where: { url: "${req.params.url}" 
-		  ,AND:{seller:{port:"${port}"}}}) {
-		    name
-		    price
-		    images {
-		      file {
-			publicUrl
-		      }
-		    }
-		    brand {
-		      name
-		    }
-		    category {
-		      name
-		    }
-		    attributes {
-		      name
-		    }
-		    description
-		    file {
-		      publicUrl
-		    }
-		    guide
-		  }
-	}
-	  `
-        );
         const ejsPath = this.host[port].ejsPath({ name: "detail" });
-        res.render(ejsPath, data);
+        res.render(ejsPath);
       })
       .get("*", (req, res) => {
         let port = req.socket.localPort;

@@ -25,7 +25,7 @@ module.exports = fileAdapter => ({
     images: {
       type: Relationship,
       ref: "Gallery.product",
-      //      isRequired: true,
+      isRequired: true,
       label: "Hình hiển thị (Bắt buộc)",
       many: true
     },

@@ -1,85 +1,14 @@
 // XIN CHAO
 const port = 7000;
-const url = "https://ad.loaloa.me";
-let graph = {
-  allProducts: {
-    newArrival: () => `query {
-    allProducts(first: 6, where: { suggestions: new,
-    , AND: {seller:{port:"${port}"}}}) {
-      name
-      price
-      images {
-        file {
-          publicUrl
-        }
-      }
-      url
-    }
-  }`,
-    bestSeller: () => `query {
-    allProducts(first: 6, where: { suggestions: bestSeller,
-    , AND: {seller:{port:"${port}"}}}) {
-      name
-      price
-      images {
-        file {
-          publicUrl
-        }
-      }
-      url
-    }
-  }`,
-    brand: ({ brand }) => `query {
-    allProducts(where: {brand: {url}: "${brand}"}
-    , AND: {seller:{port:"${port}"}}}) {
-      images {
-        file {
-          publicUrl
-        }
-      }
-      name
-      price
-      url
-    }
-  }`,
-    category: ({ category }) => `query {
-    allProducts(where: {category: {url: "${category}"}
-    , AND: {seller:{port:"${port}"}}}) {
-      images {
-        file {
-          publicUrl
-        }
-      }
-      name
-      price
-      url
-    }
-  }`,
-    search: ({ keyword }) => `query {
-    allProducts(where: {name_contains_i: "${keyword}",
-    ,AND: {seller:{port:"${port}"}}}) {
-    name,
-    price,
-    images {file{publicUrl}},
-    url  }
-  }`
-  },
-  allBrands: () => `query {
-    allBrands(where:{seller:{port:"${port}"}}) {
-      name,
-      url
-    }
-  }`,
-  allCategories: () => `query {
-    allCategories(where:{seller:{port:"${port}"}}) {
-      name,
-      url
-    }
-  }`
-};
+let seller = { id: "5e4c2235ea30da18df1c210f" };
+let url = "https://ad.loaloa.me";
+if (window.location.hostname === "localhost") {
+  url = "http://localhost:6006";
+  seller = { id: "5e4a546f6417693c1a5bc923" };
+}
 
-class Components {
-  static async query({ query }) {
+class Graph {
+  static async execute({ query }) {
     const response = await fetch(url + "/admin/api", {
       method: "POST",
       mode: "cors",
@@ -95,12 +24,33 @@ class Components {
     return await response.json();
   }
   constructor() {
-    this.isExist = false;
+    this.gql = new Object();
+    this.gql.query;
+    this.gql.mutation;
   }
-  assign({ id }) {
+  query({ condition }) {
+    return Graph.execute({ query: this.gql.query({ condition }) });
+  }
+  mutation({ data }) {
+    console.log(this.gql.mutation({ data }));
+    return Graph.execute({ query: this.gql.mutation({ data }) });
+  }
+}
+class Html {
+  constructor({ id }) {
+    this.isExist = false;
     this.box = $(`#${id}`);
+    if (this.box.length) {
+      this.isExist = true;
+      console.log("find: ", id);
+    }
+  }
+}
+class Arrays extends Html {
+  constructor({ id }) {
+    super({ id });
     this.item = this.box.html();
-    if (this.box.length) this.isExist = true;
+    this.empty();
   }
   add(data) {
     if (this.isExist) {
@@ -112,30 +62,346 @@ class Components {
       this.box.append(html);
     }
   }
-}
-class Products extends Components {
-  constructor({ id }) {
-    super();
-    this.assign({ id });
+  empty() {
     this.box.empty();
   }
-  async load({ query }) {
+}
+class Paragraphs extends Html {
+  constructor({ id }) {
+    super({ id });
+  }
+  render({ value }) {
+    if (this.isExist && value) this.box[0].innerText = value;
+  }
+}
+class Images extends Html {
+  constructor({ id }) {
+    super({ id });
+  }
+  render({ src, alt }) {
+    if (this.isExist) {
+      this.box[0].setAttribute("src", src);
+      this.box[0].setAttribute("alt", alt);
+    }
+  }
+}
+class Customers extends Graph {
+  constructor({ name, phone, address, order }) {
+    super();
+    this.name = new Paragraphs({ id: name });
+    this.phone = new Paragraphs({ id: phone });
+    this.address = new Paragraphs({ id: address });
+    this.order = new Paragraphs({ id: order });
+    this.status = false;
+    this.customer = "";
+  }
+  async createCustomer({ phone, name, address }) {
+    this.gql.mutation = ({
+      data: {
+        phone,
+        name,
+        address,
+        seller: { id }
+      }
+    }) => `mutation {
+        createCustomer(
+          data: {
+            phone: "${phone}",
+            name: "${name}",
+            address:"${address}",
+            seller: { connect: { id: "${id}" } }
+          }
+        ) {
+          id
+        }
+      }`;
+    const {
+      data: {
+        createCustomer: { id }
+      }
+    } = await this.mutation({ data: { phone, name, address, seller } });
+    return id;
+  }
+  async createBill({ product, customer }) {
+    this.gql.mutation = ({
+      data: {
+        product,
+        customer,
+        seller: { id }
+      }
+    }) => `mutation {
+        createBill(
+          data: {
+            customer:{ connect:{ id:"${customer}"}},
+            products:{connect:[{id:"${product}"}]},
+            seller: { connect: { id: "${id}" }}
+          }
+        ) {
+          id
+        }
+      }`;
+    const { data } = await this.mutation({
+      data: { product, customer, seller }
+    });
+    console.log(data);
+  }
+  start() {
+    this.phone.box.val(localStorage.getItem("phone"));
+    this.order.box.click(async btn => {
+      const name = this.name.box.val();
+      const phone = this.phone.box.val();
+      const address = this.address.box.val();
+      const customer = await this.matching({ condition: `phone:"${phone}"` });
+      if (customer) {
+        const id = await this.createBill({
+          product: detail.id,
+          customer: customer.id
+        });
+        console.log(id);
+        this.order.render({ value: "Đặt hàng thành công!" });
+      } else {
+        console.log("Tạo người dùng");
+        this.order.render({ value: this.status });
+        const id = await this.createCustomer({
+          phone,
+          name,
+          address
+        });
+        this.customer = id;
+        this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+      }
+    });
+  }
+  async matching({ condition }) {
+    this.gql.query = ({ condition }) => `query {
+      allCustomers(where:{seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        id,
+        name,
+        phone,
+        address
+      }
+    }`;
+    const {
+      data: { allCustomers }
+    } = await this.query({ condition });
+    if (allCustomers) {
+      return allCustomers[0];
+    } else {
+      return false;
+    }
+  }
+}
+class Details extends Graph {
+  constructor({
+    name,
+    price,
+    imageMain,
+    imageOrthers,
+    categoryName,
+    categoryUrl,
+    brandName,
+    brandUrl,
+    attributeName,
+    description,
+    detail,
+    guide
+  }) {
+    super();
+    this.gql.query = ({ condition }) => `query {
+      allProducts(where:{ seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        id,
+        name,
+        price,
+        images {
+          file {
+            publicUrl
+          }
+        },
+        category {
+          name,
+          url
+        },
+        brand {
+          name,
+          url
+        },
+        attributes {
+          name
+        },
+        description,
+        file {
+          publicUrl
+        },
+        guide
+      }
+    }`;
+    this.name = new Paragraphs({ id: name });
+    this.price = new Paragraphs({ id: price });
+    this.imageMain = new Images({ id: imageMain });
+    this.imageOrthers = new Arrays({ id: imageOrthers });
+    this.categoryName = new Paragraphs({ id: categoryName });
+    this.brandName = new Paragraphs({ id: brandName });
+    this.attributeName = new Arrays({ id: attributeName });
+    this.description = new Paragraphs({ id: description });
+    this.detail = new Images({ id: detail });
+    this.guide = new Paragraphs({ id: guide });
+  }
+  async load({ condition }) {
     const {
       data: { allProducts }
-    } = await Components.query({ query });
+    } = await this.query({ condition });
+    if (allProducts.length) {
+      const {
+        id,
+        name,
+        price,
+        images,
+        category,
+        brand,
+        attributes,
+        description,
+        file,
+        guide
+      } = allProducts[0];
+      this.id = id;
+      this.name.render({ value: name });
+      this.price.render({ value: Products.formatMoney(price, 0) });
+      this.imageMain.render({ src: url + images[0].file.publicUrl });
+      if (category) this.categoryName.render({ value: category.name });
+      if (brand) this.brandName.render({ value: brand.name });
+      this.attributeName.empty();
+      if (attributes.length)
+        attributes.forEach(attribute => {
+          this.attributeName.add([
+            {
+              template: "attribute",
+              value: attribute.name
+            }
+          ]);
+        });
+
+      if (images.length > 1) {
+        this.imageOrthers.empty();
+        for (let i = 1; i < images.length; i++) {
+          this.imageOrthers.add([
+            {
+              template: "duong-dan-hinh-anh",
+              value: url + images[i].file.publicUrl
+            }
+          ]);
+        }
+      }
+      if (description) this.description.render({ value: description });
+      if (file) this.detail.render({ src: url + file.publicUrl });
+      if (guide) this.guide.render({ value: guide });
+    }
+  }
+}
+class PresentFilter extends Graph {
+  constructor({ name }) {
+    super();
+    this.name = new Paragraphs({ id: name });
+  }
+  async withCategory({ url }) {
+    this.gql.query = ({ condition }) => `query {
+      allCategories(where:{seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        name,
+        url
+      }
+    }`;
+    const {
+      data: { allCategories }
+    } = await this.query({ condition: `url: "${url}"` });
+    if (allCategories.length) {
+      const category = allCategories[0].name;
+      this.name.render({ value: category });
+    }
+  }
+  async withBrand({ url }) {
+    this.gql.query = ({ condition }) => `query {
+    allBrands(where:{seller:{id:"${seller.id}"},
+    AND: {${condition}}}) {
+      name,
+      url
+    }
+  }`;
+    const {
+      data: { allBrands }
+    } = await this.query({ condition: `url: "${url}"` });
+    if (allBrands.length) {
+      const brand = allBrands[0].name;
+      this.name.render({ value: brand });
+    }
+  }
+}
+class Lists extends Graph {
+  constructor({ id }) {
+    super();
+    this.html = new Arrays({ id });
+  }
+}
+class Banners extends Lists {
+  constructor({ id }) {
+    super({ id });
+    this.gql.query = ({ condition }) => `query {
+      allBanners(where:{seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        file {
+          publicUrl
+        }
+      }
+    }`;
+  }
+  async load({ condition }) {
+    const {
+      data: { allBanners }
+    } = await this.query({ condition });
+    if (allBanners)
+      allBanners.forEach(banner => {
+        this.html.add([
+          { template: "duong-dan-hinh-anh", value: url + banner.file.publicUrl }
+        ]);
+      });
+  }
+}
+class Products extends Lists {
+  constructor({ id }) {
+    super({ id });
+    this.limit = 100;
+    this.gql.query = ({ condition }) => `query {
+      allProducts(first:${this.limit}, where: { seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        name
+        price
+        images {
+          file {
+            publicUrl
+          }
+        }
+        url
+      }
+    }`;
+  }
+  async load({ condition }) {
+    const {
+      data: { allProducts }
+    } = await this.query({ condition });
     this.show(allProducts);
   }
   show(data) {
-    this.box.empty();
+    this.html.empty();
     data.forEach(p => {
-      this.add([
+      this.html.add([
         {
           template: "duong-dan-hinh-anh",
           value: url + p.images[0].file.publicUrl
         },
         { template: "san-pham", value: p.name },
         { template: "gia", value: Products.formatMoney(p.price, 0) },
-        { template: "duong-dan", value: "/detail/" + p.url }
+        { template: "duong-dan", value: "/detail/?detail=" + p.url }
       ]);
     });
   }
@@ -164,77 +430,60 @@ class Products extends Components {
     }
   }
 }
-class Brands extends Components {
+class Brands extends Lists {
   constructor({ id }) {
-    super();
-    this.assign({ id });
-    this.box.empty();
+    super({ id });
+    this.gql.query = ({ condition }) => `query {
+      allBrands(where:{seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        name,
+        url
+      }
+    }`;
   }
-  async load({ query }) {
+  async load({ condition }) {
     const {
       data: { allBrands }
-    } = await Components.query({ query });
+    } = await this.query({ condition });
     this.show(allBrands);
   }
   show(data) {
-    this.box.empty();
+    this.html.empty();
     data.forEach(p => {
-      this.add([
+      this.html.add([
         { template: "thuong-hieu", value: p.name },
         { template: "duong-dan", value: p.url }
       ]);
     });
   }
 }
-class Categories extends Components {
+class Categories extends Lists {
   constructor({ id }) {
-    super();
-    this.assign({ id });
-    this.box.empty();
+    super({ id });
+    this.gql.query = ({ condition }) => `query {
+      allCategories(where:{seller:{id:"${seller.id}"},
+      AND: {${condition}}}) {
+        name,
+        url
+      }
+    }`;
   }
-  async load({ query }) {
+  async load({ condition }) {
     const {
       data: { allCategories }
-    } = await Components.query({ query });
+    } = await this.query({ condition });
     this.show(allCategories);
   }
   show(data) {
-    this.box.empty();
-
+    this.html.empty();
     data.forEach(p => {
-      this.add([
+      this.html.add([
         { template: "danh-muc", value: p.name },
         { template: "duong-dan", value: p.url }
       ]);
     });
   }
 }
-
-const newArrival = new Products({ id: "new-products" });
-newArrival.load({ query: graph.allProducts.newArrival() });
-
-const bestSeller = new Products({ id: "bestSeller-products" });
-bestSeller.load({ query: graph.allProducts.bestSeller() });
-
-let filter = new Products({ id: "products-main" });
-
-let search = new Products({ id: "products-search" });
-
-let categories = new Categories({ id: "categories" });
-categories.load({ query: graph.allCategories() });
-
-let categoriesNav = new Categories({ id: "categories-navbar" });
-categoriesNav.load({ query: graph.allCategories() });
-
-let brands = new Brands({ id: "brands" });
-brands.load({ query: graph.allBrands() });
-
-const gobackBtn = document.getElementById("go-back");
-if (gobackBtn)
-  gobackBtn.onclick = () => {
-    window.history.back();
-  };
-
 function searchToObject() {
   let pairs = window.location.search.substring(1).split("&"),
     obj = {},
@@ -248,14 +497,71 @@ function searchToObject() {
   return obj;
 }
 
+/* INIT */
+const newArrival = new Products({ id: "new-products" });
+const bestSeller = new Products({ id: "bestSeller-products" });
+let filter = new Products({ id: "products-main" });
+let search = new Products({ id: "products-search" });
+search.limit = 12;
+let categories = new Categories({ id: "categories" });
+let brands = new Brands({ id: "brands" });
+let categoriesNav = new Categories({ id: "categories-navbar" });
+let banners = new Banners({ id: "banners" });
+let detail = new Details({
+  name: "detail-name",
+  price: "detail-price",
+  categoryName: "detail-category",
+  brandName: "detail-brand",
+  attributeName: "detail-attribute",
+  imageMain: "detail-imageMain",
+  imageOrthers: "detail-imageMore",
+  description: "detail-description",
+  detail: "detail-info",
+  guide: "detail-guide"
+});
+
+let customer = new Customers({
+  name: "customer-name",
+  phone: "customer-phone",
+  address: "customer-address",
+  order: "customer-order"
+});
+
+let inputSearch = $("#input-search");
+let presentFilter = new PresentFilter({ name: "present-filter" });
+let gobackBtn = $("#go-back");
 let condition = searchToObject();
+
+customer.start();
+banners.load({ condition: `` });
+categoriesNav.load({ condition: `` });
+categories.load({ condition: `` });
+brands.load({ condition: `` });
+newArrival.load({ condition: `suggestions: new` });
+bestSeller.load({ condition: `suggestions: bestSeller` });
 if (condition.category) {
-  $("#present-filter").text("KẾT QUẢ TÌM KIẾM");
-  filter.load({
-    query: graph.allProducts.category({ category: condition.category })
+  presentFilter.withCategory({ url: condition.category });
+  filter.load({ condition: `category: {url:"${condition.category}"}` });
+}
+if (condition.brand) {
+  presentFilter.withBrand({ url: condition.brand });
+  filter.load({ condition: `brand: {url:"${condition.brand}"}` });
+}
+if (condition.detail) {
+  detail.load({ condition: `url: "${condition.detail}"` });
+}
+if (gobackBtn.length) {
+  gobackBtn.click(() => {
+    window.history.back();
   });
 }
 
+/* EVENT */
+inputSearch.keyup(input => {
+  const keyword = input.target.value;
+  if (keyword.length > 1)
+    search.load({ condition: `name_contains_i: "${keyword}"` });
+});
 /* SMOOTH */
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -266,8 +572,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       behavior: "smooth"
     });
   });
-});
-$("#input-search").keyup(input => {
-  const keyword = input.target.value;
-  search.load({ query: graph.allProducts.search({ keyword }) });
 });

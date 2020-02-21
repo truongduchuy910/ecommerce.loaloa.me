@@ -32,16 +32,33 @@ module.exports = {
     password: {
       type: Password
     },
-    pages_access_token: { type: Text },
-    psid: { type: Text },
-    port: { type: Text }
+    pages_access_token: {
+      type: Text,
+      access: {
+        read: access.userIsAdmin
+      }
+    },
+    pages_id: {
+      type: Text,
+      access: {
+        read: access.userIsAdmin
+      }
+    },
+    psid: {
+      type: Text,
+      access: {
+        read: access.userIsAdmin
+      }
+    },
+    port: {
+      type: Text
+    }
   },
   access: {
-    read: access.userIsAdminOrOwner,
+    read: true,
     update: access.userIsAdmin,
     create: access.userIsAdmin,
-    delete: access.userIsAdmin,
-    auth: true
+    delete: access.userIsAdmin
   },
   label: "Tài khoản"
 };

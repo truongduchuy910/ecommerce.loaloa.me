@@ -1,12 +1,3 @@
-<%function formatMoney(amount, decimalCount = 2, decimal = ".", thousands = ",")
-{ try { decimalCount = Math.abs(decimalCount); decimalCount =
-isNaN(decimalCount) ? 2 : decimalCount; const negativeSign = amount < 0 ? "-" :
-""; let i = parseInt( (amount = Math.abs(Number(amount) ||
-0).toFixed(decimalCount)) ).toString(); let j = i.length > 3 ? i.length % 3 : 0;
-return ( negativeSign + (j ? i.substr(0, j) + thousands : "") +
-i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ?
-decimal + Math.abs(amount - i) .toFixed(decimalCount) .slice(2) : "") ); } catch
-(e) { console.log(e); } }%>
 <!DOCTYPE html>
 <html style="font-size: 14px;">
   <head>
@@ -19,78 +10,95 @@ decimal + Math.abs(amount - i) .toFixed(decimalCount) .slice(2) : "") ); } catch
 
     <main>
       <div class="container">
-        <% if (data.allProducts.length) { const p = data.allProducts[0]%>
         <div class="row">
           <div class="col-md-9">
             <div class="row p-0 m-0">
               <div class="col-7 col-sm-7">
                 <button
-                  class="btn btn-outline-light btn-sm mt-4"
+                  class="btn btn-outline-light btn-sm mt-4 text-myColor"
                   id="go-back"
                   type="button"
+                  style="border-radius: 0px; border-color: #D4AC5C;"
                 >
-                  Trở về</button
-                ><img
-                  class="w-100 p-4"
-                  src="https://ad.loaloa.me/<%=p.images[0].file.publicUrl%>"
-                />
+                  Trở về
+                </button>
+                <img id="detail-imageMain" class="w-100 p-4" src="" />
                 <hr />
                 <div class="row">
-                  <% for (let i = 1; i < p.images.length;i++) { const url =
-                  p.images[i].file.publicUrl%>
                   <div
                     class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3"
                     data-bs-hover-animate="bounce"
+                    id="detail-imageMore"
                   >
-                    <img class="w-100" src="https://ad.loaloa.me/<%=url%>" />
+                    <img class="w-100" src="duong-dan-hinh-anh" />
                   </div>
-                  <%}%>
                 </div>
                 <hr />
+                <input
+                  id="customer-phone"
+                  name="phone"
+                  type="text"
+                  class="form-control mb-3 text-myColor"
+                  placeholder="Số điện thoại (phone)"
+                  style="border-radius: 0px;border-top: none;border-left: none;border-right: none; background-color: transparent;border-color: #D4AC5C;max-width: 300px;"
+                />
+                <input
+                  id="customer-name"
+                  name="name"
+                  type="text"
+                  class="form-control mb-3 text-myColor"
+                  placeholder="Tên (name)"
+                  style="border-radius: 0px;border-top: none;border-left: none;border-right: none; background-color: transparent;border-color: #D4AC5C;max-width: 300px;"
+                />
+                <input
+                  id="customer-address"
+                  name="address"
+                  type="text"
+                  class="form-control mb-3 text-myColor"
+                  placeholder="Địa chỉ (address)"
+                  style="border-radius: 0px;border-top: none;border-left: none;border-right: none; background-color: transparent;border-color: #D4AC5C;max-width: 300px;"
+                />
+                <button
+                  id="customer-order"
+                  class="btn btm-sm mb-3 text-myColor"
+                  style="border-radius: 0px; border-color: #D4AC5C;width: 100%; max-width: 300px;"
+                >
+                  Đặt hàng
+                </button>
               </div>
+
               <div class="col-5 col-sm-5">
                 <div class="p-4">
-                  <h6 class="text-myColor"><%=p.name%></h6>
+                  <h6 id="detail-name" class="text-myColor"></h6>
                   <hr />
-                  <h6><%=formatMoney(p.price,0)%></h6>
+                  <h6 id="detail-price"></h6>
                   <hr />
                   <h6 class="text-myColor">MÙI</h6>
-                  <%p.attributes.forEach(a=>{%>
-                  <p class="text-secondary"><%=a.name%></p>
-                  <%})%>
+                  <div id="detail-attribute">
+                    <p class="text-secondary">attribute</p>
+                  </div>
+
                   <h6 class="text-uppercase text-myColor">thương hiệu</h6>
-                  <%if (p.brand) {%>
-                  <p class="text-secondary"><%=p.brand.name%></p>
-                  <%}%>
-                  <h6 class="text-uppercase text-myColor">chức năng</h6>
-                  <%if (p.category ){%>
-                  <p class="text-secondary"><%=p.category.name%></p>
-                  <%}%>
+                  <p id="detail-brand" class="text-secondary"></p>
+                  <h6 class="text-uppercase text-myColor">danh mục</h6>
+                  <p id="detail-category" class="text-secondary"></p>
                 </div>
               </div>
               <div class="col-12">
-                <h6 class="text-uppercase text-myColor">Mô tả</h6>
-                <p><%=p.description%></p>
-                <h6 class="text-uppercase text-myColor">Chi tiết</h6>
-                <% if(p.file) { %>
-                <img
-                  style="max-width: 100%;"
-                  src="https://ad.loaloa.me<%=p.file.publicUrl%>"
-                />
-                <% } %>
-                <h6 class="text-uppercase text-myColor">Hướng dẫn sử dụng</h6>
-                <p><%=p.guide%></p>
+                <h6 class="text-uppercase text-myColor mt-3">Mô tả</h6>
+                <p id="detail-description"></p>
+                <h6 class="text-uppercase text-myColor mt-3">Chi tiết</h6>
+                <img id="detail-info" style="max-width: 100%;" />
+                <h6 class="text-uppercase text-myColor mt-3">
+                  Hướng dẫn sử dụng
+                </h6>
+                <p id="detail-guide"></p>
               </div>
             </div>
           </div>
         </div>
-        <%} else {%>
-        <h1>Không tìm thấy sản phẩm</h1>
-        <a class="text-white" href="/">Đi đến trang chủ?</a>
-        <%}%>
       </div>
     </main>
-
     <% include ../partials/footer%>
   </body>
 </html>

@@ -1,12 +1,11 @@
 module.exports.hooks = (fileAdapter = {}) => ({
   afterDelete: ({ existingItem = {} }) => {
-    if (fileAdapter) fileAdapter.delete(existingItem);
+    if (fileAdapter && fileAdapter.delete) fileAdapter.delete(existingItem);
   },
   resolveInput: ({ existingItem, resolvedData, context }) => {
     if (resolvedData.file && !resolvedData.name)
       resolvedData.name = resolvedData.file.originalFilename;
-    if (!context.authedItem.isAdmin)
-      resolvedData.seller = context.authedItem.id;
+    if (context.authedItem) resolvedData.seller = context.authedItem.id;
     return resolvedData;
   }
 });
@@ -18,18 +17,16 @@ const userIsAdmin = ({ authentication: { item: user } }) => {
   return Boolean(user && user.isAdmin);
 };
 const userOwnsItem = ({ authentication: { item: user } }) => {
-  if (!user) {
-    return false;
+  if (user) {
+    return { seller: { id: user.id } };
   }
-  if (user.isAdmin) return true;
-  return { seller: { id: user.id } };
+  return true;
 };
 const public = ({ authentication: { item: user } }) => {
-  if (!user) {
-    return true;
+  if (user) {
+    return { seller: { id: user.id } };
   }
-  if (user.isAdmin) return true;
-  return { seller: { id: user.id } };
+  return true;
 };
 
 const userIsAdminOrOwner = auth => {
@@ -57,8 +54,8 @@ module.exports.admin = {
   read: access.userIsAdminOrOwner
 };
 module.exports.public = {
-  create: public,
-  update: access.userOwnsItem,
-  delete: access.userOwnsItem,
-  read: public
+  create: true,
+  update: true,
+  delete: true,
+  read: access.public
 };
