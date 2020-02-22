@@ -25,7 +25,6 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
 };
 const public = ({ authentication: { item: user } }) => {
   return true;
-
   if (user && !user.isAdmin) {
     return { seller: { id: user.id } };
   }
@@ -63,7 +62,7 @@ module.exports.privateField = {
   detele: access.userIsAdmin,
   read: access.userIsAdmin
 };
-module.exports.admin = {
+module.exports.privateList = {
   create: access.userIsAdmin,
   update: access.userIsAdmin,
   delete: access.userIsAdmin,
