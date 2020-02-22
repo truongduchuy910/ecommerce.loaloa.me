@@ -23,10 +23,18 @@ const access = { userIsAdmin, userOwnsItem, userIsAdminOrOwner };
 
 module.exports = {
   fields: {
-    seller: { type: Text },
+    seller: {
+      type: Text,
+      access: {
+        read: access.userIsAdmin
+      }
+    },
     email: {
       type: Text,
-      isUnique: true
+      isUnique: true,
+      access: {
+        read: access.userIsAdmin
+      }
     },
     isAdmin: { type: Checkbox },
     password: {
