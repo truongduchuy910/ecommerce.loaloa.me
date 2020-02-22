@@ -83,14 +83,24 @@ bot.post("/webhook", (req, res) => {
       const psid = webhook_event.sender.id;
       const page = webhook_event.recipient.id;
       const seller = webhook_event.message.text;
+      console.log(psid, page, seller);
       const {
         data: { updateUser }
-      } = await keystone.executeQuery(`mutation {
-        updateUser(id: "${seller}", data: { psid: "${psid}", page:"${page}" }) {
+      } = await keystone.executeQuery(
+        `mutation {
+        updateUser(id: $seller, data: { psid: $psid, page:$page }) {
           seller
         }
       }
-      `);
+      `,
+        {
+          variables: {
+            psid,
+            page,
+            seller
+          }
+        }
+      );
       console.log("Nhận diện user: ", updateUser);
     });
 
