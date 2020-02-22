@@ -58,6 +58,7 @@ module.exports = {
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
+      enableDefaultRoute: true,
       authStrategy
     })
     // new NextApp({ dir: "app" })
