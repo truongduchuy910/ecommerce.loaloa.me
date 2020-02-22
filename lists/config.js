@@ -5,25 +5,26 @@ module.exports.hooks = (fileAdapter = {}) => ({
   resolveInput: ({ existingItem, resolvedData, context }) => {
     if (resolvedData.file && !resolvedData.name)
       resolvedData.name = resolvedData.file.originalFilename;
-    if (context.authedItem) resolvedData.seller = context.authedItem.id;
+    if (context.authedItem && !context.authedItem.isAdmin)
+      resolvedData.seller = context.authedItem.id;
     return resolvedData;
   }
 });
 const user = ({ authentication: { item: user } }) => {
-  return Boolean(user && !user.isAdminer);
+  return Boolean(user && !user.isAdmin);
 };
 
 const userIsAdmin = ({ authentication: { item: user } }) => {
   return Boolean(user && user.isAdmin);
 };
 const userOwnsItem = ({ authentication: { item: user } }) => {
-  if (user && !user.isAdminer) {
+  if (user && !user.isAdmin) {
     return { seller: { id: user.id } };
   }
   return false;
 };
 const public = ({ authentication: { item: user } }) => {
-  if (user && !user.isAdminer) {
+  if (user && !user.isAdmin) {
     return { seller: { id: user.id } };
   }
   return true;
