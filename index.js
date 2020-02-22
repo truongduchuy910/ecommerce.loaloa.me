@@ -6,6 +6,8 @@ const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const { config, onConnect } = require("./config");
+// const { NextApp } = require("@keystonejs/app-next");
+
 const keystone = new Keystone({
   secureCookies: false,
   name: config.name,
@@ -56,9 +58,9 @@ module.exports = {
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
-      enableDefaultRoute: true,
       authStrategy
     })
+    // new NextApp({ dir: "app" })
   ],
   configureExpress: app => {
     const express = require("express");

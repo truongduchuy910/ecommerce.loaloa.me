@@ -571,3 +571,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 });
+
+/*
+Messenger Extensions JS SDK Reference
+*/
+// let send = (image, name) => {
+//   (function(d, s, id) {
+//     var js,
+//       fjs = d.getElementsByTagName(s)[0];
+//     if (d.getElementById(id)) {
+//       return;
+//     }
+//     js = d.createElement(s);
+//     js.id = id;
+//     js.src = "https://connect.facebook.net/en_US/messenger.Extensions.js";
+//     fjs.parentNode.insertBefore(js, fjs);
+//   })(document, "script", "Messenger");
+//   let message = {
+//     text: "hello, world!",
+//     attachment: {
+//       type: "image",
+//       payload: {
+//         url: "http://www.messenger-rocks.com/image.jpg",
+//         is_reusable: true
+//       }
+//     }
+//   };
+//   MessengerExtensions.beginShareFlow(
+//     function(share_response) {
+//       if (share_response.is_sent) {
+//       }
+//     },
+//     function(errorCode, errorMessage) {},
+//     message,
+//     "broadcast"
+//   );
+// };

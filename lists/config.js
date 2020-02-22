@@ -10,22 +10,20 @@ module.exports.hooks = (fileAdapter = {}) => ({
   }
 });
 const user = ({ authentication: { item: user } }) => {
-  return Boolean(user);
+  return Boolean(user && !user.isAdminer);
 };
 
 const userIsAdmin = ({ authentication: { item: user } }) => {
   return Boolean(user && user.isAdmin);
 };
 const userOwnsItem = ({ authentication: { item: user } }) => {
-  if (user) {
+  if (user && !user.isAdminer) {
     return { seller: { id: user.id } };
   }
-  return true;
+  return false;
 };
 const public = ({ authentication: { item: user } }) => {
-  if (user) {
-    return true;
-
+  if (user && !user.isAdminer) {
     return { seller: { id: user.id } };
   }
   return true;
@@ -43,21 +41,28 @@ const access = {
   public,
   userIsAdminOrOwner
 };
+
+module.exports.public = {
+  create: true,
+  update: true,
+  delete: true,
+  read: access.public
+};
 module.exports.owner = {
   create: access.user,
-  update: access.userOwnsItem,
+  update: access.user,
   delete: access.userOwnsItem,
   read: access.public
+};
+module.exports.privateField = {
+  create: access.userIsAdmin,
+  update: access.userIsAdmin,
+  detele: access.userIsAdmin,
+  read: access.userIsAdmin
 };
 module.exports.admin = {
   create: access.userIsAdmin,
   update: access.userIsAdmin,
   delete: access.userIsAdmin,
   read: access.userIsAdminOrOwner
-};
-module.exports.public = {
-  create: true,
-  update: true,
-  delete: true,
-  read: access.public
 };
