@@ -78,15 +78,20 @@ bot.post("/webhook", (req, res) => {
   let body = req.body;
 
   if (body.object === "page") {
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(async function(entry) {
       let webhook_event = entry.messaging[0];
-      // keystone.executeQuery(`mutation {
-      //   updateUser(id: "123", data: { psid: "adf" }) {
-      //     seller
-      //   }
-      // }
-      // `);
-      console.log(webhook_event);
+      const psid = webhook_event.sender.id;
+      const page = webhook_event.recipient.id;
+      const seller = message.text;
+      const {
+        data: { updateUser }
+      } = await keystone.executeQuery(`mutation {
+        updateUser(id: "${seller}", data: { psid: "${psid}", page:"${page}" }) {
+          seller
+        }
+      }
+      `);
+      console.log("Nhận diện user: ", updateUser);
     });
 
     res.status(200).send("EVENT_RECEIVED");

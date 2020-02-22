@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 module.exports.hooks = (fileAdapter = {}) => ({
   afterDelete: ({ existingItem = {} }) => {
     if (fileAdapter && fileAdapter.delete) fileAdapter.delete(existingItem);
@@ -7,6 +9,31 @@ module.exports.hooks = (fileAdapter = {}) => ({
       resolvedData.name = resolvedData.file.originalFilename;
     if (context.authedItem && !context.authedItem.isAdmin)
       resolvedData.seller = context.authedItem.id;
+    if (resolvedData.products && resolvedData.customer) {
+      axios.post(messenger.uri, {
+        access_token: context.authedItem.pages_access_token,
+        recipient: {
+          id: context.authedItem.psid
+        },
+        messaging_type: "RESPONSE",
+        message: {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "button",
+              text: `Có đơn đặt hàng mới từ ${resolvedData.customer}`,
+              buttons: [
+                {
+                  type: "web_url",
+                  url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${${resolvedData.customer}}%22`,
+                  title: "Xem chi tiết"
+                }
+              ]
+            }
+          }
+        }
+      });
+    }
     return resolvedData;
   }
 });
