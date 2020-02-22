@@ -145,24 +145,28 @@ class Customers extends Graph {
       const name = this.name.box.val();
       const phone = this.phone.box.val();
       const address = this.address.box.val();
-      const customer = await this.matching({ condition: `phone:"${phone}"` });
-      if (customer) {
-        const id = await this.createBill({
-          product: detail.id,
-          customer: customer.id
-        });
-        console.log(id);
-        this.order.render({ value: "Đặt hàng thành công!" });
+      if (phone.length > 8) {
+        const customer = await this.matching({ condition: `phone:"${phone}"` });
+        if (customer) {
+          const id = await this.createBill({
+            product: detail.id,
+            customer: customer.id
+          });
+          console.log(id);
+          this.order.render({ value: "Đặt hàng thành công!" });
+        } else {
+          console.log("Tạo người dùng");
+          this.order.render({ value: this.status });
+          const id = await this.createCustomer({
+            phone,
+            name,
+            address
+          });
+          this.customer = id;
+          this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+        }
       } else {
-        console.log("Tạo người dùng");
-        this.order.render({ value: this.status });
-        const id = await this.createCustomer({
-          phone,
-          name,
-          address
-        });
-        this.customer = id;
-        this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+        this.order.render({ value: "Kiểm tra số điện thoại và thử lại!" });
       }
     });
   }
