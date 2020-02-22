@@ -72,6 +72,8 @@ module.exports = {
   }
 };
 const bot = express();
+const bodyParser = require("body-parser");
+bot.use(bodyParser.json());
 bot.post("/webhook", (req, res) => {
   let body = req.body;
 
