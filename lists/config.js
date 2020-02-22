@@ -9,6 +9,7 @@ module.exports.hooks = (fileAdapter = {}) => ({
       resolvedData.name = resolvedData.file.originalFilename;
     if (context.authedItem && !context.authedItem.isAdmin)
       resolvedData.seller = context.authedItem.id;
+    console.log(resolvedData);
     if (resolvedData.products && resolvedData.customer) {
       axios.post(messenger.uri, {
         access_token: context.authedItem.pages_access_token,
