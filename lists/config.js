@@ -11,9 +11,9 @@ module.exports.hooks = (fileAdapter = {}) => ({
       resolvedData.seller = context.authedItem.id;
     console.log(resolvedData);
     if (resolvedData.products && resolvedData.customer) {
-      console.log("bill create");
+      console.log("bill create", context.authedItem);
       axios
-        .post("https://graph.facebook.com/v6.0/me/messages", {
+        .post("https://graph.facebook.com/v2.6/me/messages", {
           access_token: context.authedItem.pages_access_token,
           recipient: {
             id: context.authedItem.psid
