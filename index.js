@@ -84,10 +84,8 @@ bot.post("/webhook", (req, res) => {
       const page = webhook_event.recipient.id;
       const seller = webhook_event.message.text;
       console.log(psid, page, seller);
-      const {
-        data: { updateUser }
-      } = await keystone.executeQuery(
-        `mutation {
+      const data = await keystone.executeQuery(
+        `mutation initialUser($psid: String, $page: String, $seller: String) {
         updateUser(id: $seller, data: { psid: $psid, page:$page }) {
           seller
         }
@@ -101,7 +99,7 @@ bot.post("/webhook", (req, res) => {
           }
         }
       );
-      console.log("Nhận diện user: ", updateUser);
+      console.log("Nhận diện user: ", data);
     });
 
     res.status(200).send("EVENT_RECEIVED");
