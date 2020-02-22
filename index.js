@@ -53,6 +53,8 @@ const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
   list: "User"
 });
+const express = require("express");
+
 module.exports = {
   keystone,
   apps: [
@@ -64,44 +66,48 @@ module.exports = {
     // new NextApp({ dir: "app" })
   ],
   configureExpress: app => {
-    const express = require("express");
     const path = require("path");
     app.use(express.static(path.join(path.resolve(), "store")));
     // Creates the endpoint for our webhook
-    app.post("/webhook", (req, res) => {
-      let body = req.body;
-
-      if (body.object === "page") {
-        body.entry.forEach(function(entry) {
-          let webhook_event = entry.messaging[0];
-          // keystone.executeQuery(`mutation {
-          //   updateUser(id: "123", data: { psid: "adf" }) {
-          //     seller
-          //   }
-          // }
-          // `);
-          console.log(webhook_event);
-        });
-
-        res.status(200).send("EVENT_RECEIVED");
-      } else {
-        res.sendStatus(404);
-      }
-    });
-    app.get("/webhook", (req, res) => {
-      let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
-
-      let mode = req.query["hub.mode"];
-      let token = req.query["hub.verify_token"];
-      let challenge = req.query["hub.challenge"];
-      if (mode && token) {
-        if (mode === "subscribe" && token === VERIFY_TOKEN) {
-          console.log("WEBHOOK_VERIFIED");
-          res.status(200).send(challenge);
-        } else {
-          res.sendStatus(403);
-        }
-      }
-    });
   }
 };
+const bot = express();
+bot.post("/webhook", (req, res) => {
+  let body = req.body;
+
+  if (body.object === "page") {
+    body.entry.forEach(function(entry) {
+      let webhook_event = entry.messaging[0];
+      // keystone.executeQuery(`mutation {
+      //   updateUser(id: "123", data: { psid: "adf" }) {
+      //     seller
+      //   }
+      // }
+      // `);
+      console.log(webhook_event);
+    });
+
+    res.status(200).send("EVENT_RECEIVED");
+  } else {
+    res.sendStatus(404);
+  }
+});
+bot.get("/webhook", (req, res) => {
+  let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
+  if (mode && token) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+      console.log("WEBHOOK_VERIFIED");
+      res.status(200).send(challenge);
+    } else {
+      res.sendStatus(403);
+    }
+  }
+});
+bot.get("*", (req, res) => {
+  res.send("<h1>Welcome to Loa Loa Bot</h1>");
+});
+bot.listen(6789);
