@@ -9,8 +9,9 @@ module.exports.hooks = (fileAdapter = {}) => ({
       resolvedData.name = resolvedData.file.originalFilename;
     if (context.authedItem && !context.authedItem.isAdmin)
       resolvedData.seller = context.authedItem.id;
-
-    if (resolvedData.products.length && resolvedData.customer) {
+    console.log(resolvedData);
+    if (resolvedData.products && resolvedData.customer) {
+      console.log("bill create");
       axios
         .post("https://graph.facebook.com/v6.0/me/messages", {
           access_token: context.authedItem.pages_access_token,
