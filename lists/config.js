@@ -1,46 +1,4 @@
 const axios = require("axios");
-const { Keystone } = require("@keystonejs/keystone");
-function send(seller, customer) {
-  Keystone.executeQuery(
-    `query {
-  allUsers(where: { id: "${seller}" }) {
-    pages_access_token
-    psid
-  }
-}`
-  ).then(response => {
-    console.log(response);
-    const {
-      data: { allUsers }
-    } = response;
-    console.log(allUsers);
-    const user = allUsers[0];
-    console.loguser;
-    axios.post("https://graph.facebook.com/v2.6/me/messages", {
-      access_token: user.pages_access_token,
-      recipient: {
-        id: user.psid
-      },
-      messaging_type: "RESPONSE",
-      message: {
-        attachment: {
-          type: "template",
-          payload: {
-            template_type: "button",
-            text: `Có đơn đặt hàng mới từ ${customer}`,
-            buttons: [
-              {
-                type: "web_url",
-                url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${customer}%22`,
-                title: "Xem chi tiết"
-              }
-            ]
-          }
-        }
-      }
-    });
-  });
-}
 module.exports.hooks = (fileAdapter = {}) => ({
   afterDelete: ({ existingItem = {} }) => {
     if (fileAdapter && fileAdapter.delete) fileAdapter.delete(existingItem);
@@ -51,7 +9,30 @@ module.exports.hooks = (fileAdapter = {}) => ({
     if (context.authedItem && !context.authedItem.isAdmin)
       resolvedData.seller = context.authedItem.id;
     if (resolvedData.products && resolvedData.customer) {
-      send({ seller: resolvedData.seller, customer: resolvedData.customer });
+      axios.post("https://graph.facebook.com/v2.6/me/messages", {
+        access_token:
+          "EAAExUahkTb0BAIFpFIFcIukRiTKbmClu90jwNIDGPdmrht793UboZArZB6QN10SaU5DhiWWWmoVxUk3NBkm6bFbHzMTZAWeKsnHNoAlZByw6iUXz4aZAVxWUjtlZBM21IpMF4iS7ckoL71SoH8rwHF1TTcbq1lJ99wraY9kj69wknJPxhCVpYJ2dxzlqkgLpsZD",
+        recipient: {
+          id: "2839537892763545"
+        },
+        messaging_type: "RESPONSE",
+        message: {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "button",
+              text: `Có đơn đặt hàng mới từ ${resolvedData.customer}`,
+              buttons: [
+                {
+                  type: "web_url",
+                  url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${resolvedData.customer}%22`,
+                  title: "Xem chi tiết"
+                }
+              ]
+            }
+          }
+        }
+      });
     }
     return resolvedData;
   }
