@@ -24,6 +24,8 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
 };
 const public = ({ authentication: { item: user } }) => {
   if (user) {
+    return true;
+
     return { seller: { id: user.id } };
   }
   return true;
