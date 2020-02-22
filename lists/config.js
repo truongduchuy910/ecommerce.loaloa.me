@@ -9,31 +9,41 @@ module.exports.hooks = (fileAdapter = {}) => ({
       resolvedData.name = resolvedData.file.originalFilename;
     if (context.authedItem && !context.authedItem.isAdmin)
       resolvedData.seller = context.authedItem.id;
-    console.log(resolvedData);
-    if (resolvedData.products && resolvedData.customer) {
-      axios.post(messenger.uri, {
-        access_token: context.authedItem.pages_access_token,
-        recipient: {
-          id: context.authedItem.psid
-        },
-        messaging_type: "RESPONSE",
-        message: {
-          attachment: {
-            type: "template",
-            payload: {
-              template_type: "button",
-              text: `Có đơn đặt hàng mới từ ${resolvedData.customer}`,
-              buttons: [
-                {
-                  type: "web_url",
-                  url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${resolvedData.customer}%22`,
-                  title: "Xem chi tiết"
-                }
-              ]
+
+    if (resolvedData.products.length && resolvedData.customer) {
+      axios
+        .post("https://graph.facebook.com/v6.0/me/messages", {
+          access_token: context.authedItem.pages_access_token,
+          recipient: {
+            id: context.authedItem.psid
+          },
+          messaging_type: "RESPONSE",
+          message: {
+            attachment: {
+              type: "template",
+              payload: {
+                template_type: "button",
+                text: `Có đơn đặt hàng mới từ ${resolvedData.customer}`,
+                buttons: [
+                  {
+                    type: "web_url",
+                    url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${resolvedData.customer}%22`,
+                    title: "Xem chi tiết"
+                  }
+                ]
+              }
             }
           }
-        }
-      });
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+        .then(function() {
+          // always executed
+        });
     }
     return resolvedData;
   }
