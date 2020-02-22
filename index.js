@@ -86,7 +86,7 @@ bot.post("/webhook", (req, res) => {
       console.log(psid, page, seller);
       const data = await keystone.executeQuery(
         `mutation initialUser($psid: String, $page: String, $seller: String) {
-        updateUser(id: $seller, data: { psid: $psid, page:$page }) {
+        updateUser(id: $seller, data: { psid: $psid, pages_id:$page }) {
           seller
         }
       }
