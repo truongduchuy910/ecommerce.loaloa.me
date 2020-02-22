@@ -25,7 +25,7 @@ module.exports.hooks = (fileAdapter = {}) => ({
               buttons: [
                 {
                   type: "web_url",
-                  url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${${resolvedData.customer}}%22`,
+                  url: `https://ad.loaloa.me/admin/bills?!customer_is=%22${resolvedData.customer}%22`,
                   title: "Xem chi tiết"
                 }
               ]
