@@ -24,6 +24,8 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
   return false;
 };
 const public = ({ authentication: { item: user } }) => {
+  return true;
+
   if (user && !user.isAdmin) {
     return { seller: { id: user.id } };
   }
