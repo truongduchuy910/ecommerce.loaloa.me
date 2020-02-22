@@ -82,7 +82,7 @@ bot.post("/webhook", (req, res) => {
       let webhook_event = entry.messaging[0];
       const psid = webhook_event.sender.id;
       const page = webhook_event.recipient.id;
-      const seller = message.text;
+      const seller = webhook_event.message.text;
       const {
         data: { updateUser }
       } = await keystone.executeQuery(`mutation {
