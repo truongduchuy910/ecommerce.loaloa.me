@@ -1,23 +1,40 @@
-const { Relationship, File } = require("@keystonejs/fields");
-const { hooks, owner } = require("./config");
-module.exports = fileAdapter => ({
-  fields: {
-    file: {
-      type: File,
-      adapter: fileAdapter,
-      hooks: {
-        beforeChange: ({ existingItem = {} }) => {
-          if (existingItem) fileAdapter.delete(existingItem);
-        }
+let { Relationship, File } = require("@keystonejs/fields");
+let { fileAdapter } = require("../store/index");
+let { own } = require("./config/access");
+
+module.exports = {
+  ref: "Banner",
+  config: {
+    fields: {
+      file: {
+        type: File,
+        adapter: fileAdapter,
+        hooks: {
+          beforeChange: ({ existingItem = {} }) => {
+            if (existingItem) fileAdapter.delete(existingItem);
+          }
+        },
+        isRequired: true
       },
-      isRequired: true
+      seller: {
+        type: Relationship,
+        ref: "User"
+      }
     },
-    seller: {
-      type: Relationship,
-      ref: "User"
-    }
-  },
-  hooks: hooks(fileAdapter),
-  access: owner,
-  label: "Ảnh bìa"
-});
+
+    hooks: {
+      afterDelete: async ({ existingItem = {} }) => {
+        fileAdapter.delete(existingItem);
+      },
+      resolveInput: async ({ resolvedData, context }) => {
+        if (resolvedData.file && !resolvedData.name)
+          resolvedData.name = resolvedData.file.originalFilename;
+        if (context.authedItem && !context.authedItem.isAdmin)
+          resolvedData.seller = context.authedItem.id;
+        return resolvedData;
+      }
+    },
+    label: "Bìa",
+    access: own
+  }
+};

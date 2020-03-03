@@ -1,24 +1,33 @@
-const { Text, Slug, Relationship } = require("@keystonejs/fields");
-const { owner, hooks } = require("./config");
+let { Text, Slug, Relationship } = require("@keystonejs/fields");
+let { own } = require("./config/access");
+
 module.exports = {
-  fields: {
-    name: {
-      type: Text,
-      isRequired: true,
-      isUnique: true
+  ref: "Brand",
+  config: {
+    fields: {
+      name: {
+        type: Text,
+        isRequired: true
+      },
+      url: {
+        type: Slug,
+        from: "name",
+        schemaDoc: "Đường dẫn"
+      },
+      seller: {
+        type: Relationship,
+        ref: "User"
+      }
     },
-    url: {
-      type: Slug,
-      from: "name",
-      schemaDoc: "Đường dẫn"
+
+    hooks: {
+      resolveInput: async ({ resolvedData, context }) => {
+        if (context.authedItem && !context.authedItem.isAdmin)
+          resolvedData.seller = context.authedItem.id;
+        return resolvedData;
+      }
     },
-    seller: {
-      type: Relationship,
-      ref: "User"
-    }
-  },
-  label: "Thương hiệu",
-  labelField: "name",
-  hooks: hooks(),
-  access: owner
+    label: "Thương hiệu",
+    access: own
+  }
 };

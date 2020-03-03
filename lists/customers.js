@@ -1,29 +1,39 @@
-const { Text, Relationship } = require("@keystonejs/fields");
-const { hooks, public } = require("./config");
+let { Text, Relationship } = require("@keystonejs/fields");
+const { public, admin } = require("./config/access");
 module.exports = {
-  fields: {
-    phone: {
-      type: Text,
-      isRequired: true
+  ref: "Customer",
+  config: {
+    fields: {
+      phone: {
+        type: Text,
+        isRequired: true
+      },
+      name: {
+        type: Text
+      },
+      address: {
+        type: Text
+      },
+      seller: {
+        type: Relationship,
+        ref: "User"
+      },
+      cart: {
+        type: Relationship,
+        ref: "Product",
+        many: true
+      }
     },
-    name: {
-      type: Text
+
+    hooks: {
+      resolveInput: async ({ resolvedData, context }) => {
+        console.log(resolvedData);
+        if (context.authedItem && !context.authedItem.isAdmin)
+          resolvedData.seller = context.authedItem.id;
+        return resolvedData;
+      }
     },
-    address: {
-      type: Text
-    },
-    seller: {
-      type: Relationship,
-      ref: "User"
-    },
-    cart: {
-      type: Relationship,
-      ref: "Product",
-      many: true
-    }
-  },
-  label: "Khách hàng",
-  labelField: "name",
-  access: public,
-  hooks: hooks()
+    label: "Khách hàng",
+    access: public
+  }
 };

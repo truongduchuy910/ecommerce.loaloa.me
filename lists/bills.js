@@ -1,29 +1,39 @@
-const { Checkbox, Text, Relationship } = require("@keystonejs/fields");
-const { hooks, public } = require("./config");
+let { Checkbox, Text, Relationship } = require("@keystonejs/fields");
+let { own } = require("./config/access");
+
 module.exports = {
-  fields: {
-    customer: {
-      type: Relationship,
-      ref: "Customer",
-      isRequired: true
+  ref: "Bill",
+  config: {
+    fields: {
+      customer: {
+        type: Relationship,
+        ref: "Customer",
+        isRequired: true
+      },
+      products: {
+        type: Relationship,
+        ref: "Product",
+        many: true,
+        isRequired: true
+      },
+      done: {
+        type: Checkbox,
+        label: "Đã hoàn thành?"
+      },
+      seller: {
+        type: Relationship,
+        ref: "User"
+      }
     },
-    products: {
-      type: Relationship,
-      ref: "Product",
-      many: true,
-      isRequired: true
+
+    hooks: {
+      resolveInput: async ({ resolvedData, context }) => {
+        if (context.authedItem && !context.authedItem.isAdmin)
+          resolvedData.seller = context.authedItem.id;
+        return resolvedData;
+      }
     },
-    done: {
-      type: Checkbox,
-      label: "Đã hoàn thành?"
-    },
-    seller: {
-      type: Relationship,
-      ref: "User"
-    }
-  },
-  hooks: hooks(),
-  access: public,
-  label: "Đơn hàng",
-  labelField: "done"
+    label: "Đơn",
+    access: own
+  }
 };
