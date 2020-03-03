@@ -9,14 +9,9 @@ let { Host } = require("./host/index");
 let keystone = new Keystone({
   secureCookies: false,
   name: "loaloa",
-  adapters: {
-    lists: new MongooseAdapter({
-	    mongoUri: "mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa"
-    }),
-    messenger: new MongooseAdapter({
-      mongoUri: "mongodb://localhost:27017/messenger"
-    })
-  },
+  adapter: new MongooseAdapter({
+    mongoUri: "mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa"
+  }),
   defaultAdapter: "lists",
   onConnect: require("./onConnect")
 });
