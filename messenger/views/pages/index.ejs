@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <% include ../partials/head %>
+    <title>Cửa hàng</title>
+    <% include ../partials/sdk %>
+  </head>
+  <body>
+    <% include ../partials/header %>
+    <main>
+      <% include ../partials/categories %>
+
+      <section class="container">
+        <hr />
+        <span class="badge badge-secondary">Hàng mới về</span>
+        <div id="new-products" class="row m-3">
+          <a href="duong-dan" class="col-6 col-sm-4 ">
+            <img class="img-fuild w-100" src="duong-dan-hinh-anh" />
+            <p class="text-dark mt-3 mb-0 p-0">san-pham</p>
+            <p class="text-primary">gia</p>
+          </a>
+        </div>
+        <script>
+          const newArrival = new Products({ id: "new-products" });
+          newArrival.limit = 6;
+          newArrival.load({ condition: `suggestions: new` });
+        </script>
+      </section>
+      <section class="container">
+        <hr />
+        <span class="badge badge-secondary">Bán chạy nhất</span>
+        <div id="bestSeller-products" class="row m-3">
+          <a href="duong-dan" class="col-6 col-sm-4 ">
+            <img class="img-fuild w-100" src="duong-dan-hinh-anh" />
+            <p class="text-dark mt-3 mb-0 p-0">san-pham</p>
+            <p class="text-primary">gia</p>
+          </a>
+        </div>
+        <script>
+          const bestSeller = new Products({ id: "bestSeller-products" });
+          bestSeller.limit = 6;
+          bestSeller.load({ condition: `suggestions: bestSeller` });
+        </script>
+      </section>
+    </main>
+
+    <!-- <script>
+      /* INIT */
+
+      const bestSeller = new Products({ id: "bestSeller-products" });
+      search.limit = 12;
+      
+      let brands = new Brands({ id: "brands" });
+      let categoriesNav = new Categories({ id: "categories-navbar" });
+      let banners = new Banners({ id: "banners" });
+      let detail = new Details({
+        name: "detail-name",
+        price: "detail-price",
+        categoryName: "detail-category",
+        brandName: "detail-brand",
+        attributeName: "detail-attribute",
+        imageMain: "detail-imageMain",
+        imageOrthers: "detail-imageMore",
+        description: "detail-description",
+        detail: "detail-info",
+        guide: "detail-guide"
+      });
+
+      let customer = new Customers({
+        name: "customer-name",
+        phone: "customer-phone",
+        address: "customer-address",
+        order: "customer-order"
+      });
+
+
+      banners.load({ condition: `` });
+      categoriesNav.load({ condition: `` });
+      brands.load({ condition: `` });
+     
+     
+      if (condition.detail) {
+        detail.load({ condition: `url: "${condition.detail}"` });
+      }
+
+      /* EVENT */
+
+      /* SMOOTH */
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function(e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+          });
+        });
+      });
+      /*
+        Messenger Extensions JS SDK Reference
+        */
+      // let send = (image, name) => {
+      //   (function(d, s, id) {
+      //     var js,
+      //       fjs = d.getElementsByTagName(s)[0];
+      //     if (d.getElementById(id)) {
+      //       return;
+      //     }
+      //     js = d.createElement(s);
+      //     js.id = id;
+      //     js.src = "https://connect.facebook.net/en_US/messenger.Extensions.js";
+      //     fjs.parentNode.insertBefore(js, fjs);
+      //   })(document, "script", "Messenger");
+      //   let message = {
+      //     text: "hello, world!",
+      //     attachment: {
+      //       type: "image",
+      //       payload: {
+      //         url: "http://www.messenger-rocks.com/image.jpg",
+      //         is_reusable: true
+      //       }
+      //     }
+      //   };
+      //   MessengerExtensions.beginShareFlow(
+      //     function(share_response) {
+      //       if (share_response.is_sent) {
+      //       }
+      //     },
+      //     function(errorCode, errorMessage) {},
+      //     message,
+      //     "broadcast"
+      //   );
+      // };
+    </script> -->
+  </body>
+</html>

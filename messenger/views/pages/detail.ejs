@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <% include ../partials/head %>
+    <title>Chi tiết</title>
+    <% include ../partials/sdk %>
+  </head>
+  <body>
+    <% include ../partials/header %>
+    <main>
+      <section class="container">
+        <button
+          type="button"
+          class="btn btn-link p-0"
+          onclick="window.history.back()"
+        >
+          ⬅ Quay lại
+        </button>
+
+        <img class="w-100" id="detail-imageMain" />
+        <hr />
+        <p id="detail-name"></p>
+        <p id="detail-price" class="text-primary"></p>
+        <h6>
+          Danh mục
+          <span id="detail-category" class="badge badge-info ml-3"></span>
+        </h6>
+        <h6>
+          Thương hiệu
+          <span id="detail-brand" class="badge badge-info ml-3"></span>
+        </h6>
+        <div id="detail-attribute">
+          <span class="badge badge-info">attribute</span>
+        </div>
+        <hr />
+        <div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">📲</span>
+            </div>
+            <input
+              id="customer-phone"
+              type="text"
+              class="form-control"
+              placeholder="Số điện thoại..."
+              aria-label="Số điện thoại..."
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">🖊</span>
+            </div>
+            <input
+              id="customer-name"
+              type="text"
+              class="form-control"
+              placeholder="Họ tên..."
+              aria-label="Họ tên..."
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">📍</span>
+            </div>
+            <input
+              id="customer-address"
+              type="text"
+              class="form-control"
+              placeholder="Địa chỉ..."
+              aria-label="Địa chỉ..."
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="btn-group w-100" role="group" aria-label="Basic example">
+            <button
+              id="customer-order"
+              type="button"
+              class="btn btn-outline-primary"
+            >
+              Đặt hàng
+            </button>
+            <button type="button" class="btn btn-outline-primary">
+              Tư vấn
+            </button>
+          </div>
+          <script>
+            let customer = new Customers({
+              name: "customer-name",
+              phone: "customer-phone",
+              address: "customer-address",
+              order: "customer-order"
+            });
+          </script>
+        </div>
+        <hr />
+        <span class="badge badge-secondary my-3">Mô tả</span>
+        <p id="detail-description"></p>
+        <hr />
+        <span class="badge badge-secondary my-3">Hướng dẫn</span>
+        <p id="detail-guide"></p>
+        <hr />
+        <span class="badge badge-secondary my-3">Chi tiết</span>
+        <img id="detail-info" />
+        <script>
+          let detail = new Details({
+            name: "detail-name",
+            price: "detail-price",
+            categoryName: "detail-category",
+            brandName: "detail-brand",
+            attributeName: "detail-attribute",
+            imageMain: "detail-imageMain",
+            imageOrthers: "detail-imageMore",
+            description: "detail-description",
+            detail: "detail-info",
+            guide: "detail-guide"
+          });
+          if (condition.detail) {
+            detail.load({ condition: `url: "${condition.detail}"` });
+          }
+        </script>
+      </section>
+    </main>
+    <!-- <script>
+      /* INIT */
+
+      const bestSeller = new Products({ id: "bestSeller-products" });
+      search.limit = 12;
+      
+      let brands = new Brands({ id: "brands" });
+      let categoriesNav = new Categories({ id: "categories-navbar" });
+      let banners = new Banners({ id: "banners" });
+   
+
+      let gobackBtn = document.getElementById("go-back");
+
+      banners.load({ condition: `` });
+      categoriesNav.load({ condition: `` });
+      brands.load({ condition: `` });
+     
+     
+      
+      if (gobackBtn) {
+        gobackBtn.onclick = () => {
+          window.history.back();
+        };
+      }
+      /* EVENT */
+
+      /* SMOOTH */
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function(e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+          });
+        });
+      });
+      /*
+        Messenger Extensions JS SDK Reference
+        */
+      // let send = (image, name) => {
+      //   (function(d, s, id) {
+      //     var js,
+      //       fjs = d.getElementsByTagName(s)[0];
+      //     if (d.getElementById(id)) {
+      //       return;
+      //     }
+      //     js = d.createElement(s);
+      //     js.id = id;
+      //     js.src = "https://connect.facebook.net/en_US/messenger.Extensions.js";
+      //     fjs.parentNode.insertBefore(js, fjs);
+      //   })(document, "script", "Messenger");
+      //   let message = {
+      //     text: "hello, world!",
+      //     attachment: {
+      //       type: "image",
+      //       payload: {
+      //         url: "http://www.messenger-rocks.com/image.jpg",
+      //         is_reusable: true
+      //       }
+      //     }
+      //   };
+      //   MessengerExtensions.beginShareFlow(
+      //     function(share_response) {
+      //       if (share_response.is_sent) {
+      //       }
+      //     },
+      //     function(errorCode, errorMessage) {},
+      //     message,
+      //     "broadcast"
+      //   );
+      // };
+    </script> -->
+  </body>
+</html>

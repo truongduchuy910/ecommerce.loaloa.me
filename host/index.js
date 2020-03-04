@@ -56,6 +56,14 @@ class Host {
         let ejsPath = this.ejs[port].path({ name: "detail" });
         res.render(ejsPath);
       })
+      .get("/:router", (req, res) => {
+        let port = req.socket.localPort;
+        const router = req.params.router;
+        let ejsPath = this.ejs[port].path({ name: router });
+        let pageNotFound = this.ejs[port].path({ name: "404" });
+        if (ejsPath) res.render(ejsPath);
+        else res.render(pageNotFound);
+      })
       .get("*", (req, res) => {
         let port = req.socket.localPort;
         let ejsPath = this.ejs[port].path({ name: "404" });

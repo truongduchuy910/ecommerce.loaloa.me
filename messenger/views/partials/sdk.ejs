@@ -1,0 +1,523 @@
+<script>
+  function searchToObject() {
+    let pairs = window.location.search.substring(1).split("&"),
+      obj = {},
+      pair,
+      i;
+    for (i in pairs) {
+      if (pairs[i] === "") continue;
+      pair = pairs[i].split("=");
+      obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    }
+    return obj;
+  }
+  let seller = { id: window.location.pathname.split("/")[1] };
+  let condition = searchToObject();
+
+  let url = "https://ad.loaloa.me";
+
+  class Graph {
+    static async execute({ query }) {
+      const response = await fetch(url + "/admin/api", {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify({ query: query })
+      });
+      return await response.json();
+    }
+    constructor() {
+      this.gql = new Object();
+      this.gql.query;
+      this.gql.mutation;
+    }
+    query({ condition }) {
+      console.log(condition);
+      return Graph.execute({ query: this.gql.query({ condition }) });
+    }
+    mutation({ data }) {
+      console.log(this.gql.mutation({ data }));
+      return Graph.execute({ query: this.gql.mutation({ data }) });
+    }
+  }
+  class Html {
+    constructor({ id }) {
+      this.isExist = false;
+      this.e = document.getElementById(id);
+
+      if (this.e) {
+        this.isExist = true;
+        console.log("find: ", id);
+      }
+    }
+  }
+  class Arrays extends Html {
+    constructor({ id }) {
+      super({ id });
+      if (this.e) {
+        this.item = this.e.innerHTML;
+        this.e.innerHTML = "";
+      }
+    }
+    add(data) {
+      if (this.isExist) {
+        let html = this.item;
+        data.forEach(({ template, value }) => {
+          const regExp = new RegExp(template, "g");
+          html = html.replace(regExp, value);
+        });
+        this.e.innerHTML += html;
+      }
+    }
+    empty() {
+      this.e.innerHTML = "";
+    }
+  }
+  class Paragraphs extends Html {
+    constructor({ id }) {
+      super({ id });
+    }
+    render({ value }) {
+      if (this.isExist && value) this.e.innerText = value;
+    }
+  }
+  class Images extends Html {
+    constructor({ id }) {
+      super({ id });
+    }
+    render({ src, alt }) {
+      if (this.isExist) {
+        this.e.setAttribute("src", src);
+        this.e.setAttribute("alt", alt);
+      }
+    }
+  }
+  class Customers extends Graph {
+    constructor({ name, phone, address, order }) {
+      super();
+      this.name = new Paragraphs({ id: name });
+      this.phone = new Paragraphs({ id: phone });
+      this.address = new Paragraphs({ id: address });
+      this.order = new Paragraphs({ id: order });
+      this.status = false;
+      this.customer = "";
+      if (this.order.isExist) {
+        this.order.e.onclick = async btn => {
+          const name = this.name.e.value;
+          const phone = this.phone.e.value;
+          const address = this.address.e.value;
+          if (phone.length > 8) {
+            const customer = await this.matching({
+              condition: `phone:"${phone}"`
+            });
+            if (customer) {
+              const id = await this.createBill({
+                product: detail.id,
+                customer: customer.id
+              });
+              console.log(id);
+              this.order.render({ value: "Đặt hàng thành công!" });
+            } else {
+              console.log("Tạo người dùng");
+              this.order.render({ value: this.status });
+              const id = await this.createCustomer({
+                phone,
+                name,
+                address
+              });
+              this.customer = id;
+              this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+            }
+          } else {
+            this.order.render({
+              value: "Kiểm tra số điện thoại và thử lại!"
+            });
+          }
+        };
+      }
+    }
+    async createCustomer({ phone, name, address }) {
+      this.gql.mutation = ({
+        data: {
+          phone,
+          name,
+          address,
+          seller: { id }
+        }
+      }) => `mutation {
+                createCustomer(
+                  data: {
+                    phone: "${phone}",
+                    name: "${name}",
+                    address:"${address}",
+                    seller: { connect: { id: "${id}" } }
+                  }
+                ) {
+                  id
+                }
+              }`;
+      const {
+        data: {
+          createCustomer: { id }
+        }
+      } = await this.mutation({ data: { phone, name, address, seller } });
+      return id;
+    }
+    async createBill({ product, customer }) {
+      this.gql.mutation = ({
+        data: {
+          product,
+          customer,
+          seller: { id }
+        }
+      }) => `mutation {
+                createBill(
+                  data: {
+                    customer:{ connect:{ id:"${customer}"}},
+                    products:{connect:[{id:"${product}"}]},
+                    seller: { connect: { id: "${id}" }}
+                  }
+                ) {
+                  id
+                }
+              }`;
+      const { data } = await this.mutation({
+        data: { product, customer, seller }
+      });
+    }
+    async matching({ condition }) {
+      this.gql.query = ({ condition }) => `query {
+              allCustomers(where:{seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                id,
+                name,
+                phone,
+                address
+              }
+            }`;
+      const {
+        data: { allCustomers }
+      } = await this.query({ condition });
+      if (allCustomers) {
+        return allCustomers[0];
+      } else {
+        return false;
+      }
+    }
+  }
+  class Details extends Graph {
+    constructor({
+      name,
+      price,
+      imageMain,
+      imageOrthers,
+      categoryName,
+      categoryUrl,
+      brandName,
+      brandUrl,
+      attributeName,
+      description,
+      detail,
+      guide
+    }) {
+      super();
+      this.gql.query = ({ condition }) => `query {
+              allProducts(where:{ seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                id,
+                name,
+                price,
+                images {
+                  file {
+                    publicUrl
+                  }
+                },
+                category {
+                  name,
+                  url
+                },
+                brand {
+                  name,
+                  url
+                },
+                attributes {
+                  name
+                },
+                description,
+                file {
+                  publicUrl
+                },
+                guide
+              }
+            }`;
+      this.name = new Paragraphs({ id: name });
+      this.price = new Paragraphs({ id: price });
+      this.imageMain = new Images({ id: imageMain });
+      this.imageOrthers = new Arrays({ id: imageOrthers });
+      this.categoryName = new Paragraphs({ id: categoryName });
+      this.brandName = new Paragraphs({ id: brandName });
+      this.attributeName = new Arrays({ id: attributeName });
+      this.description = new Paragraphs({ id: description });
+      this.detail = new Images({ id: detail });
+      this.guide = new Paragraphs({ id: guide });
+    }
+    async load({ condition }) {
+      const {
+        data: { allProducts }
+      } = await this.query({ condition });
+      if (allProducts.length) {
+        const {
+          id,
+          name,
+          price,
+          images,
+          category,
+          brand,
+          attributes,
+          description,
+          file,
+          guide
+        } = allProducts[0];
+        this.id = id;
+        this.name.render({ value: name });
+        this.price.render({ value: Products.formatMoney(price, 0) });
+        this.imageMain.render({
+          src: url + images[0].file.publicUrl,
+          alt: name
+        });
+        if (category) this.categoryName.render({ value: category.name });
+        if (brand) this.brandName.render({ value: brand.name });
+        if (attributes.length) {
+          this.attributeName.empty();
+
+          attributes.forEach(attribute => {
+            this.attributeName.add([
+              {
+                template: "attribute",
+                value: attribute.name
+              }
+            ]);
+          });
+        }
+        if (images.length > 1) {
+          this.imageOrthers.innerHTML = "";
+          for (let i = 1; i < images.length; i++) {
+            this.imageOrthers.add([
+              {
+                template: "duong-dan-hinh-anh",
+                value: url + images[i].file.publicUrl
+              }
+            ]);
+          }
+        }
+        if (description) this.description.render({ value: description });
+        if (file) this.detail.render({ src: url + file.publicUrl });
+        if (guide) this.guide.render({ value: guide });
+      }
+    }
+  }
+  class PresentFilter extends Graph {
+    constructor({ name }) {
+      super();
+      this.name = new Paragraphs({ id: name });
+    }
+    async withCategory({ url }) {
+      this.gql.query = ({ condition }) => `query {
+              allCategories(where:{seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                name,
+                url
+              }
+            }`;
+      const {
+        data: { allCategories }
+      } = await this.query({ condition: `url: "${url}"` });
+      if (allCategories.length) {
+        const category = allCategories[0].name;
+        this.name.render({ value: category });
+      }
+    }
+    async withBrand({ url }) {
+      this.gql.query = ({ condition }) => `query {
+            allBrands(where:{seller:{id:"${seller.id}"},
+            AND: {${condition}}}) {
+              name,
+              url
+            }
+          }`;
+      const {
+        data: { allBrands }
+      } = await this.query({ condition: `url: "${url}"` });
+      if (allBrands.length) {
+        const brand = allBrands[0].name;
+        this.name.render({ value: brand });
+      }
+    }
+  }
+  class Lists extends Graph {
+    constructor({ id }) {
+      super();
+      this.html = new Arrays({ id });
+    }
+  }
+  class Banners extends Lists {
+    constructor({ id }) {
+      super({ id });
+      this.gql.query = ({ condition }) => `query {
+              allBanners(where:{seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                file {
+                  publicUrl
+                }
+              }
+            }`;
+    }
+    async load({ condition }) {
+      const {
+        data: { allBanners }
+      } = await this.query({ condition });
+      if (allBanners)
+        allBanners.forEach(banner => {
+          this.html.add([
+            {
+              template: "duong-dan-hinh-anh",
+              value: url + banner.file.publicUrl
+            }
+          ]);
+        });
+    }
+  }
+  class Products extends Lists {
+    constructor({ id }) {
+      super({ id });
+      this.limit = 100;
+      this.gql.query = ({ condition }) => `query {
+              allProducts(first:${this.limit}, where: { seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                name
+                price
+                images {
+                  file {
+                    publicUrl
+                  }
+                }
+                url
+              }
+            }`;
+    }
+    async load({ condition }) {
+      const {
+        data: { allProducts }
+      } = await this.query({ condition });
+      this.show(allProducts);
+    }
+    show(data) {
+      console.log(data);
+      this.html.empty();
+
+      data.forEach(p => {
+        this.html.add([
+          {
+            template: "duong-dan-hinh-anh",
+            value: url + p.images[0].file.publicUrl
+          },
+          { template: "san-pham", value: p.name },
+          { template: "gia", value: Products.formatMoney(p.price, 0) },
+          {
+            template: "duong-dan",
+            value: "/" + seller.id + "/detail/?detail=" + p.url
+          }
+        ]);
+      });
+    }
+    static formatMoney(
+      amount,
+      decimalCount = 2,
+      decimal = ".",
+      thousands = ","
+    ) {
+      try {
+        decimalCount = Math.abs(decimalCount);
+        decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+        const negativeSign = amount < 0 ? "-" : "";
+        let i = parseInt(
+          (amount = Math.abs(Number(amount) || 0).toFixed(decimalCount))
+        ).toString();
+        let j = i.length > 3 ? i.length % 3 : 0;
+        return (
+          negativeSign +
+          (j ? i.substr(0, j) + thousands : "") +
+          i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) +
+          (decimalCount
+            ? decimal +
+              Math.abs(amount - i)
+                .toFixed(decimalCount)
+                .slice(2)
+            : "")
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+  class Brands extends Lists {
+    constructor({ id }) {
+      super({ id });
+      this.gql.query = ({ condition }) => `query {
+              allBrands(where:{seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                name,
+                url
+              }
+            }`;
+    }
+    async load({ condition }) {
+      const {
+        data: { allBrands }
+      } = await this.query({ condition });
+      this.show(allBrands);
+    }
+    show(data) {
+      this.html.empty();
+      data.forEach(p => {
+        this.html.add([
+          { template: "thuong-hieu", value: p.name },
+          { template: "duong-dan", value: "?brand=" + p.url }
+        ]);
+      });
+    }
+  }
+  class Categories extends Lists {
+    constructor({ id }) {
+      super({ id });
+      this.gql.query = ({ condition }) => `query {
+              allCategories(where:{seller:{id:"${seller.id}"},
+              AND: {${condition}}}) {
+                name,
+                url
+              }
+            }`;
+    }
+    async load({ condition }) {
+      const {
+        data: { allCategories }
+      } = await this.query({ condition });
+      this.show(allCategories);
+    }
+    show(data) {
+      this.html.empty();
+      data.forEach(p => {
+        this.html.add([
+          { template: "danh-muc", value: p.name },
+          { template: "duong-dan", value: "?category=" + p.url }
+        ]);
+      });
+    }
+  }
+</script>

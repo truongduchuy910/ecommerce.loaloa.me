@@ -1,1 +1,0 @@
-self.__BUILD_MANIFEST = {"/[seller]":["static\u002Fcss\u002Fstyles.cffac2a0.chunk.css","static\u002Fchunks\u002Fstyles.b17097b1a7217789e90e.js"]};self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()

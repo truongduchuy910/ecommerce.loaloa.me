@@ -1,1 +1,0 @@
-{"code":"(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{RNiq:function(n,i,t){\"use strict\";t.r(i);var u=t(\"mXGw\"),w=t.n(u).a.createElement;i.default=function(){return w(\"div\",null,\"Hi\")}},TqC3:function(n,i,t){(window.__NEXT_P=window.__NEXT_P||[]).push([\"/\",function(){return t(\"RNiq\")}])}},[[\"TqC3\",1,2,0]]]);"}

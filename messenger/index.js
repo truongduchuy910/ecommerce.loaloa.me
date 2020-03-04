@@ -1,11 +1,14 @@
 const express = require("express");
-module.exports.Messenger = class {
+const path = require("path");
+module.exports.Messenger = class Messenger {
   constructor({ keystone, port }) {
     this.ms = express();
     this.ms
+      .set("view engine", "ejs")
+      .set("views", path.join(__dirname, "views"))
+      .use(express.static(path.join(__dirname, "public")))
       .post("/webhook", (req, res) => {
         let body = req.body;
-
         if (body.object === "page") {
           body.entry.forEach(function(entry) {
             let webhook_event = entry.messaging[0];
@@ -31,6 +34,14 @@ module.exports.Messenger = class {
           }
         }
       })
+      .get("/:seller", (req, res) => {
+        res.render("pages/index");
+      })
+      .get("/:seller/detail", (req, res) => {
+        res.render("pages/detail");
+      })
+
       .listen(port, console.log(port));
   }
 };
+new this.Messenger({ port: 6789 });
