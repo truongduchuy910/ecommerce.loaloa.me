@@ -44,4 +44,4 @@ module.exports.Messenger = class Messenger {
       .listen(port, console.log(port));
   }
 };
-new this.Messenger({ port: 6789 });
+//new this.Messenger({ port: 6789 });
