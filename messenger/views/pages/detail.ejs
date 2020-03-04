@@ -81,7 +81,11 @@
             >
               Đặt hàng
             </button>
-            <button type="button" class="btn btn-outline-primary">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              onclick="send()"
+            >
               Tư vấn
             </button>
           </div>
@@ -116,8 +120,68 @@
             detail: "detail-info",
             guide: "detail-guide"
           });
+
           if (condition.detail) {
-            detail.load({ condition: `url: "${condition.detail}"` });
+            var message;
+            detail
+              .load({
+                condition: `url: "${condition.detail}"`
+              })
+              .then(kj34hjkgf => {
+                message = {
+                  attachment: {
+                    type: "template",
+                    payload: {
+                      template_type: "generic",
+                      elements: [
+                        {
+                          title: kj34hjkgf.name,
+                          image_url:
+                            window.location.origin +
+                            kj34hjkgf.images[0].file.publicUrl,
+                          subtitle: kj34hjkgf.price,
+                          default_action: {
+                            type: "web_url",
+                            url:
+                              window.location.origin +
+                              window.location.pathname +
+                              window.location.search
+                          },
+                          buttons: [
+                            {
+                              type: "web_url",
+                              url:
+                                window.location.origin +
+                                "/" +
+                                window.location.pathname.split("/")[1] +
+                                "?category=" +
+                                kj34hjkgf.category.url,
+                              title: "Xem thêm"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                };
+                console.log(message);
+              });
+          }
+          function send() {
+            console.log("send to messenger");
+            MessengerExtensions.beginShareFlow(
+              function(share_response) {
+                // User dismissed without error, but did they share the message?
+                if (share_response.is_sent) {
+                  console.log("gửi thành công!");
+                }
+              },
+              function(errorCode, errorMessage) {
+                console.log(errorCode, errorMessage);
+              },
+              message,
+              "broadcast"
+            );
           }
         </script>
       </section>
@@ -159,41 +223,7 @@
           });
         });
       });
-      /*
-        Messenger Extensions JS SDK Reference
-        */
-      // let send = (image, name) => {
-      //   (function(d, s, id) {
-      //     var js,
-      //       fjs = d.getElementsByTagName(s)[0];
-      //     if (d.getElementById(id)) {
-      //       return;
-      //     }
-      //     js = d.createElement(s);
-      //     js.id = id;
-      //     js.src = "https://connect.facebook.net/en_US/messenger.Extensions.js";
-      //     fjs.parentNode.insertBefore(js, fjs);
-      //   })(document, "script", "Messenger");
-      //   let message = {
-      //     text: "hello, world!",
-      //     attachment: {
-      //       type: "image",
-      //       payload: {
-      //         url: "http://www.messenger-rocks.com/image.jpg",
-      //         is_reusable: true
-      //       }
-      //     }
-      //   };
-      //   MessengerExtensions.beginShareFlow(
-      //     function(share_response) {
-      //       if (share_response.is_sent) {
-      //       }
-      //     },
-      //     function(errorCode, errorMessage) {},
-      //     message,
-      //     "broadcast"
-      //   );
-      // };
+      
     </script> -->
   </body>
 </html>

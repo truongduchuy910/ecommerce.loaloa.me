@@ -2,7 +2,7 @@ let { Keystone } = require("@keystonejs/keystone");
 let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
-
+const { NextApp } = require("@keystonejs/app-next");
 let { Messenger } = require("./messenger/index");
 let { Host } = require("./host/index");
 let keystone = new Keystone({
@@ -34,15 +34,16 @@ let authStrategy = keystone.createAuthStrategy({
 });
 
 new Host({ port: { from: 7000, to: 7011 } });
-//new Messenger({ keystone, port: 6789 });
+new Messenger({ keystone, port: 6789 });
 module.exports = {
   keystone,
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
-      enableDefaultRoute: true,
+      enableDefaultRoute: false,
       authStrategy
-    })
+    }),
+    new NextApp({ dir: "app" })
   ],
   configureExpress: app => {
     let path = require("path");

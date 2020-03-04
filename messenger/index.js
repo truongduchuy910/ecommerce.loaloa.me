@@ -7,6 +7,12 @@ module.exports.Messenger = class Messenger {
       .set("view engine", "ejs")
       .set("views", path.join(__dirname, "views"))
       .use(express.static(path.join(__dirname, "public")))
+      .get("/", (req, res) => {
+        res.render("pages/home");
+      })
+      .get("/auth/fb", (req, res) => {
+        res.redirect("/");
+      })
       .post("/webhook", (req, res) => {
         let body = req.body;
         if (body.object === "page") {
@@ -44,4 +50,3 @@ module.exports.Messenger = class Messenger {
       .listen(port, console.log(port));
   }
 };
-//new this.Messenger({ port: 6789 });
