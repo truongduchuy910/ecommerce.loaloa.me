@@ -1,6 +1,6 @@
 body {
-	font-family: 'Lora', serif;
-	font-size: 1.15rem;
+  font-family: "Lora", serif;
+  font-size: 1.15rem;
 }
 .nav-item {
   width: 150px;
@@ -11,7 +11,7 @@ body {
 }
 
 :root {
-  --myColor: brown;
+  --myColor: #d4ac5c;
 }
 
 .textColor {
