@@ -1,5 +1,6 @@
 <script>
   async function statusChangeCallback(response) {
+    console.log(response);
     if (response.status === "connected") {
       run({ response });
     } else {
