@@ -121,7 +121,7 @@
               const path = window.location.origin + "/" + id;
               console.log(path);
               FB.api(
-                `/me/messenger_profile?`,
+                `/me/messenger_profile`,
                 "post",
                 {
                   get_started: {
@@ -165,8 +165,8 @@
             const {
               authResponse: { userID, accessToken }
             } = response;
-            console.log(`/${userID}/accounts?access_token=${accessToken}`);
-            FB.api(`/${userID}/accounts?access_token=${accessToken}`, function(
+            console.log(`/${userID}/accounts`);
+            FB.api(`/${userID}/accounts`, function(
               response
             ) {
               const { data } = response;
