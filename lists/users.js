@@ -15,7 +15,8 @@ module.exports = {
       password: {
         type: Password,
         label: "Mật khẩu"
-      }
+      },
+      facebookId: { type: Text }
     },
     label: "Tài khoản",
     labelField: "email",
