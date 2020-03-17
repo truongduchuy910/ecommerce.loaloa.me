@@ -2,7 +2,6 @@ let { Keystone } = require("@keystonejs/keystone");
 let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
-const { NextApp } = require("@keystonejs/app-next");
 let { Messenger } = require("./messenger/index");
 let { Host } = require("./host/index");
 let keystone = new Keystone({
@@ -26,43 +25,10 @@ files.forEach(file => {
   }
 });
 
-
+let { PasswordAuthStrategy } = require("@keystonejs/auth-password");
 let authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
   list: "User"
-});
-
-const {
-  GoogleAuthStrategy,
-  FacebookAuthStrategy
-} = require("@keystonejs/auth-passport");
-const facebookStrategy = keystone.createAuthStrategy({
-  type: FacebookAuthStrategy,
-  list: "User",
-  config: {
-    idField: "facebookId",
-    appId: "335701763968445",
-    appSecret: "d2d109abb0a9c648a4c2a2abc47d6055",
-    loginPath: "/auth/facebook",
-    callbackPath: "/auth/facebook/callback",
-
-    // Once a user is found/created and successfully matched to the
-    // googleId, they are authenticated, and the token is returned here.
-    // NOTE: By default KeystoneJS sets a `keystone.sid` which authenticates the
-    // user for the API domain. If you want to authenticate via another domain,
-    // you must pass the `token` as a Bearer Token to GraphQL requests.
-    onAuthenticated: ({ token, item, isNewItem }, req, res) => {
-      console.log(token, item, isNewItem);
-      res.redirect("/");
-    },
-
-    // If there was an error during any of the authentication flow, this
-    // callback is executed
-    onError: (error, req, res) => {
-      console.error(error);
-      res.redirect("/?error=Uh-oh");
-    }
-  }
 });
 
 new Host({ port: { from: 7000, to: 7011 } });
@@ -74,8 +40,7 @@ module.exports = {
     new AdminUIApp({
       enableDefaultRoute: false,
       authStrategy
-    }),
-    new NextApp({ dir: "app" })
+    })
   ],
   configureExpress: app => {
     let path = require("path");
