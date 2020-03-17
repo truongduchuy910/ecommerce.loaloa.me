@@ -32,6 +32,39 @@ let authStrategy = keystone.createAuthStrategy({
   list: "User"
 });
 
+const {
+  GoogleAuthStrategy,
+  FacebookAuthStrategy
+} = require("@keystonejs/auth-passport");
+const facebookStrategy = keystone.createAuthStrategy({
+  type: FacebookAuthStrategy,
+  list: "User",
+  config: {
+    idField: "facebookId",
+    appId: "335701763968445",
+    appSecret: "d2d109abb0a9c648a4c2a2abc47d6055",
+    loginPath: "/auth/facebook",
+    callbackPath: "/auth/facebook/callback",
+
+    // Once a user is found/created and successfully matched to the
+    // googleId, they are authenticated, and the token is returned here.
+    // NOTE: By default KeystoneJS sets a `keystone.sid` which authenticates the
+    // user for the API domain. If you want to authenticate via another domain,
+    // you must pass the `token` as a Bearer Token to GraphQL requests.
+    onAuthenticated: ({ token, item, isNewItem }, req, res) => {
+      console.log(token, item, isNewItem);
+      res.redirect("/");
+    },
+
+    // If there was an error during any of the authentication flow, this
+    // callback is executed
+    onError: (error, req, res) => {
+      console.error(error);
+      res.redirect("/?error=Uh-oh");
+    }
+  }
+});
+
 new Host({ port: { from: 7000, to: 7011 } });
 new Messenger({ keystone, port: 6789 });
 module.exports = {
