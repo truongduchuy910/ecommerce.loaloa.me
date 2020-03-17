@@ -26,7 +26,6 @@ files.forEach(file => {
   }
 });
 
-let { PasswordAuthStrategy } = require("@keystonejs/auth-password");
 
 let authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
