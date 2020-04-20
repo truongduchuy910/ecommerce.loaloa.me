@@ -34,7 +34,7 @@ module.exports = {
       validateInput: async ({ resolvedData, context, actions: { query } }) => {
         let user = context.authedItem;
         let gr = `query { 
-	allUsers( where: { id: "${resolvedData.seller}"}) { psid } 
+	allUsers( where: { id: "${resolvedData.seller}"}) {id psid } 
 	allCustomers ( where: {id:"${resolvedData.customer}"}) {name phone address}
 	allProducts ( where: {id: "${resolvedData.products}"}) {name}
 	}`;
@@ -68,7 +68,7 @@ module.exports = {
             }
           }
         );
-        if (user && !user.isAdmin) resolvedData.seller = user.id;
+        resolvedData.seller = user.id;
         resolvedData.time = Date();
         return resolvedData;
       }
