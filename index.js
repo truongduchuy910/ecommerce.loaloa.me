@@ -35,7 +35,7 @@ let authStrategy = keystone.createAuthStrategy({
 });
 
 new Host({ port: { from: 7000, to: 7011 } });
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
   console.log("handleMessage", received_message);
   callSendAPI(sender_psid, {
     attachment: {
@@ -60,6 +60,10 @@ async function handlePostback(sender_psid, received_postback) {
     { variables: { user: null, psid: sender_psid } }
   );
   console.log(data);
+}
+
+function handleOption(sender_psid, received_option) {
+  console.log(received_option);
 }
 function callSendAPI(sender_psid, response) {
   // Construct the message body
@@ -90,26 +94,6 @@ function callSendAPI(sender_psid, response) {
       }
     }
   );
-}
-function handleOption(sender_psid, received_option) {
-  console.log(received_option);
-}
-function callSendAPI(sender_psid, keystone_id) {
-  let request_body = {
-    recipient: {
-      id: sender_psid
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "one_time_notif_req",
-          title: "Đăng ký nhận tin",
-          payload: keystone_id
-        }
-      }
-    }
-  };
 }
 module.exports = {
   keystone,
