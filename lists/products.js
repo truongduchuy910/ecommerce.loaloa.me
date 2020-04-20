@@ -94,6 +94,7 @@ module.exports = {
       resolveInput: async ({ resolvedData, context }) => {
         if (resolvedData.file && !resolvedData.name)
           resolvedData.name = resolvedData.file.originalFilename;
+
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;

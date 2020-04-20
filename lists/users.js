@@ -1,34 +1,48 @@
- let { Text, Checkbox, Password } = require("@keystonejs/fields");
- let { access, admin } = require("./config/access");
- 
+let { Relationship, Text, Checkbox, Password } = require("@keystonejs/fields");
+let { own, admin } = require("./config/access");
+
 module.exports = {
-   ref: "User",
+  ref: "User",
   config: {
- fields: {
-   email: {
-     type: Text,
-     isUnique: true,
-     isRequired: true,
-     label: "Tài khoản"
-   },
-   isAdmin: { type: Checkbox },
-   password: {
-     type: Password,
-     label: "Mật khẩu"
-   },
-   facebookId: { type: Text }
- },
- label: "Tài khoản",
- labelField: "email",
- access: {
-   create: access.admin,
-   update: access.admin,
-   delete: access.admin,
-   read: ({ authentication: { item: user } }) => {
-     if (user && !user.isAdmin) {
-       return { id: user.id };
-     } else return true;
-   }
- }
-	}
+    fields: {
+      email: {
+        type: Text,
+        isUnique: true,
+        label: "Tài khoản"
+      },
+      isAdmin: { type: Checkbox },
+      password: {
+        type: Password,
+        label: "Mật khẩu"
+      },
+      name: { type: Text },
+      phone: { type: Text },
+      address: { type: Text },
+      page_id: { type: Text },
+      page_access_token: { type: Text },
+      psid: { type: Text },
+      user_defined_payload: { type: Text },
+      one_time_token: { type: Text },
+      seller: {
+        type: Relationship,
+        ref: "User"
+      }
+    },
+    label: "Tài khoản",
+    labelField: "email",
+    access: own,
+    hooks: {
+      afterDelete: async ({ existingItem = {} }) => {
+        fileAdapter.delete(existingItem);
+      },
+      resolveInput: async ({ resolvedData, context }) => {
+        if (resolvedData.file && !resolvedData.name)
+          resolvedData.name = resolvedData.file.originalFilename;
+
+        if (context.authedItem && !context.authedItem.isAdmin)
+          resolvedData.seller = context.authedItem.id;
+        return resolvedData;
+      }
+    }
+  }
 };

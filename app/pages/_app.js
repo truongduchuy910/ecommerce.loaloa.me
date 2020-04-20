@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
+import { FacebookProvider, CustomChat } from "react-facebook";
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -20,7 +21,7 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Head>
-          <title>My page</title>
+          <title>Tử Vi Logic</title>
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -29,7 +30,10 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <FacebookProvider appId="335701763968445" chatSupport>
+            <Component {...pageProps} />
+            <CustomChat pageId="100100461661624" minimized={false} />
+          </FacebookProvider>
         </ThemeProvider>
       </React.Fragment>
     );

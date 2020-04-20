@@ -2,7 +2,7 @@ function admin({ authentication: { item: user } }) {
   return Boolean(user && user.isAdmin);
 }
 function user({ authentication: { item: user } }) {
-  return Boolean(user && !user.isAdmin);
+  return Boolean(user);
 }
 function public({ authentication: { item: user } }) {
   if (user && !user.isAdmin) {

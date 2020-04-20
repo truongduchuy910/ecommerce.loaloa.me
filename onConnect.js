@@ -1,7 +1,4 @@
-
 module.exports = async keystone => {
-  
-
   let {
     data: {
       _allUsersMeta: { count }

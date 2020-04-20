@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { withAuthSync } from \"../utils/auth\";","map":{"version":3,"sources":["/home/truongduchuy910/apps/loaloa.me/app/pages/index.js"],"names":["withAuthSync"],"mappings":"AAAA,SAASA,YAAT,QAA6B,eAA7B","sourcesContent":["import { withAuthSync } from \"../utils/auth\";\n"]},"metadata":{},"sourceType":"module"}
