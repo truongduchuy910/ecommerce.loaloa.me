@@ -2,8 +2,9 @@ const express = require("express");
 const path = require("path");
 module.exports.Messenger = class Messenger {
   constructor({ keystone, app }) {
-	 let handleMessage= this.handleMessage;
-	  let handlePostback  = this.handlePostback;
+    let handleMessage = this.handleMessage;
+    let handlePostback = this.handlePostback;
+    let callSendAPI = this.callSendAPI;
     app.get("/messenger/webhook", (req, res) => {
       let VERIFY_TOKEN = "Loaloa.Media";
       let mode = req.query["hub.mode"];
@@ -19,7 +20,7 @@ module.exports.Messenger = class Messenger {
       }
     });
     app.post("/messenger/webhook", (req, res) => {
-	    console.log("/webhook received");
+      console.log("/webhook received");
       let body = req.body;
       if (body.object === "page") {
         body.entry.forEach(function(entry) {
@@ -38,40 +39,41 @@ module.exports.Messenger = class Messenger {
         res.sendStatus(404);
       }
     });
-      }
-handleMessage(sender_psid, received_message) {
-      let response;
-      if (received_message.text) {
-        response = {
-          text: `You sent the message: "${received_message.text}". Now send me an image!`,
-        };
-      }
-      callSendAPI(sender_psid, response);
-	keystone.excuteQuery(`mutation($user: ID!, $psid: String) {
+  }
+  handleMessage(sender_psid, received_message) {
+    let response;
+    if (received_message.text) {
+      response = {
+        text: `You sent the message: "${received_message.text}". Now send me an image!`
+      };
+    }
+    callSendAPI(sender_psid, response);
+    keystone.excuteQuery(
+      `mutation($user: ID!, $psid: String) {
   updateUser(id: $user, data: { psid: $psid }) {
     email
   }
 }
-`,{variables: {user:received_message.text,psid:sender_psid}})
+`,
+      { variables: { user: received_message.text, psid: sender_psid } }
+    );
+  }
+  handlePostback(sender_psid, received_postback) {
+    let response;
+    let payload = received_postback.payload;
+    if (payload === "yes") {
+      response = { text: "Thanks!" };
+    } else if (payload === "no") {
+      response = { text: "Oops, try sending another image." };
     }
-    handlePostback(sender_psid, received_postback) {
-      let response;
-      let payload = received_postback.payload;
-      if (payload === "yes") {
-        response = { text: "Thanks!" };
-      } else if (payload === "no") {
-        response = { text: "Oops, try sending another image." };
-      }
-      callSendAPI(sender_psid, response);
-    }
-    callSendAPI(sender_psid, response) {
-      let request_body = {
-        recipient: {
-          id: sender_psid,
-        },
-        message: response,
-      };
-    }
-
-
+    callSendAPI(sender_psid, response);
+  }
+  callSendAPI(sender_psid, response) {
+    let request_body = {
+      recipient: {
+        id: sender_psid
+      },
+      message: response
+    };
+  }
 };
