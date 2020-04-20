@@ -35,6 +35,12 @@ let authStrategy = keystone.createAuthStrategy({
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
   let response;
+  if (received_message.text) {
+    callSendAPI(sender_psid, received_message.text);
+  }
+}
+async function handlePostback(sender_psid, received_postback) {
+  console.log("handlePostback", received_postback);
   let data = await keystone.executeQuery(
     `mutation($user: ID!, $psid: String) {
   updateUser(id: $user, data: { psid: $psid }) {
@@ -42,17 +48,10 @@ async function handleMessage(sender_psid, received_message) {
   }
 }
 `,
-    { variables: { user: received_message.text, psid: sender_psid } }
+    { variables: { user: null, psid: sender_psid } }
   );
   console.log(data);
-  if (received_message.text) {
-    response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`
-    };
-  }
-  callSendAPI(sender_psid, response);
-}
-function handlePostback(sender_psid, received_postback) {
+
   let response;
   let payload = received_postback.payload;
   if (payload === "yes") {
@@ -62,12 +61,21 @@ function handlePostback(sender_psid, received_postback) {
   }
   callSendAPI(sender_psid, response);
 }
-function callSendAPI(sender_psid, response) {
+function callSendAPI(sender_psid, keystone_id) {
   let request_body = {
     recipient: {
       id: sender_psid
     },
-    message: response
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "one_time_notif_req",
+          title: "Đăng ký nhận tin",
+          payload: keystone_id
+        }
+      }
+    }
   };
 }
 module.exports = {
@@ -101,7 +109,6 @@ module.exports = {
       }
     });
     app.post("/messenger/webhook", (req, res) => {
-      console.log("/webhook received");
       let body = req.body;
       if (body.object === "page") {
         body.entry.forEach(function(entry) {
