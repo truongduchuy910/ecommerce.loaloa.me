@@ -51,7 +51,7 @@ function handleMessage(sender_psid, received_message) {
     });
   }
 }
-function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {
   console.log("handlePostback", received_postback);
   let data = await keystone.executeQuery(
     `mutation($user: ID!, $psid: String) {
@@ -66,7 +66,7 @@ function handlePostback(sender_psid, received_postback) {
 }
 function callSendAPI(sender_psid, response) {
   // Construct the message body
-  console.log(sender_psid,response);
+  console.log(sender_psid, response);
   let request_body = {
     recipient: {
       id: sender_psid
@@ -94,7 +94,9 @@ function callSendAPI(sender_psid, response) {
     }
   );
 }
-function handleOption(sender_psid,received_option){console.log(received_option)} 
+function handleOption(sender_psid, received_option) {
+  console.log(received_option);
+}
 function callSendAPI(sender_psid, keystone_id) {
   let request_body = {
     recipient: {
@@ -154,7 +156,9 @@ module.exports = {
             handleMessage(sender_psid, webhook_event.message);
           } else if (webhook_event.postback) {
             handlePostback(sender_psid, webhook_event.postback);
-          }else if (webhook_event.optin){handleOption(sender_psid,webhook_event.optin)}
+          } else if (webhook_event.optin) {
+            handleOption(sender_psid, webhook_event.optin);
+          }
         });
         res.status(200).send("EVENT_RECEIVED");
       } else {
