@@ -1,4 +1,6 @@
 let { Keystone } = require("@keystonejs/keystone");
+const request = require("request");
+
 let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
@@ -36,7 +38,16 @@ new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
   let response;
   if (received_message.text) {
-    callSendAPI(sender_psid, received_message.text);
+    callSendAPI(sender_psid, {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "one_time_notif_req",
+          title: "Đăng ký nhận tin",
+          payload: received_message.text
+        }
+      }
+    });
   }
 }
 async function handlePostback(sender_psid, received_postback) {
@@ -51,16 +62,37 @@ async function handlePostback(sender_psid, received_postback) {
     { variables: { user: null, psid: sender_psid } }
   );
   console.log(data);
-
-  let response;
-  let payload = received_postback.payload;
-  if (payload === "yes") {
-    response = { text: "Thanks!" };
-  } else if (payload === "no") {
-    response = { text: "Oops, try sending another image." };
-  }
-  callSendAPI(sender_psid, response);
 }
+function callSendAPI(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    recipient: {
+      id: sender_psid
+    },
+    message: response
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v6.0/me/messages",
+      qs: {
+        access_token:
+          "EAAExUahkTb0BALoBn5sPB58VBXbxVDE1dghtKLpLSBl3xGYrcK0jkBvZBowjQ4EcKWivxojebaIzyrPlFxePfBguSdjhohvT4CC0uZBuuDtRyaMzZCbsStrmmjYSJpTjFEYN12rgYErK2VL9aX1nnifK5cAZC1C4Rncr44ZBxeaOXnDbd9lUm5NX0f0FZChN8ZD"
+      },
+      method: "POST",
+      json: request_body
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("message sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+}
+
 function callSendAPI(sender_psid, keystone_id) {
   let request_body = {
     recipient: {
