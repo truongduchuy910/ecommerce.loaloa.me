@@ -36,32 +36,38 @@ let authStrategy = keystone.createAuthStrategy({
 
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
-  callSendAPI(sender_psid, {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "one_time_notif_req",
-        title: "Đăng ký nhận tin",
-        payload: received_message.text
+  if (received_message.length == 24)
+    callSendAPI(sender_psid, {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "one_time_notif_req",
+          title: "Đăng ký nhận tin",
+          payload: received_message.text
+        }
       }
-    }
-  });
+    });
 }
-async function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {}
+
+async function handleOption(sender_psid, received_option) {
+  console.log(received_option);
   let data = await keystone.executeQuery(
-    `mutation($user: ID!, $psid: String) {
-  updateUser(id: $user, data: { psid: $psid }) {
+    `mutation($user: ID!, $psid: String, $one_time_token) {
+  updateUser(id: $user, data: {one_time_token:$one_time_token, psid: $psid }) {
     email
   }
 }
 `,
-    { variables: { user: null, psid: sender_psid } }
+    {
+      variables: {
+        user: received_option.payload,
+        psid: sender_psid,
+        one_time_token: received_option.one_time_notif_token
+      }
+    }
   );
   console.log(data);
-}
-
-function handleOption(sender_psid, received_option) {
-  console.log(received_option);
 }
 function callSendAPI(sender_psid, response) {
   // Construct the message body
