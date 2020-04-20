@@ -86,7 +86,7 @@ class Customers extends Graph {
     this.phone = new Paragraphs({ id: phone });
     this.address = new Paragraphs({ id: address });
     this.order = new Paragraphs({ id: order });
-    this.status = false;
+    this.status = true;
     this.customer = "";
   }
   async createCustomer({ phone, name, address }) {
@@ -146,24 +146,31 @@ class Customers extends Graph {
       const phone = this.phone.box.val();
       const address = this.address.box.val();
       if (phone.length > 8) {
-        const customer = await this.matching({ condition: `phone:"${phone}"` });
-        if (customer) {
-          const id = await this.createBill({
-            product: detail.id,
-            customer: customer.id
+        if (this.status) {
+          const customer = await this.matching({
+            condition: `phone:"${phone}"`
           });
-          console.log(id);
-          this.order.render({ value: "Đặt hàng thành công!" });
+          if (customer) {
+            const id = await this.createBill({
+              product: detail.id,
+              customer: customer.id
+            });
+            console.log(id);
+            this.order.render({ value: "Đặt hàng thành công!" });
+            this.status = false;
+          } else {
+            console.log("Tạo người dùng");
+            this.order.render({ value: this.status });
+            const id = await this.createCustomer({
+              phone,
+              name,
+              address
+            });
+            this.customer = id;
+            this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+          }
         } else {
-          console.log("Tạo người dùng");
-          this.order.render({ value: this.status });
-          const id = await this.createCustomer({
-            phone,
-            name,
-            address
-          });
-          this.customer = id;
-          this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
+          this.order.render({ value: "Đã đặt hàng thành công!" });
         }
       } else {
         this.order.render({ value: "Kiểm tra số điện thoại và thử lại!" });

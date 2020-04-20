@@ -1,14 +1,14 @@
 const express = require("express");
 const path = require("path");
 const request = require("request");
-module.exports.callSendAPI = function callSendAPI(sender_psid, response) {
+module.exports.callSendAPI = function callSendAPI(recipient, response) {
   // Construct the message body
-  console.log(sender_psid, response);
+  console.log(recipient, response);
   let request_body = {
-    recipient: {
-      id: sender_psid
-    },
-    message: response
+    recipient,
+    message: response,
+    messaging_type: "MESSAGE_TAG",
+    tag: "ACCOUNT_UPDATE"
   };
 
   // Send the HTTP request to the Messenger Platform

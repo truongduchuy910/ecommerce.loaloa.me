@@ -7,6 +7,7 @@ let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 let { Messenger } = require("./messenger/index");
 const { NextApp } = require("@keystonejs/app-next");
 let { Host } = require("./host/index");
+let { callSendAPI } = require("./messenger/index");
 let keystone = new Keystone({
   secureCookies: false,
   name: "loaloa",
@@ -37,25 +38,28 @@ let authStrategy = keystone.createAuthStrategy({
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
   if (received_message.text.length == 24)
-    callSendAPI(sender_psid, {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "one_time_notif_req",
-          title: "Đăng ký nhận tin",
-          payload: received_message.text
+    callSendAPI(
+      { id: sender_psid },
+      {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "one_time_notif_req",
+            title: "Đăng ký nhận tin",
+            payload: received_message.text
+          }
         }
       }
-    });
+    );
 }
 async function handlePostback(sender_psid, received_postback) {}
 
 async function handleOption(sender_psid, received_option) {
   console.log(received_option);
   let data = await keystone.executeQuery(
-    `mutation($user: ID!, $psid: String, $one_time_token) {
+    `mutation($user: ID!, $psid: String, $one_time_token:String) {
   	updateUser(
-	id: $user, 
+	id: $user 
 	data: {
 	one_time_token:$one_time_token 
 	psid: $psid 
@@ -74,36 +78,7 @@ async function handleOption(sender_psid, received_option) {
   );
   console.log(data);
 }
-function callSendAPI(sender_psid, response) {
-  // Construct the message body
-  console.log(sender_psid, response);
-  let request_body = {
-    recipient: {
-      id: sender_psid
-    },
-    message: response
-  };
 
-  // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v6.0/me/messages",
-      qs: {
-        access_token:
-          "EAAExUahkTb0BALoBn5sPB58VBXbxVDE1dghtKLpLSBl3xGYrcK0jkBvZBowjQ4EcKWivxojebaIzyrPlFxePfBguSdjhohvT4CC0uZBuuDtRyaMzZCbsStrmmjYSJpTjFEYN12rgYErK2VL9aX1nnifK5cAZC1C4Rncr44ZBxeaOXnDbd9lUm5NX0f0FZChN8ZD"
-      },
-      method: "POST",
-      json: request_body
-    },
-    (err, res, body) => {
-      if (!err) {
-        console.log("message sent!", body);
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
-  );
-}
 module.exports = {
   keystone,
   apps: [
@@ -154,6 +129,30 @@ module.exports = {
       } else {
         res.sendStatus(404);
       }
+    });
+    app.post("/messenger/bills", (req, res) => {
+      console.log(req.body);
+      let { phone, name, address, productName } = req.body;
+      callSendAPI(
+        { id: req.body.psid },
+        {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "button",
+              text: `[${new Date().toDateString()}] Bạn ${name}. Đt: ${phone}. Địa chỉ: ${address}. Đặt sản phẩm: ${productName}!`,
+              buttons: [
+                {
+                  type: "web_url",
+                  url: "https://ad.loaloa.tech/admin",
+                  title: "Kiểm tra"
+                }
+              ]
+            }
+          }
+        }
+      );
+      res.send({ success: true });
     });
   }
 };
