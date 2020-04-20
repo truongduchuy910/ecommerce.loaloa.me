@@ -36,7 +36,6 @@ let authStrategy = keystone.createAuthStrategy({
 
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
-  console.log("handleMessage", received_message);
   callSendAPI(sender_psid, {
     attachment: {
       type: "template",
@@ -49,7 +48,6 @@ async function handleMessage(sender_psid, received_message) {
   });
 }
 async function handlePostback(sender_psid, received_postback) {
-  console.log("handlePostback", received_postback);
   let data = await keystone.executeQuery(
     `mutation($user: ID!, $psid: String) {
   updateUser(id: $user, data: { psid: $psid }) {
@@ -88,7 +86,7 @@ function callSendAPI(sender_psid, response) {
     },
     (err, res, body) => {
       if (!err) {
-        console.log("message sent!");
+        console.log("message sent!", body);
       } else {
         console.error("Unable to send message:" + err);
       }
