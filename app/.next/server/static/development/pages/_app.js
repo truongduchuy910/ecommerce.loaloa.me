@@ -458,7 +458,7 @@ class MyApp extends next_app__WEBPACK_IMPORTED_MODULE_1___default.a {
         lineNumber: 24
       },
       __self: this
-    }, "T\u1EED Vi Logic"), __jsx("meta", {
+    }, "Loa Loa Team"), __jsx("meta", {
       name: "viewport",
       content: "minimum-scale=1, initial-scale=1, width=device-width",
       __source: {

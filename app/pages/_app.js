@@ -21,7 +21,7 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Head>
-          <title>Tử Vi Logic</title>
+          <title>Loa Loa Team</title>
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"

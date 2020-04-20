@@ -30032,15 +30032,7 @@ function Index(_ref) {
       lineNumber: 64
     },
     __self: this
-  }))))), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    item: true,
-    xs: 12,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 72
-    },
-    __self: this
-  }, __jsx("svg", {
+  })))), __jsx("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 1440 320",
     style: {
@@ -30049,7 +30041,7 @@ function Index(_ref) {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 73
+      lineNumber: 71
     },
     __self: this
   }, __jsx("path", {
@@ -30058,7 +30050,7 @@ function Index(_ref) {
     d: "M0,32L120,32C240,32,480,32,720,74.7C960,117,1200,203,1320,245.3L1440,288L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 78
+      lineNumber: 76
     },
     __self: this
   }))), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -30068,9 +30060,12 @@ function Index(_ref) {
     spacing: 2,
     justify: "center",
     alignItems: "center",
+    style: {
+      backgroundColor: "transparent"
+    },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 85
+      lineNumber: 84
     },
     __self: this
   }, __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -30234,7 +30229,7 @@ function Layout(props) {
       lineNumber: 8
     },
     __self: this
-  }, __jsx(CustomChat, {
+  }, __jsx(react_facebook__WEBPACK_IMPORTED_MODULE_4__["CustomChat"], {
     pageId: "395622761034219",
     minimized: false,
     __source: {
@@ -30243,9 +30238,6 @@ function Layout(props) {
     },
     __self: this
   }), __jsx(_material_ui_core_Box__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    style: {
-      backgroundColor: "rgb(250, 251, 252)"
-    },
     __source: {
       fileName: _jsxFileName,
       lineNumber: 10
@@ -30482,7 +30474,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!***********************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js ***!
   \***********************************************************************************************************************************/
@@ -30505,5 +30497,5 @@ module.exports = dll_99873879131b459af989;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map

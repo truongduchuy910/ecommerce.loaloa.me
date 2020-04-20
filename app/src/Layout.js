@@ -7,9 +7,7 @@ function Layout(props) {
   return (
     <FacebookProvider appId="335701763968445" chatSupport>
       <CustomChat pageId="395622761034219" minimized={false} />
-      <Box style={{ backgroundColor: "rgb(250, 251, 252)" }}>
-        {props.children}
-      </Box>
+      <Box>{props.children}</Box>
     </FacebookProvider>
   );
 }

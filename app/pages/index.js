@@ -22,7 +22,7 @@ function Index({ email, id }) {
                     marginTop: 21,
                     marginBottom: 21,
                     color: "white",
-                    fontWeight: 800,
+                    fontWeight: 800
                   }}
                 >
                   Loa Loa Team
@@ -68,8 +68,6 @@ function Index({ email, id }) {
               </Grid>
             </Grid>
           </Container>
-        </Grid>
-        <Grid item xs={12}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 320"
@@ -82,6 +80,7 @@ function Index({ email, id }) {
             ></path>
           </svg>
         </Grid>
+
         <Grid
           item
           xs={12}
@@ -89,6 +88,7 @@ function Index({ email, id }) {
           spacing={2}
           justify="center"
           alignItems="center"
+          style={{ backgroundColor: "transparent" }}
         >
           <Grid item xs={12} sm={5} md={4} lg={3}>
             <img style={{ width: "100%", padding: 21 }} src="/img/coder.png" />
