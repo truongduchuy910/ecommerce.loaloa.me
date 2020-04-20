@@ -36,7 +36,7 @@ let authStrategy = keystone.createAuthStrategy({
 
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
-  if (received_message.length == 24)
+  if (received_message.text.length == 24)
     callSendAPI(sender_psid, {
       attachment: {
         type: "template",
