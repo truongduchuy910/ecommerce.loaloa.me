@@ -1,5 +1,4 @@
 let { Keystone } = require("@keystonejs/keystone");
-const request = require("request");
 
 let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
@@ -54,7 +53,12 @@ async function handleOption(sender_psid, received_option) {
   console.log(received_option);
   let data = await keystone.executeQuery(
     `mutation($user: ID!, $psid: String, $one_time_token) {
-  updateUser(id: $user, data: {one_time_token:$one_time_token, psid: $psid }) {
+  	updateUser(
+	id: $user, 
+	data: {
+	one_time_token:$one_time_token 
+	psid: $psid 
+	}) {
     email
   }
 }

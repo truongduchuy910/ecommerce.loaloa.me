@@ -1,6 +1,6 @@
 let { Checkbox, Text, Relationship } = require("@keystonejs/fields");
 let { own, public } = require("./config/access");
-
+let { callSendAPI } = require("../messenger/index");
 module.exports = {
   ref: "Bill",
   config: {
@@ -28,8 +28,9 @@ module.exports = {
 
     hooks: {
       resolveInput: async ({ resolvedData, context }) => {
-        if (context.authedItem && !context.authedItem.isAdmin)
-          resolvedData.seller = context.authedItem.id;
+        let user = context.authedItem;
+        if (user) console.log(user.psid, user.one_time_token);
+        if (user && !user.isAdmin) resolvedData.seller = user.id;
         return resolvedData;
       }
     },
