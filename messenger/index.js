@@ -40,41 +40,4 @@ module.exports.Messenger = class Messenger {
       }
     });
   }
-  async handleMessage(sender_psid, received_message) {
-    let response;
-    let data = keystone.excuteQuery(
-      `mutation($user: ID!, $psid: String) {
-  updateUser(id: $user, data: { psid: $psid }) {
-    email
-  }
-}
-`,
-      { variables: { user: received_message.text, psid: sender_psid } }
-    );
-    console.log(data);
-    if (received_message.text) {
-      response = {
-        text: `You sent the message: "${received_message.text}". Now send me an image!`
-      };
-    }
-    callSendAPI(sender_psid, response);
-  }
-  handlePostback(sender_psid, received_postback) {
-    let response;
-    let payload = received_postback.payload;
-    if (payload === "yes") {
-      response = { text: "Thanks!" };
-    } else if (payload === "no") {
-      response = { text: "Oops, try sending another image." };
-    }
-    callSendAPI(sender_psid, response);
-  }
-  callSendAPI(sender_psid, response) {
-    let request_body = {
-      recipient: {
-        id: sender_psid
-      },
-      message: response
-    };
-  }
 };
