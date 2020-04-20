@@ -94,7 +94,7 @@ function callSendAPI(sender_psid, response) {
     }
   );
 }
-
+function handleOption(sender_psid,received_option){console.log(received_option)} 
 function callSendAPI(sender_psid, keystone_id) {
   let request_body = {
     recipient: {
@@ -154,7 +154,7 @@ module.exports = {
             handleMessage(sender_psid, webhook_event.message);
           } else if (webhook_event.postback) {
             handlePostback(sender_psid, webhook_event.postback);
-          }
+          }else if (webhook_event.optin){handleOption(sender_psid,webhook_event.optin)}
         });
         res.status(200).send("EVENT_RECEIVED");
       } else {
