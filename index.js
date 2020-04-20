@@ -36,20 +36,17 @@ let authStrategy = keystone.createAuthStrategy({
 
 new Host({ port: { from: 7000, to: 7011 } });
 function handleMessage(sender_psid, received_message) {
-  console.log("handleMessage");
-  let response;
-  if (received_message.text) {
-    callSendAPI(sender_psid, {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "one_time_notif_req",
-          title: "Đăng ký nhận tin",
-          payload: received_message.text
-        }
+  console.log("handleMessage", received_message);
+  callSendAPI(sender_psid, {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "one_time_notif_req",
+        title: "Đăng ký nhận tin",
+        payload: received_message.text
       }
-    });
-  }
+    }
+  });
 }
 async function handlePostback(sender_psid, received_postback) {
   console.log("handlePostback", received_postback);
