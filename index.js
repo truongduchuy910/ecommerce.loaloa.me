@@ -35,7 +35,7 @@ let authStrategy = keystone.createAuthStrategy({
 new Host({ port: { from: 7000, to: 7011 } });
 async function handleMessage(sender_psid, received_message) {
   let response;
-  let data = keystone.excuteQuery(
+  let data = await keystone.executeQuery(
     `mutation($user: ID!, $psid: String) {
   updateUser(id: $user, data: { psid: $psid }) {
     email
