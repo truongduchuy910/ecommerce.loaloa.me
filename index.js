@@ -1,5 +1,6 @@
 let { Keystone } = require("@keystonejs/keystone");
 
+const request = require("request");
 let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
