@@ -117,7 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_Layout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../src/Layout */ "./src/Layout.js");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-facebook */ "react-facebook");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_facebook__WEBPACK_IMPORTED_MODULE_8__);
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/pages/index.js";
+var _jsxFileName = "/root/apps/loaloa/app/pages/index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -418,7 +418,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _material_ui_core_Link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Link */ "@material-ui/core/Link");
 /* harmony import */ var _material_ui_core_Link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Link__WEBPACK_IMPORTED_MODULE_2__);
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/src/Copyright.js";
+var _jsxFileName = "/root/apps/loaloa/app/src/Copyright.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -468,7 +468,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_CardMedia__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_CardMedia__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-facebook */ "react-facebook");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_facebook__WEBPACK_IMPORTED_MODULE_4__);
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/src/Layout.js";
+var _jsxFileName = "/root/apps/loaloa/app/src/Layout.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -530,7 +530,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! graphql-request */ "graphql-request");
 /* harmony import */ var graphql_request__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_request__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utils_getGraphUri__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/getGraphUri */ "./utils/getGraphUri.js");
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/utils/auth.js";
+var _jsxFileName = "/root/apps/loaloa/app/utils/auth.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -667,7 +667,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/truongduchuy910/apps/loaloa/app/pages/index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! /root/apps/loaloa/app/pages/index.js */"./pages/index.js");
 
 
 /***/ }),

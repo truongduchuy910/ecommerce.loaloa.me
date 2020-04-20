@@ -32,7 +32,7 @@ let authStrategy = keystone.createAuthStrategy({
   list: "User",
 });
 
-//new Host({ port: { from: 7000, to: 7011 } });
+new Host({ port: { from: 7000, to: 7011 } });
 module.exports = {
   keystone,
   apps: [
@@ -46,6 +46,11 @@ module.exports = {
   configureExpress: (app) => {
     let path = require("path");
     app.use(require("express").static(path.join(path.resolve(), "store")));
+	  const
+  express = require('express'),
+  bodyParser = require('body-parser');
+  app.use(bodyParser.json()); // creates express http server
+
     new Messenger({ keystone, app });
   },
 };

@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 module.exports.Messenger = class Messenger {
   constructor({ keystone, app }) {
+	 let handleMessage= this.handleMessage;
+	  let handlePostback  = this.handlePostback;
     app.get("/messenger/webhook", (req, res) => {
       let VERIFY_TOKEN = "Loaloa.Media";
       let mode = req.query["hub.mode"];
@@ -17,6 +19,7 @@ module.exports.Messenger = class Messenger {
       }
     });
     app.post("/messenger/webhook", (req, res) => {
+	    console.log("/webhook received");
       let body = req.body;
       if (body.object === "page") {
         body.entry.forEach(function(entry) {
@@ -25,9 +28,9 @@ module.exports.Messenger = class Messenger {
           let sender_psid = webhook_event.sender.id;
           console.log("Sender PSID: " + sender_psid);
           if (webhook_event.message) {
-            this.handleMessage(sender_psid, webhook_event.message);
+            handleMessage(sender_psid, webhook_event.message);
           } else if (webhook_event.postback) {
-            this.handlePostback(sender_psid, webhook_event.postback);
+            handlePostback(sender_psid, webhook_event.postback);
           }
         });
         res.status(200).send("EVENT_RECEIVED");
@@ -35,7 +38,8 @@ module.exports.Messenger = class Messenger {
         res.sendStatus(404);
       }
     });
-    function handleMessage(sender_psid, received_message) {
+      }
+handleMessage(sender_psid, received_message) {
       let response;
       if (received_message.text) {
         response = {
@@ -43,8 +47,14 @@ module.exports.Messenger = class Messenger {
         };
       }
       callSendAPI(sender_psid, response);
+	keystone.excuteQuery(`mutation($user: ID!, $psid: String) {
+  updateUser(id: $user, data: { psid: $psid }) {
+    email
+  }
+}
+`,{variables: {user:received_message.text,psid:sender_psid}})
     }
-    function handlePostback(sender_psid, received_postback) {
+    handlePostback(sender_psid, received_postback) {
       let response;
       let payload = received_postback.payload;
       if (payload === "yes") {
@@ -54,7 +64,7 @@ module.exports.Messenger = class Messenger {
       }
       callSendAPI(sender_psid, response);
     }
-    function callSendAPI(sender_psid, response) {
+    callSendAPI(sender_psid, response) {
       let request_body = {
         recipient: {
           id: sender_psid,
@@ -62,5 +72,6 @@ module.exports.Messenger = class Messenger {
         message: response,
       };
     }
-  }
+
+
 };

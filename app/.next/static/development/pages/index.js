@@ -13946,7 +13946,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!********************************************************!*\
   !*** ../node_modules/@material-ui/system/esm/index.js ***!
   \********************************************************/
-/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19833,10 +19833,10 @@ module.exports = (__webpack_require__(/*! dll-reference dll_99873879131b459af989
 
 /***/ }),
 
-/***/ "../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js!./":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js ***!
-  \********************************************************************************************************************************************************************************/
+/***/ "../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Froot%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js!./":
+/*!**************************************************************************************************************************************************************!*\
+  !*** ../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Froot%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js ***!
+  \**************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29866,7 +29866,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_Layout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../src/Layout */ "./src/Layout.js");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-facebook */ "../node_modules/react-facebook/lib/index.js");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_facebook__WEBPACK_IMPORTED_MODULE_8__);
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/pages/index.js";
+var _jsxFileName = "/root/apps/loaloa/app/pages/index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -30165,7 +30165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/Typography */ "../node_modules/@material-ui/core/esm/Typography/index.js");
 /* harmony import */ var _material_ui_core_Link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Link */ "../node_modules/@material-ui/core/esm/Link/index.js");
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/src/Copyright.js";
+var _jsxFileName = "/root/apps/loaloa/app/src/Copyright.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -30212,7 +30212,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_CardMedia__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/CardMedia */ "../node_modules/@material-ui/core/esm/CardMedia/index.js");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-facebook */ "../node_modules/react-facebook/lib/index.js");
 /* harmony import */ var react_facebook__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_facebook__WEBPACK_IMPORTED_MODULE_4__);
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/src/Layout.js";
+var _jsxFileName = "/root/apps/loaloa/app/src/Layout.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
@@ -30309,7 +30309,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/utils/auth.js";
+var _jsxFileName = "/root/apps/loaloa/app/utils/auth.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_14___default.a.createElement;
 
@@ -30475,13 +30475,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 1:
-/*!***********************************************************************************************************************************!*\
-  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js ***!
-  \***********************************************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2Froot%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js! */"../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Fhome%2Ftruongduchuy910%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js!./");
+module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=%2Froot%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js! */"../node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2Froot%2Fapps%2Floaloa%2Fapp%2Fpages%2Findex.js!./");
 
 
 /***/ }),
