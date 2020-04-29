@@ -1,6 +1,6 @@
 // XIN CHAO
 let seller = { id: "5e4c2235ea30da18df1c210f" };
-let url = "https://ad.loaloa.me";
+let url = "https://ad.loaloa.tech";
 class Graph {
   static async execute({ query }) {
     const response = await fetch(url + "/admin/api", {
