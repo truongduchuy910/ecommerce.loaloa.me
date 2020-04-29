@@ -5,7 +5,6 @@ let { GraphQLApp } = require("@keystonejs/app-graphql");
 let { AdminUIApp } = require("@keystonejs/app-admin-ui");
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 let { Messenger } = require("./messenger/index");
-const { NextApp } = require("@keystonejs/app-next");
 let { Host } = require("./host/index");
 let { callSendAPI } = require("./messenger/index");
 let keystone = new Keystone({
@@ -13,8 +12,7 @@ let keystone = new Keystone({
   name: "loaloa",
   adapter: new MongooseAdapter({
     mongoUri: "mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa"
-  }),
-  defaultAdapter: "lists",
+  }), defaultAdapter: "lists",
   onConnect: require("./onConnect")
 });
 
@@ -84,10 +82,9 @@ module.exports = {
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
-      enableDefaultRoute: false,
+      enableDefaultRoute: true,
       authStrategy
     }),
-    new NextApp({ dir: "app" })
   ],
   configureExpress: app => {
     let path = require("path");
