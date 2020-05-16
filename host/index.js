@@ -11,7 +11,7 @@ class Ejs {
     let hostPath = __dirname + "/ports/" + this.port + "/pages";
     try {
       let pages = fs.readdirSync(hostPath);
-      pages.forEach(file => {
+      pages.forEach((file) => {
         let name = path.basename(file, ".ejs");
         this.routers[name] = path.join(hostPath, name);
       });
@@ -42,6 +42,24 @@ class Host {
         let data = {};
         res.render(ejsPath, data);
       })
+      .get("/san-pham", async (req, res) => {
+        res.redirect("/");
+      })
+      .get("/bai-viet", async (req, res) => {
+        res.redirect("/");
+      })
+      .get("/danh-muc", async (req, res) => {
+        res.redirect("/");
+      })
+      .get("/gioi-thieu", async (req, res) => {
+        res.redirect("/");
+      })
+      .get("/tin-tuc", async (req, res) => {
+        res.redirect("/");
+      })
+      .get("/home", async (req, res) => {
+        res.redirect("/");
+      })
       .get("/home", async (req, res) => {
         res.redirect("/");
       })
@@ -54,7 +72,9 @@ class Host {
       .get("/detail/", async (req, res) => {
         let port = req.socket.localPort;
         let ejsPath = this.ejs[port].path({ name: "detail" });
-        res.render(ejsPath);
+        const path = "https://" + req.hostname + req.url;
+        console.log(path);
+        res.render(ejsPath, { path });
       })
       .get("/:router", (req, res) => {
         let port = req.socket.localPort;

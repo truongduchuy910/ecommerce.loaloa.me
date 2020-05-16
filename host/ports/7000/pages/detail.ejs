@@ -94,7 +94,16 @@
                 </h6>
                 <p id="detail-guide"></p>
               </div>
-              <div class="col-12 col-md-6"></div>
+              <div class="col-12">
+                <% if (path) {%>
+                <div
+                  class="fb-comments"
+                  data-href="<%=path%>"
+                  data-numposts="5"
+                  data-width=""
+                ></div>
+                <%}%>
+              </div>
             </div>
           </div>
         </div>
