@@ -1,132 +1,385 @@
 <!DOCTYPE html>
-<html style="font-size: 14px;">
+<html style="font-family: 'Open Sans', sans-serif;" lang="vi">
   <head>
-    <title>Shop Whey Đà Nẵng | Dinh Dưỡng Thể Thao</title>
-    <% include ../partials/head %>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Thiết Kế Website - Phần mềm | Đà Nẵng</title>
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="description"
+      content="Cung cấp giải pháp Website phần mềm cho doanh nghiệp. Điện thoại: 0332813077 (Mr.Huy). Địa chỉ: 100 Nguyễn Lương Bằng, Liên Chiều, Đà Nẵng."
+    />
+    <meta property="og:type" content="website" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="612x600"
+      href="/loaloa/assets/img/loaloa.png?h=05035686111da6ba5bd964fec71b13eb"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="612x600"
+      href="/loaloa/assets/img/loaloa.png?h=05035686111da6ba5bd964fec71b13eb"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="612x600"
+      href="/loaloa/assets/img/loaloa.png?h=05035686111da6ba5bd964fec71b13eb"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="612x600"
+      href="/loaloa/assets/img/loaloa.png?h=05035686111da6ba5bd964fec71b13eb"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="612x600"
+      href="/loaloa/assets/img/loaloa.png?h=05035686111da6ba5bd964fec71b13eb"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="manifest"
+      href="/loaloa/manifest.json?h=2b2053cf4f6bb28732a7762af7590e4e"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/loaloa/assets/css/styles.min.css?h=c9e0766b1613e27ac516758f05867d8f"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css"
+    />
   </head>
 
-  <body
-    class="text-white bg-dark w-100 m-0 p-0"
-    style="background-color: #343a40;"
-  >
-    <% include ../partials/header %>
-    <main>
-      <% include ../partials/banner %>
-      <section class="mb-4">
-        <div class="container-fluid">
-          <div class="row ow-eq-height m-0 p-0 w-100">
-            <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0 col-xs-4">
-              <h6 class="mt-4 ml-3 text-myColor">DANH MỤC</h6>
-              <div class="list-group" id="category">
-                <% if (data.allCategories) { data.allCategories.forEach(c => {
-                %>
-                <a
-                  class="list-group-item list-group-item-action border rounded-0 categoryClick"
-                  href="?category=<%=c.name%>#present-filter"
-                  ><span><%=c.name%></span></a
-                >
-                <%})}%>
+  <body style="font-family: Roboto, sans-serif;">
+    <header>
+      <section class="pt-5" style="background-color: #212121;">
+        <div class="container text-light">
+          <div class="row">
+            <div
+              class="col-sm-8 col-lg-7 col-xl-7 d-xl-flex justify-content-xl-center align-items-xl-center"
+            >
+              <div data-aos="fade-down">
+                <h1 class="text-center">Loa Loa Team</h1>
+                <h3 class="text-center">
+                  Thiết kế website phân khúc phổ thông
+                </h3>
+                <h5 class="text-center"><i class="fa fa-code"></i></h5>
+                <h5 class="text-center text-secondary">
+                  Sử dụng công nghệ mới nhất được hàng triệu người sử dụng. Mang
+                  lại cho khách hàng sản phẩm chất lượng với giá thành tốt nhất.
+                </h5>
+                <h5 class="text-center text-secondary">
+                  Rất hân hạnh được làm việc!
+                </h5>
               </div>
-              <h6 class="mt-4 ml-3 text-myColor">THƯƠNG HIỆU</h6>
-              <div id="brands" class="list-group">
-                <% if (data.allBrands) { data.allBrands.forEach(b => { %>
+            </div>
+            <div class="col p-3">
+              <img
+                data-aos="fade-left"
+                class="w-100"
+                src="/loaloa/assets/img/development.png?h=b3a12a2aed5c666ffd0e513dc78ca6e0"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <img
+        src="/loaloa/assets/img/wave.svg?h=e7b41ad876274516f5c2ae4b1d44c82e"
+        style="margin-bottom: -11%;"
+      />
+    </header>
 
-                <a
-                  class="list-group-item list-group-item-action border rounded-0 brandClick"
-                  href="?brand=<%=b.name%>#present-filter"
-                  ><span><%=b.name%></span></a
-                >
-                <%})}%>
+    <main>
+      <section data-aos="fade-up" class="mb-5">
+        <div class="container">
+          <div class="mb-5">
+            <h2 class="text-center">Nhanh. Rẻ. Đẹp</h2>
+            <h5 class="text-center text-secondary">
+              Là tất cả những gì chúng tôi có
+            </h5>
+          </div>
+          <div class="row no-gutters justify-content-center align-items-center">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96eb8cd6fb483d11880501-2ca688568380555225a4f61edff58ce4.jpg?h=50248b2e8ea7afee1131a014cc9919b9"
+              />
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96eba2d6fb483d11880505-119e75ba0a60fced0797634732c8649e.jpg?h=38b888ea837644a53a62158440b5a160"
+              />
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96eb99d6fb483d11880503-6da7d477864883.5c93ea96211b6.jpg?h=21df3bd0a5f756ce7d95c823695eaff4"
+              />
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96ebc8d6fb483d1188050b-824176aedab12e606866e7e2f5df9649.jpg?h=9608e95c1bdce3ad6d8689be00bc3d5a"
+              />
+            </div>
+            <div class="col-6 col-sm-3 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96ebaed6fb483d11880507-379e7de5828aade85046e47b3ced84f7.jpg?h=d70d6f776840567e45dd5afee009eeb7"
+              />
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/5e96ebbbd6fb483d11880509-7714c8fc27c38a5ec701594074cd085f.jpg?h=3614517bd8f31a31d5f18db7db1182cd"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mb-5">
+        <div class="container" data-aos="fade-up">
+          <!-- Start: Intro -->
+          <div class="mb-5">
+            <h2 class="text-center">Quy trình làm việc</h2>
+            <h5 class="text-center text-secondary">
+              Đơn giản và hiệu quả. Từ 3,000,000 cho một website.
+            </h5>
+          </div>
+          <!-- End: Intro -->
+          <div class="row">
+            <div class="col-lg-6 order-1 order-sm-1 order-md-1">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/undraw_online_collaboration_7pfp.svg?h=34e1176c37d0e67e5bb742690220f5d3"
+              />
+            </div>
+            <div
+              class="col-lg-6 d-lg-flex order-2 order-sm-2 align-items-lg-center"
+            >
+              <div class="p-3">
+                <h3 class="text-center">Tiếp nhận yêu cầu</h3>
+                <p class="text-center text-secondary">
+                  Trao đổi trực tiếp để tiếp nhận các yêu cầu. Thu nhập hình ảnh
+                  và nội dung của khách hàng.
+                </p>
               </div>
             </div>
             <div
-              class="col-8 col-sm-9 col-md-10 col-lg-10 col-xl-10 p-0 col-xs-4"
+              class="col d-lg-flex order-4 order-sm-4 order-md-3 align-items-lg-center"
             >
-              <div class="bg-dark">
-                <h5
-                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
-                >
-                  sản phẩm bán chạy
-                </h5>
-                <div class="text-center px-2 py-0 mb-4">
-                  <div id="bestSeller-products" class="row justify-content-center p-0 m-0">
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
-                      <a href="duong-dan" target="_parent">
-                        <div class="bg-dark p-3">
-                          <img class="w-100" src="duong-dan-hinh-anh" />
-                          <div class="productBasis">
-                            <p class="text-center p-0 m-0 text-myColor">
-                              san-pham
-                            </p>
-                            <h6 class="text-center text-white">gia</h6>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div class="p-3">
+                <h3 class="text-center">Thiết kế giao diện</h3>
+                <p class="text-center text-secondary">
+                  Gửi giao diện và chỉnh sửa đến khi đúng với nhu cầu của khách
+                  hàng.
+                </p>
               </div>
-              <div class="bg-dark">
-                <h5
-                  id="present-filter"
-                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
-                >
-                  VITAMIN &amp; KHOÁNG CHẤT
-                </h5>
-                <div class="text-center px-2 py-0 mb-4">
-                  <div
-                    id="products-main"
-                    class="row justify-content-center p-0 m-0"
-                  >
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
-                      <a href="duong-dan" target="_parent">
-                        <div class="bg-dark p-3">
-                          <img class="w-100" src="duong-dan-hinh-anh" />
-                          <div class="productBasis">
-                            <p class="text-center p-0 m-0 text-myColor">
-                              san-pham
-                            </p>
-                            <h6 class="text-center text-white">gia</h6>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="bg-dark">
-                <h5
-                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
-                >
-                  HÀNG MỚI VỀ
-                </h5>
-                <div class="text-center px-2 py-0 mb-4">
-                  <div id="new-products" class="row justify-content-center p-0 m-0">
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
-                      <a href="duong-dan">
-                        <div class="bg-dark p-3">
-                          <img
-                            class="w-100"
-                            src="duong-dan-hinh-anh"
-                          />
-                          <div class="productBasis">
-                            <p class="text-center p-0 m-0 text-myColor">
-                             san-pham 
-                            </p>
-                            <h6 class="text-center text-white">gia</h6>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+            </div>
+            <div class="col-lg-6 order-3 order-sm-3 order-md-4">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/undraw_design_feedback_dexe.svg?h=5a73d0cde1611b9bfda87282022297e7"
+              />
+            </div>
+            <div class="col-lg-6 order-5 order-sm-5">
+              <img
+                class="w-100"
+                src="/loaloa/assets/img/undraw_online_page_cq94.svg?h=cafbe931bc7df734e874d8a2121c8d05"
+              />
+            </div>
+            <div
+              class="col-lg-6 d-lg-flex order-6 order-sm-6 align-items-lg-center"
+            >
+              <div class="p-3">
+                <h3 class="text-center">Lắp đặt tính năng</h3>
+                <p class="text-center text-secondary">
+                  Triển khai lên môi trường internet để đưa vào hoạt động
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <section class="my-5 py-5">
+        <div class="container" data-aos="fade-up">
+          <!-- Start: Intro -->
+          <div class="mb-5">
+            <h2 class="text-center">Đội Ngũ</h2>
+            <h5 class="text-center text-secondary">
+              Nhóm phát triển đầy tâm huyết và sáng tạo
+            </h5>
+          </div>
+          <!-- End: Intro -->
+          <div class="row">
+            <div class="col-lg-3">
+              <img
+                data-bs-hover-animate="pulse"
+                class="w-100 mb-3"
+                src="/loaloa/assets/img/IMG_2752.JPG?h=8ba0b51a39a475567982e5e74288edf5"
+                style="border-radius: 15px;"
+              />
+              <h4 class="text-left">Trần Ngọc Huy</h4>
+              <h6 class="text-left text-secondary">Trưởng nhóm</h6>
+              <p class="text-secondary mb-0" style="font-size: 14px;">
+                Đang học Kỹ sư Công Nghệ Thông Tin - Bách Khoa Đà Nẵng
+              </p>
+              <p style="font-size: 14px;">Điện thoại: 0332813077</p>
+            </div>
+            <div class="col-lg-3">
+              <img
+                data-bs-hover-animate="pulse"
+                class="w-100 mb-3"
+                src="/loaloa/assets/img/97764762_618987865377041_7588446440179892224_n.jpg?h=be182319d7baf6256acb529d865f829e"
+                style="border-radius: 15px;"
+              />
+              <h4 class="text-left">Tăng Bá Hông Phúc</h4>
+              <h6 class="text-left text-secondary">Lập trình viên</h6>
+              <p class="text-secondary mb-0" style="font-size: 14px;">
+                Đang học Kỹ sư Công Nghệ Thông Tin - Bách Khoa Đà Nẵng
+              </p>
+              <p style="font-size: 14px;">Điện thoại: 0366061247</p>
+            </div>
+            <div class="col-lg-3">
+              <img
+                data-bs-hover-animate="pulse"
+                class="w-100 mb-3"
+                src="/loaloa/assets/img/83573728_1264952613709935_7934492328880766976_n.jpg?h=12ff5b6c8b71413ed8458d662a5e0592"
+                style="border-radius: 15px;"
+              />
+              <h4 class="text-left">Nguyễn Lê Tuấn Cương</h4>
+              <h6 class="text-left text-secondary">Lập trình viên</h6>
+              <p class="text-secondary mb-0" style="font-size: 14px;">
+                Đang học Kỹ sư Công Nghệ Thông Tin - Bách Khoa Đà Nẵng
+              </p>
+              <p style="font-size: 14px;">Điện thoại: 0962421305</p>
+            </div>
+            <div class="col-lg-3">
+              <img
+                data-bs-hover-animate="pulse"
+                class="w-100 mb-3"
+                src="/loaloa/assets/img/81427775_811576239290751_3139094560450281472_o.jpg?h=a16128fe1ed0a11dd2347e286c8df5dd"
+                style="border-radius: 15px;"
+              />
+              <h4 class="text-left">Nguyễn Kim Huy</h4>
+              <h6 class="text-left text-secondary">Thiết kế viên</h6>
+              <p class="text-secondary mb-0" style="font-size: 14px;">
+                Đang học Kỹ sư Công Nghệ Thông Tin - Bách Khoa Đà Nẵng
+              </p>
+              <p style="font-size: 14px;">Điện thoại: 0929153261</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
-    <% include ../partials/footer %>
+    <!-- Start: Footer Dark -->
+    <div class="footer-dark">
+      <footer>
+        <div class="container">
+          <div class="row">
+            <!-- Start: Services -->
+            <div class="col-sm-6 col-md-3 item">
+              <h3>Dịch vụ</h3>
+              <ul>
+                <li><a href="#">Thiết kế website</a></li>
+                <li><a href="#">Phát triển ứng dụng</a></li>
+              </ul>
+            </div>
+            <!-- End: Services -->
+            <!-- Start: About -->
+            <div class="col-sm-6 col-md-3 item">
+              <h3>Giới thiệu</h3>
+              <ul>
+                <li><a href="#">Trần Ngọc Huy</a></li>
+                <li>
+                  <a href="#">100 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng.</a>
+                </li>
+                <li><a href="#">0332813077</a></li>
+              </ul>
+            </div>
+            <!-- End: About -->
+            <!-- Start: Footer Text -->
+            <div class="col-md-6 item text">
+              <h3>Loa Loa Team</h3>
+              <p>
+                Nếu bạn muốn một website với thiết kế riêng của mình. Hoặc có
+                những chức năng đặc biệt, phụ vụ cho doanh nghiệp. Loa Loa Team
+                sẽ đem lại phương án tối ưu về chất lượng và chi phí cho bạn.
+              </p>
+            </div>
+            <!-- End: Footer Text -->
+          </div>
+          <!-- Start: Copyright -->
+          <p class="copyright">Loa Loa Team © 2019</p>
+          <!-- End: Copyright -->
+        </div>
+      </footer>
+    </div>
+    <!-- End: Footer Dark -->
+    <!-- Start: Scroll to top --><a
+      class="cd-top"
+      href="#"
+      style="background-color: #212121;border-radius: 5px;"
+    >
+    </a>
+    <!-- End: Scroll to top -->
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml: true,
+          version: "v7.0",
+        });
+      };
+
+      (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
+
+    <!-- Your customer chat code -->
+    <div
+      class="fb-customerchat"
+      attribution="setup_tool"
+      page_id="395622761034219"
+      theme_color="#212121"
+      logged_in_greeting="Nhấn tiếp tục để bắt đầu trò chuyện."
+      logged_out_greeting="Nhấn tiếp tục để bắt đầu trò chuyện."
+    ></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+    <script src="/loaloa/assets/js/script.min.js?h=aa3cb70744e5d9b926276ca51bc10a60"></script>
   </body>
 </html>
