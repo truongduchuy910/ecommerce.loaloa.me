@@ -27,7 +27,7 @@ module.exports = {
       },
       sale: {
         type: Integer,
-        label: "Giá (Bắt buộc)",
+        label: "Giá Sale",
         schemaDoc: "Giá Sale",
       },
       images: {

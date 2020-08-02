@@ -1,5 +1,6 @@
 // XIN CHAO
 let seller = { id: "5e4c2235ea30da18df1c210f" };
+//let url = "http://localhost:6006";
 let url = "https://ad.loaloa.tech";
 class Graph {
   static async execute({ query }) {
@@ -9,11 +10,11 @@ class Graph {
       cache: "no-cache",
       credentials: "same-origin",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify({ query: query })
+      body: JSON.stringify({ query: query }),
     });
     return await response.json();
   }
@@ -95,8 +96,8 @@ class Customers extends Graph {
         phone,
         name,
         address,
-        seller: { id }
-      }
+        seller: { id },
+      },
     }) => `mutation {
         createCustomer(
           data: {
@@ -111,8 +112,8 @@ class Customers extends Graph {
       }`;
     const {
       data: {
-        createCustomer: { id }
-      }
+        createCustomer: { id },
+      },
     } = await this.mutation({ data: { phone, name, address, seller } });
     return id;
   }
@@ -121,8 +122,8 @@ class Customers extends Graph {
       data: {
         product,
         customer,
-        seller: { id }
-      }
+        seller: { id },
+      },
     }) => `mutation {
         createBill(
           data: {
@@ -135,25 +136,25 @@ class Customers extends Graph {
         }
       }`;
     const { data } = await this.mutation({
-      data: { product, customer, seller }
+      data: { product, customer, seller },
     });
     console.log(data);
   }
   start() {
     this.phone.box.val(localStorage.getItem("phone"));
-    this.order.box.click(async btn => {
+    this.order.box.click(async (btn) => {
       const name = this.name.box.val();
       const phone = this.phone.box.val();
       const address = this.address.box.val();
       if (phone.length > 8) {
         if (this.status) {
           const customer = await this.matching({
-            condition: `phone:"${phone}"`
+            condition: `phone:"${phone}"`,
           });
           if (customer) {
             const id = await this.createBill({
               product: detail.id,
-              customer: customer.id
+              customer: customer.id,
             });
             console.log(id);
             this.order.render({ value: "Đặt hàng thành công!" });
@@ -164,7 +165,7 @@ class Customers extends Graph {
             const id = await this.createCustomer({
               phone,
               name,
-              address
+              address,
             });
             this.customer = id;
             this.order.render({ value: "Nhấn lần nữa để xác nhận!" });
@@ -188,7 +189,7 @@ class Customers extends Graph {
       }
     }`;
     const {
-      data: { allCustomers }
+      data: { allCustomers },
     } = await this.query({ condition });
     if (allCustomers) {
       return allCustomers[0];
@@ -201,6 +202,7 @@ class Details extends Graph {
   constructor({
     name,
     price,
+    sale,
     imageMain,
     imageOrthers,
     categoryName,
@@ -210,7 +212,7 @@ class Details extends Graph {
     attributeName,
     description,
     detail,
-    guide
+    guide,
   }) {
     super();
     this.gql.query = ({ condition }) => `query {
@@ -219,6 +221,7 @@ class Details extends Graph {
         id,
         name,
         price,
+        sale,
         images {
           file {
             publicUrl
@@ -244,6 +247,7 @@ class Details extends Graph {
     }`;
     this.name = new Paragraphs({ id: name });
     this.price = new Paragraphs({ id: price });
+    this.sale = new Paragraphs({ id: sale });
     this.imageMain = new Images({ id: imageMain });
     this.imageOrthers = new Arrays({ id: imageOrthers });
     this.categoryName = new Paragraphs({ id: categoryName });
@@ -255,35 +259,41 @@ class Details extends Graph {
   }
   async load({ condition }) {
     const {
-      data: { allProducts }
+      data: { allProducts },
     } = await this.query({ condition });
     if (allProducts.length) {
       const {
         id,
         name,
         price,
+        sale,
         images,
         category,
         brand,
         attributes,
         description,
         file,
-        guide
+        guide,
       } = allProducts[0];
       this.id = id;
       this.name.render({ value: name });
-      this.price.render({ value: Products.formatMoney(price, 0) });
+      this.price.render({
+        value: sale
+          ? Products.formatMoney(sale, 0)
+          : Products.formatMoney(price, 0),
+      });
+      this.sale.render({ value: sale ? Products.formatMoney(price, 0) : "" });
       this.imageMain.render({ src: url + images[0].file.publicUrl });
       if (category) this.categoryName.render({ value: category.name });
       if (brand) this.brandName.render({ value: brand.name });
       this.attributeName.empty();
       if (attributes.length)
-        attributes.forEach(attribute => {
+        attributes.forEach((attribute) => {
           this.attributeName.add([
             {
               template: "attribute",
-              value: attribute.name
-            }
+              value: attribute.name,
+            },
           ]);
         });
 
@@ -293,8 +303,8 @@ class Details extends Graph {
           this.imageOrthers.add([
             {
               template: "duong-dan-hinh-anh",
-              value: url + images[i].file.publicUrl
-            }
+              value: url + images[i].file.publicUrl,
+            },
           ]);
         }
       }
@@ -318,7 +328,7 @@ class PresentFilter extends Graph {
       }
     }`;
     const {
-      data: { allCategories }
+      data: { allCategories },
     } = await this.query({ condition: `url: "${url}"` });
     if (allCategories.length) {
       const category = allCategories[0].name;
@@ -334,7 +344,7 @@ class PresentFilter extends Graph {
     }
   }`;
     const {
-      data: { allBrands }
+      data: { allBrands },
     } = await this.query({ condition: `url: "${url}"` });
     if (allBrands.length) {
       const brand = allBrands[0].name;
@@ -362,12 +372,15 @@ class Banners extends Lists {
   }
   async load({ condition }) {
     const {
-      data: { allBanners }
+      data: { allBanners },
     } = await this.query({ condition });
     if (allBanners)
-      allBanners.forEach(banner => {
+      allBanners.forEach((banner) => {
         this.html.add([
-          { template: "duong-dan-hinh-anh", value: url + banner.file.publicUrl }
+          {
+            template: "duong-dan-hinh-anh",
+            value: url + banner.file.publicUrl,
+          },
         ]);
       });
   }
@@ -381,6 +394,7 @@ class Products extends Lists {
       AND: {${condition}}}) {
         name
         price
+        sale
         images {
           file {
             publicUrl
@@ -391,22 +405,33 @@ class Products extends Lists {
     }`;
   }
   async load({ condition }) {
+    console.log(this.gql.query({ condition }));
     const {
-      data: { allProducts }
+      data: { allProducts },
     } = await this.query({ condition });
+    console.log(allProducts);
     this.show(allProducts);
   }
   show(data) {
     this.html.empty();
-    data.forEach(p => {
+    data.forEach((p) => {
       this.html.add([
         {
           template: "duong-dan-hinh-anh",
-          value: url + p.images[0].file.publicUrl
+          value: url + p.images[0].file.publicUrl,
         },
         { template: "san-pham", value: p.name },
-        { template: "gia", value: Products.formatMoney(p.price, 0) },
-        { template: "duong-dan", value: "/detail/?detail=" + p.url }
+        {
+          template: "gia-gach",
+          value: p.sale ? Products.formatMoney(p.price, 0) : "",
+        },
+        {
+          template: "gia",
+          value: p.sale
+            ? Products.formatMoney(p.sale, 0)
+            : Products.formatMoney(p.price, 0),
+        },
+        { template: "duong-dan", value: "/detail/?detail=" + p.url },
       ]);
     });
   }
@@ -448,16 +473,16 @@ class Brands extends Lists {
   }
   async load({ condition }) {
     const {
-      data: { allBrands }
+      data: { allBrands },
     } = await this.query({ condition });
     this.show(allBrands);
   }
   show(data) {
     this.html.empty();
-    data.forEach(p => {
+    data.forEach((p) => {
       this.html.add([
         { template: "thuong-hieu", value: p.name },
-        { template: "duong-dan", value: p.url }
+        { template: "duong-dan", value: p.url },
       ]);
     });
   }
@@ -475,16 +500,16 @@ class Categories extends Lists {
   }
   async load({ condition }) {
     const {
-      data: { allCategories }
+      data: { allCategories },
     } = await this.query({ condition });
     this.show(allCategories);
   }
   show(data) {
     this.html.empty();
-    data.forEach(p => {
+    data.forEach((p) => {
       this.html.add([
         { template: "danh-muc", value: p.name },
-        { template: "duong-dan", value: p.url }
+        { template: "duong-dan", value: p.url },
       ]);
     });
   }
@@ -515,6 +540,7 @@ let banners = new Banners({ id: "banners" });
 let detail = new Details({
   name: "detail-name",
   price: "detail-price",
+  sale: "sale-price",
   categoryName: "detail-category",
   brandName: "detail-brand",
   attributeName: "detail-attribute",
@@ -522,14 +548,14 @@ let detail = new Details({
   imageOrthers: "detail-imageMore",
   description: "detail-description",
   detail: "detail-info",
-  guide: "detail-guide"
+  guide: "detail-guide",
 });
 
 let customer = new Customers({
   name: "customer-name",
   phone: "customer-phone",
   address: "customer-address",
-  order: "customer-order"
+  order: "customer-order",
 });
 
 let inputSearch = $("#input-search");
@@ -562,19 +588,19 @@ if (gobackBtn.length) {
 }
 
 /* EVENT */
-inputSearch.keyup(input => {
+inputSearch.keyup((input) => {
   const keyword = input.target.value;
   if (keyword.length > 1)
     search.load({ condition: `name_contains_i: "${keyword}"` });
 });
 /* SMOOTH */
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function(e) {
     e.preventDefault();
 
     document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth"
+      behavior: "smooth",
     });
   });
 });

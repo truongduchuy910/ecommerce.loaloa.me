@@ -13,7 +13,7 @@ let mongoUri =
     : "mongodb://localhost/loaloa";
 console.log(mongoUri);
 let keystone = new Keystone({
-  secureCookies: true,
+  secureCookies: process.env.NODE_ENV === "production",
   name: "loaloa",
   adapter: new MongooseAdapter({
     mongoUri,
