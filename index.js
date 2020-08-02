@@ -7,30 +7,35 @@ let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 let { Messenger } = require("./messenger/index");
 let { Host } = require("./host/index");
 let { callSendAPI } = require("./messenger/index");
+let mongoUri =
+  process.env.NODE_ENV === "production"
+    ? "mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa"
+    : "mongodb://localhost/loaloa";
+console.log(mongoUri);
 let keystone = new Keystone({
-  secureCookies: false,
+  secureCookies: true,
   name: "loaloa",
   adapter: new MongooseAdapter({
-    mongoUri: "mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa"
-  }), defaultAdapter: "lists",
-  onConnect: require("./onConnect")
+    mongoUri,
+  }),
+  onConnect: require("./onConnect"),
 });
 
 const fs = require("fs");
 const path = require("path");
 let files = fs.readdirSync("./lists");
-files.forEach(file => {
+files.forEach((file) => {
   if (path.extname(file) === ".js") {
     let list = require(`./lists/${file}`);
     keystone.createList(list.ref, list.config);
-    console.log(list.ref);
+    console.log(`create List ${list.ref}`);
   }
 });
 
 let { PasswordAuthStrategy } = require("@keystonejs/auth-password");
 let authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: "User"
+  list: "User",
 });
 
 new Host({ port: { from: 7000, to: 7011 } });
@@ -44,9 +49,9 @@ async function handleMessage(sender_psid, received_message) {
           payload: {
             template_type: "one_time_notif_req",
             title: "Đăng ký nhận tin",
-            payload: received_message.text
-          }
-        }
+            payload: received_message.text,
+          },
+        },
       }
     );
 }
@@ -70,8 +75,8 @@ async function handleOption(sender_psid, received_option) {
       variables: {
         user: received_option.payload,
         psid: sender_psid,
-        one_time_token: received_option.one_time_notif_token
-      }
+        one_time_token: received_option.one_time_notif_token,
+      },
     }
   );
   console.log(data);
@@ -83,10 +88,10 @@ module.exports = {
     new GraphQLApp(),
     new AdminUIApp({
       enableDefaultRoute: true,
-      authStrategy
+      authStrategy,
     }),
   ],
-  configureExpress: app => {
+  configureExpress: (app) => {
     let path = require("path");
     app.use(require("express").static(path.join(path.resolve(), "store")));
     const express = require("express"),
@@ -142,14 +147,14 @@ module.exports = {
                 {
                   type: "web_url",
                   url: "https://ad.loaloa.tech/admin",
-                  title: "Kiểm tra"
-                }
-              ]
-            }
-          }
+                  title: "Kiểm tra",
+                },
+              ],
+            },
+          },
         }
       );
       res.send({ success: true });
     });
-  }
+  },
 };
