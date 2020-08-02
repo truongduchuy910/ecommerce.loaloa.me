@@ -93,9 +93,12 @@ module.exports = {
   ],
   configureExpress: (app) => {
     let path = require("path");
+    app.set("trust proxy", true);
+
     app.use(require("express").static(path.join(path.resolve(), "store")));
     const express = require("express"),
       bodyParser = require("body-parser");
+
     app.use(bodyParser.json()); // creates express http server
     app.get("/messenger/webhook", (req, res) => {
       let VERIFY_TOKEN = "Loaloa.Media";
