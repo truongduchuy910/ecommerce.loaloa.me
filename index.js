@@ -1,8 +1,10 @@
 let { Keystone } = require("@keystonejs/keystone");
 
 const request = require("request");
-let { GraphQLApp } = require("@keystonejs/app-graphql");
-let { AdminUIApp } = require("@keystonejs/app-admin-ui");
+const { GraphQLApp } = require("@keystonejs/app-graphql");
+const { AdminUIApp } = require("@keystonejs/app-admin-ui");
+const { NextApp } = require("@keystonejs/app-next");
+
 let { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 let { Messenger } = require("./messenger/index");
 let { Host } = require("./host/index");
@@ -87,9 +89,9 @@ module.exports = {
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
-      enableDefaultRoute: true,
       authStrategy,
     }),
+    new NextApp({ dir: "app" }),
   ],
   configureExpress: (app) => {
     let path = require("path");

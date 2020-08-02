@@ -8,12 +8,12 @@ module.exports = {
       email: {
         type: Text,
         isUnique: true,
-        label: "Tài khoản"
+        label: "Tài khoản",
       },
       isAdmin: { type: Checkbox },
       password: {
         type: Password,
-        label: "Mật khẩu"
+        label: "Mật khẩu",
       },
       name: { type: Text },
       phone: { type: Text },
@@ -25,12 +25,34 @@ module.exports = {
       one_time_token: { type: Text },
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
     label: "Tài khoản",
     labelField: "email",
-    access: own,
+    access: {
+      create: ({ authentication: { item: user } }) => {
+        if (user && user.isAdmin) {
+          return true;
+        } else return false;
+      },
+      update: ({ authentication: { item: user } }) => {
+        if (user && !user.isAdmin) {
+          return true;
+        } else return false;
+      },
+      delete: ({ authentication: { item: user } }) => {
+        if (user && !user.isAdmin) {
+          return true;
+        } else return false;
+      },
+      read: ({ authentication: { item: user } }) => {
+        if (user) {
+          if (user.isAdmin) return true;
+          return { id: user.id };
+        } else return false;
+      },
+    },
     hooks: {
       afterDelete: async ({ existingItem = {} }) => {
         fileAdapter.delete(existingItem);
@@ -42,7 +64,7 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
-    }
-  }
+      },
+    },
+  },
 };

@@ -1070,7 +1070,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/styles */ "@material-ui/core/styles");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _src_theme__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../src/theme */ "./src/theme.js");
-var _jsxFileName = "/home/truongduchuy910/apps/loaloa/app/pages/_document.js";
+var _jsxFileName = "/home/huy/apps/loaloa/app/pages/_document.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -1081,23 +1081,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+//https://github.com/mui-org/material-ui/blob/master/examples/nextjs/pages/_document.js
 
 
 
 
 class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
   render() {
-    return __jsx("html", {
+    return __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Html"], {
       lang: "en",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 9
+        lineNumber: 10
       },
       __self: this
     }, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Head"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 11
       },
       __self: this
     }, __jsx("meta", {
@@ -1105,7 +1106,7 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
       content: _src_theme__WEBPACK_IMPORTED_MODULE_3__["default"].palette.primary.main,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 12
+        lineNumber: 13
       },
       __self: this
     }), __jsx("link", {
@@ -1113,25 +1114,25 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
       href: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 13
+        lineNumber: 14
       },
       __self: this
     })), __jsx("body", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 18
+        lineNumber: 19
       },
       __self: this
     }, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19
+        lineNumber: 20
       },
       __self: this
     }), __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 20
+        lineNumber: 21
       },
       __self: this
     })));
@@ -1140,28 +1141,6 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
 }
 
 MyDocument.getInitialProps = async ctx => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
-  // 4. app.render
-  // 5. page.render
-  // 6. document.render
-  //
-  // On the server with error:
-  // 1. document.getInitialProps
-  // 2. app.render
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. app.render
-  // 4. page.render
-  // Render app and page and get the context of the page with collected side effects.
   const sheets = new _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__["ServerStyleSheets"]();
   const originalRenderPage = ctx.renderPage;
 
@@ -1169,7 +1148,7 @@ MyDocument.getInitialProps = async ctx => {
     enhanceApp: App => props => sheets.collect(__jsx(App, _extends({}, props, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 56
+        lineNumber: 34
       },
       __self: undefined
     })))
@@ -1197,6 +1176,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/colors */ "@material-ui/core/colors");
 /* harmony import */ var _material_ui_core_colors__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_colors__WEBPACK_IMPORTED_MODULE_1__);
+//https://github.com/mui-org/material-ui/blob/master/examples/nextjs/src/theme.js
 
  // Create a theme instance.
 
@@ -1206,14 +1186,15 @@ const theme = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_0__["crea
       main: "#556cd6"
     },
     secondary: {
-      main: "#c0c0c0"
+      main: "#19857b"
     },
     error: {
       main: _material_ui_core_colors__WEBPACK_IMPORTED_MODULE_1__["red"].A400
     },
-    background: {
-      default: "#fff"
-    }
+    // background: {
+    //   default: "#fff",
+    // },
+    type: "light"
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (theme);

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function getErrorMessage(error) {\n  if (error.graphQLErrors) {\n    for (const graphQLError of error.graphQLErrors) {\n      if (graphQLError.extensions && graphQLError.extensions.code === 'BAD_USER_INPUT') {\n        return graphQLError.message;\n      }\n    }\n  }\n\n  return error.message;\n}","map":null,"metadata":{},"sourceType":"module"}
