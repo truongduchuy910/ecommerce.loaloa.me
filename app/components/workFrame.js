@@ -21,8 +21,9 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import EditIcon from "@material-ui/icons/Edit";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import MailIcon from "@material-ui/icons/Mail";
-import StoreIcon from '@material-ui/icons/Store';
+import StoreIcon from "@material-ui/icons/Store";
 import ImportExportIcon from "@material-ui/icons/ImportExport";
+import PublicIcon from "@material-ui/icons/Public";
 
 // data
 import { useState, useEffect } from "react";
@@ -127,6 +128,9 @@ export default function MiniDrawer(props) {
   const handleLogout = () => {
     router.push("/signout");
   };
+  function moveToContentManager() {
+    router.push("/admin");
+  }
 
   return (
     <div className={classes.root}>
@@ -178,18 +182,13 @@ export default function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button key="Account">
+          <ListItem button key="Account" onClick={() => router.push("/")}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
             <ListItemText primary={viewer?.email} />
           </ListItem>
-          <ListItem button key="Orders">
-            <ListItemIcon>
-              <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Đơn hàng" />
-          </ListItem>
+
           <ListItem button key="Sales">
             <ListItemIcon>
               <StoreIcon />
@@ -203,7 +202,7 @@ export default function MiniDrawer(props) {
             <ListItemText primary="Nhập xuất" />
           </ListItem>
 
-          <ListItem button key="Contents">
+          <ListItem button key="Contents" onClick={moveToContentManager}>
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>

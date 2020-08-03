@@ -1,5 +1,14 @@
-let { Checkbox, Text, Relationship, Integer } = require("@keystonejs/fields");
+let {
+  Checkbox,
+  Text,
+  Relationship,
+  Integer,
+  Decimal,
+  Select,
+} = require("@keystonejs/fields");
 let { DateTimeUtc } = require("@keystonejs/fields-datetime-utc");
+let { own, public } = require("./config/access");
+
 module.exports = {
   ref: "Stock",
   config: {
@@ -9,13 +18,20 @@ module.exports = {
         ref: "Product",
         isRequired: true,
       },
+      action: {
+        type: Select,
+        options: [
+          { label: "in", value: "in" },
+          { label: "out", value: "out" },
+        ],
+      },
+      price: {
+        type: Integer,
+      },
       quantity: {
         type: Integer,
       },
-      attributes: {
-        type: Relationship,
-        ref: "Attribute",
-      },
+      note: { type: Text },
       time: {
         type: DateTimeUtc,
       },
@@ -26,9 +42,14 @@ module.exports = {
     },
 
     hooks: {
-      validateInput: async ({ resolvedData, context, actions: { query } }) => {
-        resolvedData.seller = user.id;
-        resolvedData.time = Date();
+      validateInput: async ({
+        resolvedData,
+        context: { authedItem },
+        actions: { query },
+      }) => {
+        if (authedItem && !authedItem.isAdmin)
+          resolvedData.seller = authedItem.id;
+        resolvedData.time = new Date();
         return resolvedData;
       },
     },

@@ -54,7 +54,6 @@ module.exports = {
         ref: "Category",
         label: "Danh mục",
       },
-
       description: {
         type: Text,
         label: "Mô tả",
@@ -93,6 +92,9 @@ module.exports = {
           { value: "bestSeller", label: "Bán chạy" },
         ],
         label: "Phân loại",
+      },
+      quantity: {
+        type: Integer,
       },
       url: {
         type: Slug,

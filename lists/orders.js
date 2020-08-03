@@ -1,5 +1,7 @@
-let { Checkbox, Text, Relationship } = require("@keystonejs/fields");
+let { Checkbox, Text, Relationship, Integer } = require("@keystonejs/fields");
 let { DateTimeUtc } = require("@keystonejs/fields-datetime-utc");
+let { own, public } = require("./config/access");
+
 module.exports = {
   ref: "Order",
   config: {
@@ -11,9 +13,15 @@ module.exports = {
       },
       items: {
         type: Relationship,
-        ref: "Product",
+        ref: "OrderItem",
         many: true,
         isRequired: true,
+      },
+      total: {
+        type: Integer,
+      },
+      step: {
+        type: Integer,
       },
       time: {
         type: DateTimeUtc,
@@ -25,13 +33,17 @@ module.exports = {
     },
 
     hooks: {
-      validateInput: async ({ resolvedData, context, actions: { query } }) => {
-        resolvedData.seller = user.id;
-        resolvedData.time = Date();
+      validateInput: async ({
+        resolvedData,
+        context: { authedItem },
+        actions: { query },
+      }) => {
+        if (authedItem) resolvedData.seller = authedItem.id;
+        resolvedData.time = new Date();
         return resolvedData;
       },
     },
-    label: "Đơn",
+    label: "Đơn (new)",
     access: public,
   },
 };
