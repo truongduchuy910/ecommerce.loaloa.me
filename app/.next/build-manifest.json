@@ -25,7 +25,7 @@
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ],
-    "/signin": [
+    "/store": [
       "static/runtime/webpack.js",
       "static/runtime/main.js"
     ]

@@ -7,7 +7,9 @@ import {
   TableBody,
   TableContainer,
   Table,
+  Fab,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import formatMoney from "../lib/formatMoney";
 export default function OrderItem({ items }) {
   return (
@@ -28,7 +30,7 @@ export default function OrderItem({ items }) {
                 <TableRow key={item.id}>
                   <TableCell component="th" scope="row">
                     <img
-                      style={{ maxWidth: "100%", maxHeight: 80 }}
+                      style={{ maxWidth: "100%", maxHeight: 40 }}
                       src={
                         item.product.image
                           ? item.product.image.publicUrl

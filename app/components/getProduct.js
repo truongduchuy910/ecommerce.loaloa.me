@@ -53,19 +53,6 @@ export default function ProductItem() {
   return (
     <Paper className={classes.root}>
       <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Typography variant="body1" color="textSecondary">
-            Sản phẩm:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            label="Số lượng"
-          />
-        </Grid>
         <Grid item xs={6}>
           <TextField
             fullWidth

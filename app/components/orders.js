@@ -4,26 +4,23 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
+
 import { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
-import Link from "@material-ui/core/Link";
-import formatMoney from "../lib/formatMoney";
-import Customer from "./customer";
-import OrderItem from "./orderItem";
-import { Stepper, Step, StepLabel } from "@material-ui/core";
-import CreateOrder from "./createOrder";
+
+import Order from "./Order";
 const query = gql`
   query($limit: Int, $skip: Int) {
-    allOrders(orderBy: "time_DESC", first: $limit, skip: $skip) {
+    allOrders(orderBy: "step_ASC", first: $limit, skip: $skip) {
       id
+      time
       customer {
         id
         name
         phone
         address
       }
+      step
       items {
         id
         price
@@ -81,7 +78,7 @@ export default function orders({ newOrder, setNewOrder }) {
     let count = data?.allOrders.length;
     fetchMore({
       variables: {
-        limit: 12,
+        limit: 1,
         skip: count,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
@@ -96,46 +93,12 @@ export default function orders({ newOrder, setNewOrder }) {
     });
   }
 
-  // step
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = ["Đặt", "Xử lí", "Giao", "Thanh toán"];
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return !loading ? (
     <Grid container spacing={1}>
       {allOrders?.length ? (
         allOrders?.map((order) => (
           <Grid item xs={12} key={order.id}>
-            <Paper className={classes.root}>
-              <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <Typography variant="body1">Đơn:</Typography>
-              <Typography variant="body2" color="textSecondary">
-                Id: <Link color="primary">{order?.id}</Link>
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                Tổng:{" "}
-                <Link color="primary">{formatMoney(order?.total, 0)}</Link>
-              </Typography>
-              <Customer customer={order?.customer} />
-              <OrderItem items={order?.items} />
-            </Paper>
+            <Order order={order} nextStep={() => refetch()} />
           </Grid>
         ))
       ) : (

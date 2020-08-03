@@ -93,9 +93,232 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./components/createOrder.js":
+/***/ "./components/CreateCustomer.js":
+/*!**************************************!*\
+  !*** ./components/CreateCustomer.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customer; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Edit */ "@material-ui/icons/Edit");
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_6__);
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/CreateCustomer.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+
+
+
+const query = _apollo_client__WEBPACK_IMPORTED_MODULE_6__["gql"]`
+  query($limit: Int) {
+    allCustomers(first: $limit) {
+      id
+      name
+      phone
+      address
+    }
+  }
+`;
+const useStyles = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(theme => ({
+  root: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    maxWidth: 500
+  }
+}));
+function Customer({
+  onClick
+}) {
+  const classes = useStyles();
+  const {
+    0: drawer,
+    1: setDrawer
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+  const {
+    0: id,
+    1: setId
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const {
+    0: name,
+    1: setName
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const {
+    0: phone,
+    1: setPhone
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const {
+    0: address,
+    1: setAddress
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  let {
+    data,
+    loading,
+    error,
+    fetchMore,
+    refetch
+  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_6__["useQuery"])(query, {
+    variables: {
+      limit: 6
+    }
+  });
+  let allCustomers = data === null || data === void 0 ? void 0 : data.allCustomers;
+
+  function handleClick() {
+    onClick();
+    setDrawer(false);
+  }
+
+  function chooseCustomer({
+    customer
+  }) {
+    onClick({
+      customer
+    });
+    setDrawer(false);
+  }
+
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 64
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["IconButton"], {
+    color: "primary",
+    "aria-label": "add",
+    size: "small",
+    onClick: () => setDrawer(true),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 65
+    },
+    __self: this
+  }, __jsx(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 71
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Drawer"], {
+    open: drawer,
+    onClose: () => setDrawer(false),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 73
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Paper"], {
+    className: classes.root,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 74
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    container: true,
+    spacing: 1,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 75
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 76
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
+    fullWidth: true,
+    variant: "outlined",
+    size: "small",
+    label: "\u0110i\u1EC7n tho\u1EA1i",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 77
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 84
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
+    fullWidth: true,
+    variant: "outlined",
+    size: "small",
+    label: "T\xEAn",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 85
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 92
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
+    fullWidth: true,
+    variant: "outlined",
+    size: "small",
+    label: "\u0110\u1ECBa ch\u1EC9",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 93
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 100
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "contained",
+    size: "small",
+    color: "primary",
+    onClick: handleClick,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 101
+    },
+    __self: this
+  }, "Th\xEAm"))))));
+}
+
+/***/ }),
+
+/***/ "./components/CreateOrder.js":
 /*!***********************************!*\
-  !*** ./components/createOrder.js ***!
+  !*** ./components/CreateOrder.js ***!
   \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -119,23 +342,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Checkbox__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Checkbox__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _material_ui_core_Snackbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Snackbar */ "@material-ui/core/Snackbar");
 /* harmony import */ var _material_ui_core_Snackbar__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Snackbar__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/icons/Edit */ "@material-ui/icons/Edit");
-/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/CircularProgress */ "@material-ui/core/CircularProgress");
-/* harmony import */ var _material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "next/router");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _lib_laSoAdapter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../lib/laSoAdapter */ "./lib/laSoAdapter.js");
-/* harmony import */ var _lib_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../lib/form */ "./lib/form.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./customer */ "./components/customer.js");
-/* harmony import */ var _orderItem__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./orderItem */ "./components/orderItem.js");
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/createOrder.js";
+/* harmony import */ var _material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/CircularProgress */ "@material-ui/core/CircularProgress");
+/* harmony import */ var _material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_CircularProgress__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _lib_laSoAdapter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/laSoAdapter */ "./lib/laSoAdapter.js");
+/* harmony import */ var _lib_form__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../lib/form */ "./lib/form.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @material-ui/icons/Edit */ "@material-ui/icons/Edit");
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _Customer__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Customer */ "./components/Customer.js");
+/* harmony import */ var _Customers__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Customers */ "./components/Customers.js");
+/* harmony import */ var _orderItem__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./orderItem */ "./components/orderItem.js");
+/* harmony import */ var _Products__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Products */ "./components/Products.js");
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/CreateOrder.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -156,7 +384,11 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
-const createKetQuaMutation = _apollo_client__WEBPACK_IMPORTED_MODULE_11__["gql"]`
+
+
+
+
+const createKetQuaMutation = _apollo_client__WEBPACK_IMPORTED_MODULE_10__["gql"]`
   mutation(
     $cung: CungWhereUniqueInput
     $cungVi: CungViWhereUniqueInput
@@ -196,9 +428,8 @@ const createKetQuaMutation = _apollo_client__WEBPACK_IMPORTED_MODULE_11__["gql"]
 const useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["makeStyles"])(theme => ({
   root: {
     padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    minWidth: 200,
-    maxWidth: 600
+    marginBottom: theme.spacing(2),
+    height: "70vh"
   },
   icon: {
     marginRight: theme.spacing(1)
@@ -208,15 +439,35 @@ function createKetQuas({
   onCreate
 }) {
   const {
-    0: allProducts,
-    1: setAllProducts
+    0: customer,
+    1: setCustomer
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
+  const {
+    0: products,
+    1: setProducts
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const {
+    0: orderItems,
+    1: setOrderItems
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const {
+    0: sale,
+    1: setSale
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
   const {
     0: drawerStatus,
     1: setDrawerStatus
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
-  const [createKetQua] = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_11__["useMutation"])(createKetQuaMutation);
-  const router = Object(next_router__WEBPACK_IMPORTED_MODULE_10__["useRouter"])(); //
+  const {
+    0: order,
+    1: setOrder
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const [createKetQua] = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_10__["useMutation"])(createKetQuaMutation);
+  const router = Object(next_router__WEBPACK_IMPORTED_MODULE_9__["useRouter"])();
+  const {
+    0: items,
+    1: setItems
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]); //
 
   const {
     0: loading,
@@ -240,7 +491,7 @@ function createKetQuas({
       onCreate(data === null || data === void 0 ? void 0 : data.createKetQua);
       setLoading(false);
     } catch (error) {
-      setAlertMessage(Object(_lib_form__WEBPACK_IMPORTED_MODULE_13__["getErrorMessage"])(error));
+      setAlertMessage(Object(_lib_form__WEBPACK_IMPORTED_MODULE_12__["getErrorMessage"])(error));
       setAlertOpen(true);
       setLoading(false);
       await router.push("/");
@@ -269,35 +520,11 @@ function createKetQuas({
     setDrawerStatus(!drawerStatus);
   }
 
-  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 131
-    },
-    __self: this
-  }, __jsx(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    variant: "contained",
-    color: "primary",
-    fullWidth: true,
-    onClick: handleCreate,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 132
-    },
-    __self: this
-  }, "Create"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__["Drawer"], {
-    open: drawerStatus,
-    onClose: toggleDrawer,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 140
-    },
-    __self: this
-  }, __jsx(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_2___default.a, {
+  return __jsx(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_2___default.a, {
     className: classes.root,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 141
+      lineNumber: 139
     },
     __self: this
   }, __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -305,7 +532,7 @@ function createKetQuas({
     spacing: 1,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 142
+      lineNumber: 140
     },
     __self: this
   }, __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -313,100 +540,256 @@ function createKetQuas({
     xs: 12,
     __source: {
       fileName: _jsxFileName,
+      lineNumber: 141
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableContainer"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 142
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["Table"], {
+    "aria-label": "simple table",
+    __source: {
+      fileName: _jsxFileName,
       lineNumber: 143
     },
     __self: this
-  }, __jsx(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    variant: "contained",
-    color: "primary",
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableHead"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 144
     },
     __self: this
-  }, "Add Customer")), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    item: true,
-    xs: 12,
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableRow"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 148
+      lineNumber: 145
     },
     __self: this
-  }, __jsx(_customer__WEBPACK_IMPORTED_MODULE_16__["default"], {
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 149
+      lineNumber: 146
     },
     __self: this
-  })), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    item: true,
-    xs: 12,
+  }, __jsx(_Customers__WEBPACK_IMPORTED_MODULE_18__["default"], {
+    onClick: ({
+      customer
+    }) => {
+      console.log(customer);
+      setCustomer(customer);
+    },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 151
+      lineNumber: 147
     },
     __self: this
-  }, __jsx(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    variant: "contained",
-    color: "primary",
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 152
+      lineNumber: 154
     },
     __self: this
-  }, "Add Product")), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    item: true,
-    xs: 12,
+  }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 156
     },
     __self: this
-  }, __jsx(_orderItem__WEBPACK_IMPORTED_MODULE_17__["default"], {
-    items: true,
+  }, "\u0110i\u1EC7n tho\u1EA1i"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 157
     },
     __self: this
-  })), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
-    item: true,
-    xs: 6,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 159
-    },
-    __self: this
-  }, __jsx(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4___default.a, {
-    variant: "contained",
-    color: "primary",
+  }, "\u0110\u1ECBa ch\u1EC9"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableBody"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 160
     },
     __self: this
-  }, "Save"))), __jsx(_material_ui_core_Snackbar__WEBPACK_IMPORTED_MODULE_7___default.a, {
-    anchorOrigin: {
-      vertical: "bottom",
-      horizontal: "left"
-    },
-    open: alertOpen,
-    onClose: alertClose,
-    autoHideDuration: 3000,
-    message: alertMessage,
+  }, customer ? [customer].map(product => {
+    var _product$id;
+
+    return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableRow"], {
+      key: product.id,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 163
+      },
+      __self: this
+    }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 164
+      },
+      __self: this
+    }, (_product$id = product.id) === null || _product$id === void 0 ? void 0 : _product$id.toString().slice(0, 4), "..."), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 167
+      },
+      __self: this
+    }, product.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 168
+      },
+      __self: this
+    }, product.phone), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 169
+      },
+      __self: this
+    }, product.address));
+  }) : null)))), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    item: true,
+    xs: 12,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 165
+      lineNumber: 177
     },
     __self: this
-  }))));
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableContainer"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 178
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["Table"], {
+    "aria-label": "simple table",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 179
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableHead"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 180
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableRow"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 181
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 182
+    },
+    __self: this
+  }, __jsx(_Products__WEBPACK_IMPORTED_MODULE_20__["default"], {
+    onClick: ({
+      product
+    }) => {
+      setProducts([product]);
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 183
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 189
+    },
+    __self: this
+  }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 190
+    },
+    __self: this
+  }, "T\u1ED3n"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 191
+    },
+    __self: this
+  }, "Ni\xEAm y\u1EBFt"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 192
+    },
+    __self: this
+  }, "Gi\u1EA3m"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableBody"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 195
+    },
+    __self: this
+  }, (products === null || products === void 0 ? void 0 : products.length) ? products.map(product => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableRow"], {
+    key: product.id,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 198
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    component: "th",
+    scope: "row",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 199
+    },
+    __self: this
+  }, __jsx("img", {
+    style: {
+      maxWidth: "100%",
+      maxHeight: 40
+    },
+    src: product.image ? product.image.publicUrl : product.images[0].file.publicUrl,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 200
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 209
+    },
+    __self: this
+  }, product.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 210
+    },
+    __self: this
+  }, product.quantity), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 211
+    },
+    __self: this
+  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_21__["default"])(product.price, 0)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__["TableCell"], {
+    align: "right",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 214
+    },
+    __self: this
+  }, "- ", Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_21__["default"])(product.sale, 0)))) : null))))));
 }
 
 /***/ }),
 
-/***/ "./components/customer.js":
+/***/ "./components/Customer.js":
 /*!********************************!*\
-  !*** ./components/customer.js ***!
+  !*** ./components/Customer.js ***!
   \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -418,7 +801,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/customer.js";
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/Customer.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -488,33 +871,42 @@ function Customer({
 
 /***/ }),
 
-/***/ "./components/customers.js":
+/***/ "./components/Customers.js":
 /*!*********************************!*\
-  !*** ./components/customers.js ***!
+  !*** ./components/Customers.js ***!
   \*********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CustomerItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customer; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_4__);
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/customers.js";
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Edit */ "@material-ui/icons/Edit");
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _CreateCustomer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CreateCustomer */ "./components/CreateCustomer.js");
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/Customers.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
 
-const query = _apollo_client__WEBPACK_IMPORTED_MODULE_4__["gql"]`
+
+
+
+
+const query = _apollo_client__WEBPACK_IMPORTED_MODULE_6__["gql"]`
   query($limit: Int) {
     allCustomers(first: $limit) {
       id
@@ -527,161 +919,99 @@ const query = _apollo_client__WEBPACK_IMPORTED_MODULE_4__["gql"]`
 const useStyles = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(theme => ({
   root: {
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    width: 500,
+    maxWidth: "90vh"
+  },
+  search: {
+    padding: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    borderRadius: 8,
+    border: "1px solid #c0c0c0"
+  },
+  table: {
+    margin: theme.spacing(2),
+    padding: theme.spacing(2)
+  },
+  divider: {
+    height: 28,
+    margin: 4
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1
   }
 }));
-function CustomerItem() {
+function Customer({
+  onClick
+}) {
   const classes = useStyles();
+  const {
+    0: drawer,
+    1: setDrawer
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   let {
     data,
     loading,
     error,
     fetchMore,
     refetch
-  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_4__["useQuery"])(query, {
+  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_6__["useQuery"])(query, {
     variables: {
       limit: 6
     }
   });
   let allCustomers = data === null || data === void 0 ? void 0 : data.allCustomers;
-  return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableContainer"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 42
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Table"], {
-    "aria-label": "simple table",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 43
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableHead"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 44
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 45
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 46
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "T\xEAn",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 47
-    },
-    __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 54
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "\u0110i\u1EC7n tho\u1EA1i",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 55
-    },
-    __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 62
-    },
-    __self: this
-  }, "\u0110\u1ECBa ch\u1EC9"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableBody"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 65
-    },
-    __self: this
-  }, (allCustomers === null || allCustomers === void 0 ? void 0 : allCustomers.length) ? allCustomers.map(customer => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
-    key: customer.id,
-    hover: true,
-    onClick: () => {},
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 68
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    component: "th",
-    scope: "row",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 69
-    },
-    __self: this
-  }, customer.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 72
-    },
-    __self: this
-  }, customer.phone), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 73
-    },
-    __self: this
-  }, customer.address))) : null)));
-}
 
-/***/ }),
-
-/***/ "./components/getCustomer.js":
-/*!***********************************!*\
-  !*** ./components/getCustomer.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CustomerItem; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./customers */ "./components/customers.js");
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/getCustomer.js";
-
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
-
-const useStyles = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(theme => ({
-  root: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+  function handleClick() {
+    onClick();
+    setDrawer(false);
   }
-}));
-function CustomerItem() {
-  const classes = useStyles();
-  return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Paper"], {
+
+  function chooseCustomer({
+    customer
+  }) {
+    onClick({
+      customer
+    });
+    setDrawer(false);
+  }
+
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 75
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["IconButton"], {
+    color: "primary",
+    "aria-label": "add",
+    size: "small",
+    onClick: () => setDrawer(true),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 76
+    },
+    __self: this
+  }, __jsx(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_3___default.a, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 82
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Drawer"], {
+    open: drawer,
+    onClose: () => setDrawer(false),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 84
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Paper"], {
     className: classes.root,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 85
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
@@ -689,7 +1019,7 @@ function CustomerItem() {
     spacing: 1,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 30
+      lineNumber: 86
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
@@ -697,80 +1027,335 @@ function CustomerItem() {
     xs: 12,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 31
+      lineNumber: 87
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "T\xEAn",
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Box"], {
+    className: classes.search,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 32
+      lineNumber: 88
     },
     __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+  }, __jsx(_CreateCustomer__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    className: classes.iconButton,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 89
+    },
+    __self: this
+  }), " ", __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Divider"], {
+    className: classes.divider,
+    orientation: "vertical",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 90
+    },
+    __self: this
+  }), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["InputBase"], {
+    className: classes.input,
+    placeholder: "T\xECm ki\u1EBFm",
+    inputProps: {
+      "aria-label": "Tìm kiếm"
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 91
+    },
+    __self: this
+  }))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
     item: true,
     xs: 12,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 34
+      lineNumber: 99
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "\u0110i\u1EC7n tho\u1EA1i",
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableContainer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 35
+      lineNumber: 100
     },
     __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 12,
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+    "aria-label": "simple table",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 42
+      lineNumber: 101
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "\u0110\u1ECBa ch\u1EC9",
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableHead"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 43
+      lineNumber: 102
     },
     __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 103
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 104
+    },
+    __self: this
+  }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 105
+    },
+    __self: this
+  }, "\u0110i\u1EC7n tho\u1EA1i"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 106
+    },
+    __self: this
+  }, "\u0110\u1ECBa ch\u1EC9"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableBody"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 109
+    },
+    __self: this
+  }, (allCustomers === null || allCustomers === void 0 ? void 0 : allCustomers.length) ? allCustomers.map(customer => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
+    key: customer.id,
+    hover: true,
+    onClick: () => {
+      chooseCustomer({
+        customer
+      });
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 112
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    component: "th",
+    scope: "row",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 119
+    },
+    __self: this
+  }, customer.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 122
+    },
+    __self: this
+  }, customer.phone), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 123
+    },
+    __self: this
+  }, customer.address))) : null))))))));
+}
+
+/***/ }),
+
+/***/ "./components/Order.js":
+/*!*****************************!*\
+  !*** ./components/Order.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Order; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_styles_makeStyles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/styles/makeStyles */ "@material-ui/core/styles/makeStyles");
+/* harmony import */ var _material_ui_core_styles_makeStyles__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_styles_makeStyles__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Customer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Customer */ "./components/Customer.js");
+/* harmony import */ var _orderItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./orderItem */ "./components/orderItem.js");
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _lib_form__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../lib/form */ "./lib/form.js");
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/Order.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
+
+
+
+
+
+
+const steps = ["Đặt", "Xử lí", "Giao", "Thanh toán"];
+const updateStepQuery = _apollo_client__WEBPACK_IMPORTED_MODULE_6__["gql"]`
+  mutation($id: ID!, $step: Int) {
+    updateOrder(id: $id, data: { step: $step }) {
+      id
+    }
+  }
+`;
+const useStyles = _material_ui_core_styles_makeStyles__WEBPACK_IMPORTED_MODULE_1___default()(theme => ({
+  root: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  btn: {
+    marginTop: theme.spacing(2)
+  }
+}));
+function Order({
+  order,
+  nextStep
+}) {
+  const classes = useStyles();
+  const [updateStep] = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_6__["useMutation"])(updateStepQuery);
+  const {
+    0: errorMsg,
+    1: setErrorMsg
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+  const [activeStep, setActiveStep] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(0);
+
+  async function handleNext({
+    id,
+    step
+  }) {
+    try {
+      const {
+        data
+      } = await updateStep({
+        variables: {
+          id,
+          step
+        }
+      });
+      nextStep();
+    } catch (error) {
+      setErrorMsg(Object(_lib_form__WEBPACK_IMPORTED_MODULE_7__["getErrorMessage"])(error));
+    }
+  }
+
+  return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Paper"], {
+    className: classes.root,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 47
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Stepper"], {
+    activeStep: order === null || order === void 0 ? void 0 : order.step,
+    alternativeLabel: true,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 48
+    },
+    __self: this
+  }, steps.map(label => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Step"], {
+    key: label,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 50
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-    variant: "contained",
-    color: "primary",
-    fullWidth: true,
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["StepLabel"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 51
     },
     __self: this
-  }, "Ghi v\xE0o h\xF3a \u0111\u01A1n"))));
+  }, label)))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], {
+    variant: "body1",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 55
+    },
+    __self: this
+  }, "\u0110\u01A1n:"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], {
+    variant: "body2",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 56
+    },
+    __self: this
+  }, "C\u1EADp nh\u1EADt l\xFAc:", " ", __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    color: "primary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 58
+    },
+    __self: this
+  }, new Date(order === null || order === void 0 ? void 0 : order.time).toLocaleString("tr-TR"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], {
+    variant: "body2",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 62
+    },
+    __self: this
+  }, "Id: ", __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    color: "primary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 63
+    },
+    __self: this
+  }, "#", order === null || order === void 0 ? void 0 : order.id)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], {
+    variant: "body2",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 65
+    },
+    __self: this
+  }, "T\u1ED5ng: ", __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+    color: "primary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 66
+    },
+    __self: this
+  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_5__["default"])(order === null || order === void 0 ? void 0 : order.total, 0))), __jsx(_Customer__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    customer: order === null || order === void 0 ? void 0 : order.customer,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 68
+    },
+    __self: this
+  }), __jsx(_orderItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    items: order === null || order === void 0 ? void 0 : order.items,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 69
+    },
+    __self: this
+  }), order.step < 4 ? __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    size: "small",
+    variant: "contained",
+    color: "primary",
+    className: classes.btn,
+    onClick: () => handleNext({
+      id: order.id,
+      step: order.step + 1
+    }),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 71
+    },
+    __self: this
+  }, "\u0110\xE3 ", steps[order.step], " xong") : null);
 }
 
 /***/ }),
 
-/***/ "./components/getProduct.js":
-/*!**********************************!*\
-  !*** ./components/getProduct.js ***!
-  \**********************************/
+/***/ "./components/Products.js":
+/*!********************************!*\
+  !*** ./components/Products.js ***!
+  \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -781,22 +1366,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
-/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./products */ "./components/products.js");
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/getProduct.js";
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
+/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/icons/Edit */ "@material-ui/icons/Edit");
+/* harmony import */ var _material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Edit__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_6__);
+var _jsxFileName = "/home/huy/apps/loaloa/app/components/Products.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
- //import Autocomplete from "@material-ui/lab/Autocomplete";
 
 
 
 
-const query = _apollo_client__WEBPACK_IMPORTED_MODULE_4__["gql"]`
+
+
+const query = _apollo_client__WEBPACK_IMPORTED_MODULE_5__["gql"]`
   query($limit: Int) {
     allProducts(first: $limit) {
       id
@@ -817,122 +1406,269 @@ const query = _apollo_client__WEBPACK_IMPORTED_MODULE_4__["gql"]`
 const useStyles = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(theme => ({
   root: {
     padding: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    width: 500,
+    maxWidth: "90vh"
+  },
+  search: {
+    padding: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    borderRadius: 8,
+    border: "1px solid #c0c0c0"
+  },
+  table: {
+    margin: theme.spacing(2),
+    padding: theme.spacing(2)
+  },
+  divider: {
+    height: 28,
+    margin: 4
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1
   }
 }));
-function ProductItem() {
+function ProductItem({
+  onClick
+}) {
   const classes = useStyles();
+  const {
+    0: drawer,
+    1: setDrawer
+  } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   let {
     data,
     loading,
     error,
     fetchMore,
     refetch
-  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_4__["useQuery"])(query, {
+  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_5__["useQuery"])(query, {
     variables: {
       limit: 6
     }
   });
   let allProducts = data === null || data === void 0 ? void 0 : data.allProducts;
-  return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Paper"], {
-    className: classes.root,
+
+  function handleClick({
+    product
+  }) {
+    setDrawer(false);
+    onClick({
+      product
+    });
+  }
+
+  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 54
+      lineNumber: 76
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    container: true,
-    spacing: 1,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 55
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 12,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 56
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Typography"], {
-    variant: "body1",
-    color: "textSecondary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 57
-    },
-    __self: this
-  }, "S\u1EA3n ph\u1EA9m:")), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 6,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 61
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "S\u1ED1 l\u01B0\u1EE3ng",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 62
-    },
-    __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 6,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 69
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "Gi\u1EA3m gi\xE1",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 70
-    },
-    __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 12,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 78
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-    variant: "contained",
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["IconButton"], {
     color: "primary",
-    fullWidth: true,
+    "aria-label": "add",
+    size: "small",
+    onClick: () => setDrawer(true),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 79
+      lineNumber: 77
     },
     __self: this
-  }, "Ghi v\xE0o h\xF3a \u0111\u01A1n")), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
-    item: true,
-    xs: 12,
+  }, __jsx(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_6___default.a, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 84
+      lineNumber: 83
     },
     __self: this
-  }, __jsx(_products__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Drawer"], {
+    open: drawer,
+    onClose: () => setDrawer(false),
     __source: {
       fileName: _jsxFileName,
       lineNumber: 85
     },
     __self: this
-  }))));
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Paper"], {
+    className: classes.root,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 86
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    container: true,
+    spacing: 2,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 87
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 88
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Box"], {
+    className: classes.search,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 89
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["InputBase"], {
+    className: classes.input,
+    placeholder: "T\xECm ki\u1EBFm",
+    inputProps: {
+      "aria-label": "Tìm kiếm"
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 91
+    },
+    __self: this
+  }))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    item: true,
+    xs: 12,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 98
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableContainer"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 99
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+    "aria-label": "simple table",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 100
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableHead"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 101
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 102
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 103
+    },
+    __self: this
+  }, "\u1EA2nh"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 104
+    },
+    __self: this
+  }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 105
+    },
+    __self: this
+  }, "T\u1ED3n"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 106
+    },
+    __self: this
+  }, "Gi\xE1"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 107
+    },
+    __self: this
+  }, "Gi\u1EA3m"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableBody"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 110
+    },
+    __self: this
+  }, (allProducts === null || allProducts === void 0 ? void 0 : allProducts.length) ? allProducts.map(product => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
+    key: product.id,
+    hover: true,
+    onClick: () => handleClick({
+      product
+    }),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 113
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    component: "th",
+    scope: "row",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 118
+    },
+    __self: this
+  }, __jsx("img", {
+    style: {
+      maxWidth: "100%",
+      maxHeight: 40,
+      margin: 0
+    },
+    src: product.image ? product.image.publicUrl : product.images[0].file.publicUrl,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 119
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 132
+    },
+    __self: this
+  }, product.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 133
+    },
+    __self: this
+  }, product.quantity), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    align: "right",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 134
+    },
+    __self: this
+  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_4__["default"])(product.price, 0)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+    align: "right",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 137
+    },
+    __self: this
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Typography"], {
+    variant: "body2",
+    color: "textSecondary",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 138
+    },
+    __self: this
+  }, "- ", Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_4__["default"])(product.sale, 0), " \u0111")))) : null))))))));
 }
 
 /***/ }),
@@ -951,10 +1687,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Add */ "@material-ui/icons/Add");
+/* harmony import */ var _material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Add__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
 var _jsxFileName = "/home/huy/apps/loaloa/app/components/orderItem.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 function OrderItem({
@@ -963,72 +1702,72 @@ function OrderItem({
   return __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableContainer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 16
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     "aria-label": "simple table",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 17
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableHead"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 18
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 19
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 20
     },
     __self: this
   }), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 21
     },
     __self: this
   }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20
+      lineNumber: 22
     },
     __self: this
   }, "SL"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 21
+      lineNumber: 23
     },
     __self: this
   }, "B\xE1n"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 22
+      lineNumber: 24
     },
     __self: this
   }, "Ni\xEAm y\u1EBFt"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableBody"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 27
     },
     __self: this
   }, (items === null || items === void 0 ? void 0 : items.length) ? items.map(item => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
     key: item.id,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 30
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
@@ -1036,46 +1775,46 @@ function OrderItem({
     scope: "row",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 31
     },
     __self: this
   }, __jsx("img", {
     style: {
       maxWidth: "100%",
-      maxHeight: 80
+      maxHeight: 40
     },
     src: item.product.image ? item.product.image.publicUrl : item.product.images[0].file.publicUrl,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 30
+      lineNumber: 32
     },
     __self: this
   })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 39
+      lineNumber: 41
     },
     __self: this
   }, item.product.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 40
+      lineNumber: 42
     },
     __self: this
   }, item.quantity), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 41
+      lineNumber: 43
     },
     __self: this
-  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_2__["default"])(item.price, 0)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
+  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__["default"])(item.price, 0)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
     align: "right",
     color: "textSecondary",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 44
+      lineNumber: 46
     },
     __self: this
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Typography"], {
@@ -1083,10 +1822,10 @@ function OrderItem({
     color: "textSecondary",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 45
+      lineNumber: 47
     },
     __self: this
-  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_2__["default"])(item.product.price, 0))))) : null)));
+  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__["default"])(item.product.price, 0))))) : null)));
 }
 
 /***/ }),
@@ -1115,20 +1854,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Button */ "@material-ui/core/Button");
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _material_ui_core_Box__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Box */ "@material-ui/core/Box");
-/* harmony import */ var _material_ui_core_Box__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Box__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Divider */ "@material-ui/core/Divider");
-/* harmony import */ var _material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Divider__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _material_ui_core_Link__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/Link */ "@material-ui/core/Link");
-/* harmony import */ var _material_ui_core_Link__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core_Link__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./customer */ "./components/customer.js");
-/* harmony import */ var _orderItem__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./orderItem */ "./components/orderItem.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _createOrder__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./createOrder */ "./components/createOrder.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Order__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Order */ "./components/Order.js");
 var _jsxFileName = "/home/huy/apps/loaloa/app/components/orders.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
@@ -1141,23 +1869,18 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
-
-
-
-
-
-
-
-const query = _apollo_client__WEBPACK_IMPORTED_MODULE_9__["gql"]`
+const query = _apollo_client__WEBPACK_IMPORTED_MODULE_7__["gql"]`
   query($limit: Int, $skip: Int) {
-    allOrders(orderBy: "time_DESC", first: $limit, skip: $skip) {
+    allOrders(orderBy: "step_ASC", first: $limit, skip: $skip) {
       id
+      time
       customer {
         id
         name
         phone
         address
       }
+      step
       items {
         id
         price
@@ -1215,7 +1938,7 @@ function orders({
     error,
     fetchMore,
     refetch
-  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_9__["useQuery"])(query, {
+  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_7__["useQuery"])(query, {
     variables: {
       limit: 1,
       skip: 0
@@ -1233,7 +1956,7 @@ function orders({
     let count = data === null || data === void 0 ? void 0 : data.allOrders.length;
     fetchMore({
       variables: {
-        limit: 12,
+        limit: 1,
         skip: count
       },
       updateQuery: (prev, {
@@ -1249,30 +1972,14 @@ function orders({
         });
       }
     });
-  } // step
-
-
-  const [activeStep, setActiveStep] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(0);
-  const steps = ["Đặt", "Xử lí", "Giao", "Thanh toán"];
-
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  }
 
   return !loading ? __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
     container: true,
     spacing: 1,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 116
+      lineNumber: 97
     },
     __self: this
   }, (allOrders === null || allOrders === void 0 ? void 0 : allOrders.length) ? allOrders === null || allOrders === void 0 ? void 0 : allOrders.map(order => __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -1281,93 +1988,22 @@ function orders({
     key: order.id,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 119
+      lineNumber: 100
     },
     __self: this
-  }, __jsx(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_2___default.a, {
-    className: classes.root,
+  }, __jsx(_Order__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    order: order,
+    nextStep: () => refetch(),
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 120
+      lineNumber: 101
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__["Stepper"], {
-    activeStep: activeStep,
-    alternativeLabel: true,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 121
-    },
-    __self: this
-  }, steps.map(label => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__["Step"], {
-    key: label,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 123
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_14__["StepLabel"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 124
-    },
-    __self: this
-  }, label)))), __jsx(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default.a, {
+  }))) : __jsx(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default.a, {
     variant: "body1",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 128
-    },
-    __self: this
-  }, "\u0110\u01A1n:"), __jsx(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default.a, {
-    variant: "body2",
-    color: "textSecondary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 129
-    },
-    __self: this
-  }, "Id: ", __jsx(_material_ui_core_Link__WEBPACK_IMPORTED_MODULE_10___default.a, {
-    color: "primary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 130
-    },
-    __self: this
-  }, order === null || order === void 0 ? void 0 : order.id)), __jsx(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default.a, {
-    variant: "body2",
-    color: "textSecondary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 132
-    },
-    __self: this
-  }, "T\u1ED5ng:", " ", __jsx(_material_ui_core_Link__WEBPACK_IMPORTED_MODULE_10___default.a, {
-    color: "primary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 134
-    },
-    __self: this
-  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_11__["default"])(order === null || order === void 0 ? void 0 : order.total, 0))), __jsx(_customer__WEBPACK_IMPORTED_MODULE_12__["default"], {
-    customer: order === null || order === void 0 ? void 0 : order.customer,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 136
-    },
-    __self: this
-  }), __jsx(_orderItem__WEBPACK_IMPORTED_MODULE_13__["default"], {
-    items: order === null || order === void 0 ? void 0 : order.items,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 137
-    },
-    __self: this
-  })))) : __jsx(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_5___default.a, {
-    variant: "body1",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 142
+      lineNumber: 105
     },
     __self: this
   }, "Danh s\xE1ch k\u1EBFt qu\u1EA3 tr\u1ED7ng."), __jsx(_material_ui_core_Grid__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -1377,7 +2013,7 @@ function orders({
     lg: 2,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 145
+      lineNumber: 108
     },
     __self: this
   }, moreResult && (allOrders === null || allOrders === void 0 ? void 0 : allOrders.length) ? __jsx(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_6___default.a, {
@@ -1387,7 +2023,7 @@ function orders({
     onClick: loadingMore,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 147
+      lineNumber: 110
     },
     __self: this
   }, "Xem th\xEAm") : null)) : __jsx(_material_ui_lab_Skeleton__WEBPACK_IMPORTED_MODULE_4___default.a, {
@@ -1396,223 +2032,10 @@ function orders({
     height: "60vh",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 159
+      lineNumber: 122
     },
     __self: this
   });
-}
-
-/***/ }),
-
-/***/ "./components/products.js":
-/*!********************************!*\
-  !*** ./components/products.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ProductItem; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/icons/Search */ "@material-ui/icons/Search");
-/* harmony import */ var _material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_Search__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../lib/formatMoney */ "./lib/formatMoney.js");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @apollo/client */ "@apollo/client");
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_4__);
-var _jsxFileName = "/home/huy/apps/loaloa/app/components/products.js";
-
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
-
-
-const query = _apollo_client__WEBPACK_IMPORTED_MODULE_4__["gql"]`
-  query($limit: Int) {
-    allProducts(first: $limit) {
-      id
-      image {
-        publicUrl
-      }
-      images {
-        file {
-          publicUrl
-        }
-      }
-      name
-      price
-      sale
-    }
-  }
-`;
-const useStyles = Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(theme => ({
-  root: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  }
-}));
-function ProductItem() {
-  const classes = useStyles();
-  let {
-    data,
-    loading,
-    error,
-    fetchMore,
-    refetch
-  } = Object(_apollo_client__WEBPACK_IMPORTED_MODULE_4__["useQuery"])(query, {
-    variables: {
-      limit: 6
-    }
-  });
-  let allProducts = data === null || data === void 0 ? void 0 : data.allProducts;
-  console.log(allProducts);
-  return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 51
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TextField"], {
-    fullWidth: true,
-    variant: "outlined",
-    size: "small",
-    label: "T\xECm ki\u1EBFm",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 52
-    },
-    __self: this
-  }), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableContainer"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 53
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Table"], {
-    "aria-label": "simple table",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 54
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableHead"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 55
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 56
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 57
-    },
-    __self: this
-  }, "H\xECnh \u1EA3nh"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 58
-    },
-    __self: this
-  }, "T\xEAn"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    align: "right",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 59
-    },
-    __self: this
-  }, "T\u1ED3n"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    align: "right",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 60
-    },
-    __self: this
-  }, "Gi\xE1"), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    align: "right",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 61
-    },
-    __self: this
-  }, "Gi\u1EA3m"))), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableBody"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 64
-    },
-    __self: this
-  }, (allProducts === null || allProducts === void 0 ? void 0 : allProducts.length) ? allProducts.map(product => __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableRow"], {
-    key: product.id,
-    hover: true,
-    onClick: () => {},
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 67
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    component: "th",
-    scope: "row",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 68
-    },
-    __self: this
-  }, __jsx("img", {
-    style: {
-      maxWidth: "100%",
-      maxHeight: 80
-    },
-    src: product.image ? product.image.publicUrl : product.images[0].file.publicUrl,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 69
-    },
-    __self: this
-  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 78
-    },
-    __self: this
-  }, product.name), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 79
-    },
-    __self: this
-  }, product.quantity), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    align: "right",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 80
-    },
-    __self: this
-  }, Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__["default"])(product.price, 0)), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["TableCell"], {
-    align: "right",
-    color: "textSecondary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 83
-    },
-    __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Typography"], {
-    variant: "body2",
-    color: "textSecondary",
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 84
-    },
-    __self: this
-  }, "- ", Object(_lib_formatMoney__WEBPACK_IMPORTED_MODULE_3__["default"])(product.sale, 0), " \u0111")))) : null))));
 }
 
 /***/ }),
@@ -1971,6 +2394,7 @@ function MiniDrawer(props) {
   })), __jsx(_material_ui_core_ListItem__WEBPACK_IMPORTED_MODULE_14___default.a, {
     button: true,
     key: "Sales",
+    onClick: () => router.push("/store"),
     __source: {
       fileName: _jsxFileName,
       lineNumber: 192
@@ -2300,16 +2724,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_workFrame__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/workFrame */ "./components/workFrame.js");
 /* harmony import */ var _components_orders__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/orders */ "./components/orders.js");
-/* harmony import */ var _components_createOrder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/createOrder */ "./components/createOrder.js");
-/* harmony import */ var _components_getProduct__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/getProduct */ "./components/getProduct.js");
-/* harmony import */ var _components_getCustomer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/getCustomer */ "./components/getCustomer.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_CreateOrder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/CreateOrder */ "./components/CreateOrder.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__);
 var _jsxFileName = "/home/huy/apps/loaloa/app/pages/index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-
 
 
 
@@ -2319,20 +2739,36 @@ function Index() {
   return __jsx(_components_workFrame__WEBPACK_IMPORTED_MODULE_1__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 8
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Grid"], {
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
     container: true,
     spacing: 1,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 12
+      lineNumber: 9
     },
     __self: this
-  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__["Grid"], {
+  }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
     item: true,
     xs: 12,
+    lg: 6,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 10
+    },
+    __self: this
+  }, __jsx(_components_CreateOrder__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 11
+    },
+    __self: this
+  })), __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
+    item: true,
+    xs: 12,
+    lg: 6,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 13
@@ -2391,17 +2827,6 @@ module.exports = require("@material-ui/core");
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/core/AppBar");
-
-/***/ }),
-
-/***/ "@material-ui/core/Box":
-/*!****************************************!*\
-  !*** external "@material-ui/core/Box" ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/Box");
 
 /***/ }),
 
@@ -2501,17 +2926,6 @@ module.exports = require("@material-ui/core/Grid");
 /***/ (function(module, exports) {
 
 module.exports = require("@material-ui/core/IconButton");
-
-/***/ }),
-
-/***/ "@material-ui/core/Link":
-/*!*****************************************!*\
-  !*** external "@material-ui/core/Link" ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/Link");
 
 /***/ }),
 

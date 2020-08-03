@@ -189,7 +189,7 @@ export default function MiniDrawer(props) {
             <ListItemText primary={viewer?.email} />
           </ListItem>
 
-          <ListItem button key="Sales">
+          <ListItem button key="Sales" onClick={() => router.push("/store")}>
             <ListItemIcon>
               <StoreIcon />
             </ListItemIcon>
