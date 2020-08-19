@@ -1,38 +1,65 @@
-function admin({ authentication: { item: user } }) {
-  return Boolean(user && user.isAdmin);
-}
-function user({ authentication: { item: user } }) {
-  return Boolean(user);
-}
 function public({ authentication: { item: user } }) {
-  if (user && !user.isAdmin) {
+  if (user) {
+    if (user.isAdmin) return true;
+    if (user.isSeller) return { seller: { id: user.id } };
+  }
+  return true;
+}
+function own({ authentication: { item: user } }) {
+  if (user) {
+    if (user.isAdmin) return true;
+    if (user.isSeller) return { seller: { id: user.id } };
     return { seller: { id: user.id } };
-  } else return true;
+  }
+  return false;
+}
+function ownSeller({ authentication: { item: user } }) {
+  if (user) {
+    if (user.isAdmin) return true;
+    if (user.isSeller)
+      return {
+        OR: [{ ofSeller: { id: user.id } }, { seller: { id: user.id } }],
+      };
+    return { seller: { id: user.id } };
+  }
+  return false;
+}
+
+function user({ authentication: { item: user } }) {
+  if (user) {
+    return true;
+  }
+  return false;
+}
+function seller({ authentication: { item: user } }) {
+  if (user) {
+    if (user.isAdmin) return true;
+    if (user.isSeller) return true;
+  }
+  return false;
 }
 module.exports.access = {
-  user,
   public,
-  admin
+  own,
+};
+
+module.exports.public = {
+  create: seller,
+  update: seller,
+  delete: seller,
+  read: public,
 };
 
 module.exports.own = {
   create: user,
-  update: user,
-  delete: user,
-  read: public
+  update: own,
+  delete: own,
+  read: own,
 };
 
-module.exports.public = {
-  create: true,
-  update: true,
-  delete: user,
-  read: public
+module.exports.ownSeller = {
+  create: user,
+  update: own,
+  delete: own,
+  read: ownSeller,
 };
-module.exports.admin = {
-  create: admin,
-  update: admin,
-  delete: admin,
-  read: admin
-};
-// }
-//EAAExUahkTb0BACitsenFKxpJ7ZAuilJh5WPX9fd91I6QHZBmUG8RJ3R7WwB3QlN5XiS1ebph8QVar85Uv3whBybmypX40fHCtJsd9MZACwdO1WEyRj7b0KZAVdEPzoZCYeZArIn2PmeJQl5NZC8EqcCkikl5ZAZB3Ww6lab89Bq8Cmb9WtIaBUNn8ZBe4tnR88NbYZD

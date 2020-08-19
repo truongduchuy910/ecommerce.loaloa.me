@@ -7,34 +7,41 @@ let {
   File,
 } = require("@keystonejs/fields");
 let { fileAdapter } = require("../store/index");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Product",
   config: {
     fields: {
+      image: {
+        type: File,
+        adapter: fileAdapter,
+        hooks: {
+          beforeChange: ({ existingItem = {} }) => {
+            if (existingItem.image) fileAdapter.delete(existingItem.image);
+          },
+        },
+        label: "Hình ảnh chi tiết",
+        isRequired: true,
+      },
       name: {
         type: Text,
         isRequired: true,
         label: "Tên sản phẩm (Bắt buộc)",
-        schemaDoc: "Tên mỗi sản phẩm phải là duy nhất, không được trùng lặp",
       },
       price: {
         type: Integer,
         isRequired: true,
         label: "Giá (Bắt buộc)",
-        schemaDoc: "Giá bán thông thường",
       },
       sale: {
         type: Integer,
         label: "Giá Sale",
-        schemaDoc: "Giá Sale",
       },
       images: {
         type: Relationship,
         ref: "Gallery.product",
-        isRequired: true,
-        label: "Hình hiển thị (Bắt buộc)",
+        label: "Hình hiển thị",
         many: true,
       },
       brand: {
@@ -57,8 +64,11 @@ module.exports = {
         type: File,
         adapter: fileAdapter,
         hooks: {
-          beforeChange: ({ existingItem = {} }) =>
-            fileAdapter.delete(existingItem),
+          beforeChange: ({ existingItem = {} }) => {
+            if (fileAdapter.file) {
+              fileAdapter.delete(existingItem.file);
+            }
+          },
         },
         label: "Hình ảnh chi tiết",
       },
@@ -68,10 +78,11 @@ module.exports = {
         schemaDoc: "Hướng dẫn sử dụng",
         isMultiline: true,
       },
-      attributes: {
+
+      attributeGroups: {
         type: Relationship,
-        ref: "Attribute",
-        label: "Thuộc tính khác",
+        ref: "AttributeGroup",
+        label: "Nhóm thuộc tính",
         many: true,
       },
       suggestions: {
@@ -82,11 +93,15 @@ module.exports = {
         ],
         label: "Phân loại",
       },
+      quantity: {
+        type: Integer,
+      },
       url: {
         type: Slug,
         from: "name",
         schemaDoc: "Đường dẫn",
       },
+      // create by
       seller: {
         type: Relationship,
         ref: "User",
@@ -94,7 +109,9 @@ module.exports = {
     },
     hooks: {
       afterDelete: async ({ existingItem = {} }) => {
-        fileAdapter.delete(existingItem);
+        if (fileAdapter.file) {
+          fileAdapter.delete(existingItem.file);
+        }
       },
       resolveInput: async ({ resolvedData, context }) => {
         if (resolvedData.file && !resolvedData.name)
@@ -107,6 +124,6 @@ module.exports = {
     },
     label: "Sản phẩm",
     labelField: "name",
-    access: own,
+    access: public,
   },
 };
