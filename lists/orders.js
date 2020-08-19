@@ -1,6 +1,6 @@
 let { Checkbox, Text, Relationship, Integer } = require("@keystonejs/fields");
 let { DateTimeUtc } = require("@keystonejs/fields-datetime-utc");
-let { own, public } = require("./config/access");
+let { own, public, ownSeller } = require("./config/access");
 
 module.exports = {
   ref: "Order",
@@ -17,6 +17,9 @@ module.exports = {
         many: true,
         isRequired: true,
       },
+      sale: {
+        type: Integer,
+      },
       total: {
         type: Integer,
       },
@@ -26,6 +29,11 @@ module.exports = {
       time: {
         type: DateTimeUtc,
       },
+      ofSeller: {
+        type: Relationship,
+        ref: "User",
+      },
+      // create by
       seller: {
         type: Relationship,
         ref: "User",
@@ -44,6 +52,6 @@ module.exports = {
       },
     },
     label: "Đơn (new)",
-    access: public,
+    access: ownSeller,
   },
 };

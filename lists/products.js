@@ -7,7 +7,7 @@ let {
   File,
 } = require("@keystonejs/fields");
 let { fileAdapter } = require("../store/index");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Product",
@@ -101,6 +101,7 @@ module.exports = {
         from: "name",
         schemaDoc: "Đường dẫn",
       },
+      // create by
       seller: {
         type: Relationship,
         ref: "User",
@@ -123,6 +124,6 @@ module.exports = {
     },
     label: "Sản phẩm",
     labelField: "name",
-    access: own,
+    access: public,
   },
 };

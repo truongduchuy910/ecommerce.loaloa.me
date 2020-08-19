@@ -9,25 +9,26 @@ module.exports = {
       customer: {
         type: Relationship,
         ref: "Customer",
-        isRequired: true
+        isRequired: true,
       },
       products: {
         type: Relationship,
         ref: "Product",
         many: true,
-        isRequired: true
+        isRequired: true,
       },
       done: {
         type: Checkbox,
-        label: "Đã hoàn thành?"
+        label: "Đã hoàn thành?",
       },
       time: {
-        type: DateTimeUtc
+        type: DateTimeUtc,
       },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
 
     hooks: {
@@ -61,19 +62,19 @@ module.exports = {
                   {
                     type: "web_url",
                     url: "https://ad.loaloa.tech/admin",
-                    title: "Kiểm tra"
-                  }
-                ]
-              }
-            }
+                    title: "Kiểm tra",
+                  },
+                ],
+              },
+            },
           }
         );
         resolvedData.seller = user.id;
         resolvedData.time = Date();
         return resolvedData;
-      }
+      },
     },
     label: "Đơn",
-    access: public
-  }
+    access: public,
+  },
 };

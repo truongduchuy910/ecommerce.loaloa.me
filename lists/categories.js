@@ -3,10 +3,10 @@ let {
   File,
   Text,
   Slug,
-  Relationship
+  Relationship,
 } = require("@keystonejs/fields");
 let { fileAdapter } = require("../store/index");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Category",
@@ -14,36 +14,42 @@ module.exports = {
     fields: {
       name: {
         type: Text,
-        isRequired: true
+        isRequired: true,
+        label: "Tên phân biệt",
+      },
+      label: {
+        type: Text,
+        label: "Tên hiển thị",
       },
       root: {
         type: Checkbox,
-        label: "Danh mục gốc"
+        label: "Đây là danh mục gốc",
       },
       childs: {
         type: Relationship,
         label: "Các danh mục con",
         ref: "Category",
-        many: true
+        many: true,
       },
       file: {
         type: File,
         adapter: fileAdapter,
         hooks: {
           beforeChange: ({ existingItem = {} }) =>
-            fileAdapter.delete(existingItem)
+            fileAdapter.delete(existingItem),
         },
-        label: "Hình ảnh"
+        label: "Hình ảnh",
       },
       url: {
         type: Slug,
         from: "name",
-        schemaDoc: "Đường dẫn"
+        schemaDoc: "Đường dẫn",
       },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
     hooks: {
       afterDelete: async ({ existingItem = {} }) => {
@@ -55,9 +61,9 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
+      },
     },
     label: "Danh mục",
-    access: own
-  }
+    access: public,
+  },
 };

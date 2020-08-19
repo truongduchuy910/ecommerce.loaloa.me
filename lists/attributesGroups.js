@@ -1,5 +1,5 @@
 let { Text, Slug, Relationship } = require("@keystonejs/fields");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 module.exports = {
   ref: "AttributeGroup",
   config: {
@@ -12,12 +12,14 @@ module.exports = {
       attributes: {
         type: Relationship,
         ref: "Attribute",
+        many: true,
       },
       url: {
         type: Slug,
         from: "name",
         schemaDoc: "Đường dẫn",
       },
+      // create by
       seller: {
         type: Relationship,
         ref: "User",
@@ -33,6 +35,6 @@ module.exports = {
     },
     label: "Thuộc tính",
     labelfields: "name",
-    access: own,
+    access: public,
   },
 };

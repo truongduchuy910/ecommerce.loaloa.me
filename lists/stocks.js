@@ -35,6 +35,7 @@ module.exports = {
       time: {
         type: DateTimeUtc,
       },
+      // create by
       seller: {
         type: Relationship,
         ref: "User",
@@ -54,6 +55,6 @@ module.exports = {
       },
     },
     label: "Đơn",
-    access: public,
+    access: own,
   },
 };

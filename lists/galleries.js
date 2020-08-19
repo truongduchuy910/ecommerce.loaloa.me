@@ -1,6 +1,6 @@
 let { File, Text, Relationship } = require("@keystonejs/fields");
 let { fileAdapter } = require("../store/index");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Gallery",
@@ -11,22 +11,23 @@ module.exports = {
         adapter: fileAdapter,
         hooks: {
           beforeChange: ({ existingItem = {} }) =>
-            fileAdapter.delete(existingItem)
+            fileAdapter.delete(existingItem),
         },
-        isRequired: true
+        isRequired: true,
       },
       name: {
         type: Text,
-        label: "Tên tìm kiếm"
+        label: "Tên tìm kiếm",
       },
       product: {
         type: Relationship,
-        ref: "Product.images"
+        ref: "Product.images",
       },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
 
     hooks: {
@@ -39,9 +40,9 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
+      },
     },
     label: "Ảnh sản phẩm",
-    access: own
-  }
+    access: public,
+  },
 };
