@@ -51,6 +51,7 @@ module.exports = {
     new GraphQLApp(),
     new AdminUIApp({
       authStrategy,
+      enableDefaultRoute: true,
     }),
   ],
   configureExpress: (app) => {
