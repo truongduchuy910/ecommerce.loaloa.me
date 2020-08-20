@@ -9,7 +9,7 @@ let mongoUri =
   process.env.NODE_ENV === 'production'
     ? process.env.loaloa_mongo_uri
     : 'mongodb://localhost/loaloa';
-
+console.log(mongoUri);
 let keystone = new Keystone({
   secureCookies: process.env.NODE_ENV === 'production',
   name: 'loaloa',
