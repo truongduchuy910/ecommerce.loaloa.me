@@ -7,9 +7,10 @@ let { MongooseAdapter } = require('@keystonejs/adapter-mongoose');
 
 let mongoUri =
   process.env.NODE_ENV === 'production'
-    ? process.env.loaloa_mongo_uri
+    ? process.env.loaloa_mongo_uri ||
+      'mongodb://loaloa.me:Loaloa.Media@139.180.214.47:27017/loaloa'
     : 'mongodb://localhost/loaloa';
-console.log(mongoUri);
+console.log(mongoUri, process.env.loaloa_mongo_uri);
 let keystone = new Keystone({
   secureCookies: process.env.NODE_ENV === 'production',
   name: 'loaloa',
@@ -39,11 +40,11 @@ files.forEach(file => {
   app.listen(Number(file));
 });
 
- let { PasswordAuthStrategy } = require("@keystonejs/auth-password");
- let authStrategy = keystone.createAuthStrategy({
-   type: PasswordAuthStrategy,
-   list: "User",
- });
+let { PasswordAuthStrategy } = require('@keystonejs/auth-password');
+let authStrategy = keystone.createAuthStrategy({
+  type: PasswordAuthStrategy,
+  list: 'User',
+});
 
 module.exports = {
   keystone,
