@@ -29,5 +29,8 @@
     "cross-env": "^7.0.2",
     "dot-env": "0.0.1",
     "html-to-text": "^5.1.1"
+  },
+  "devDependencies": {
+    "pg-pool": "^3.2.1"
   }
 }
