@@ -1,28 +1,31 @@
-let { Text, Relationship } = require("@keystonejs/fields");
-const { public, admin } = require("./config/access");
+let { Text, Relationship, Checkbox } = require("@keystonejs/fields");
+const { public, admin, own, ownSeller } = require("./config/access");
 module.exports = {
   ref: "Customer",
   config: {
     fields: {
       phone: {
         type: Text,
-        isRequired: true
+        isRequired: true,
       },
       name: {
-        type: Text
+        type: Text,
       },
       address: {
-        type: Text
+        type: Text,
       },
+      isDefault: {
+        type: Checkbox,
+      },
+      ofSeller: {
+        type: Relationship,
+        ref: "User",
+      },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
+        ref: "User",
       },
-      cart: {
-        type: Relationship,
-        ref: "Product",
-        many: true
-      }
     },
 
     hooks: {
@@ -31,9 +34,9 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
+      },
     },
     label: "Khách hàng",
-    access: public
-  }
+    access: ownSeller,
+  },
 };

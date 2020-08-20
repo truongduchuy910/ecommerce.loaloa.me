@@ -1,5 +1,5 @@
 let { Text, Slug, Relationship } = require("@keystonejs/fields");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Brand",
@@ -7,17 +7,18 @@ module.exports = {
     fields: {
       name: {
         type: Text,
-        isRequired: true
+        isRequired: true,
       },
       url: {
         type: Slug,
         from: "name",
-        schemaDoc: "Đường dẫn"
+        schemaDoc: "Đường dẫn",
       },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
 
     hooks: {
@@ -25,9 +26,9 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
+      },
     },
     label: "Thương hiệu",
-    access: own
-  }
+    access: public,
+  },
 };

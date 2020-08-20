@@ -1,6 +1,6 @@
 let { Relationship, File } = require("@keystonejs/fields");
 let { fileAdapter } = require("../store/index");
-let { own } = require("./config/access");
+let { public } = require("./config/access");
 
 module.exports = {
   ref: "Banner",
@@ -12,14 +12,15 @@ module.exports = {
         hooks: {
           beforeChange: ({ existingItem = {} }) => {
             if (existingItem) fileAdapter.delete(existingItem);
-          }
+          },
         },
-        isRequired: true
+        isRequired: true,
       },
+      // create by
       seller: {
         type: Relationship,
-        ref: "User"
-      }
+        ref: "User",
+      },
     },
 
     hooks: {
@@ -32,9 +33,9 @@ module.exports = {
         if (context.authedItem && !context.authedItem.isAdmin)
           resolvedData.seller = context.authedItem.id;
         return resolvedData;
-      }
+      },
     },
     label: "Bìa",
-    access: own
-  }
+    access: public,
+  },
 };
