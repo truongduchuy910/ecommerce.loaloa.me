@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default (ctx => {\n  let a = \"\";\n  let uri = \"\";\n  if (false) a = \"http://\";else a = \"https://\";\n\n  if (ctx && ctx.req) {\n    uri = a + ctx.req.headers.host + \"/admin/api\";\n  } else {\n    uri = window.location.origin + \"/admin/api\";\n  }\n\n  return uri;\n});","map":null,"metadata":{},"sourceType":"module"}

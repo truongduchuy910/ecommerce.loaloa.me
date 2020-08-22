@@ -21,15 +21,16 @@ module.exports = {
         type: Text,
         label: "Tên hiển thị",
       },
-      root: {
-        type: Checkbox,
-        label: "Đây là danh mục gốc",
-      },
       childs: {
         type: Relationship,
         label: "Các danh mục con",
-        ref: "Category",
+        ref: "Category.parent",
         many: true,
+      },
+      parent: {
+        type: Relationship,
+        label: "Danh mục cha",
+        ref: "Category.childs",
       },
       file: {
         type: File,
