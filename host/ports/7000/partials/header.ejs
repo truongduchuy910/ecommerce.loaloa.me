@@ -1,0 +1,133 @@
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml: true,
+      version: "v6.0",
+    });
+  };
+
+  (function(d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, "script", "facebook-jssdk");
+</script>
+<!-- Include the JavaScript SDK on your page once, ideally right after the opening body tag.
+ -->
+<div id="fb-root"></div>
+<script
+  async
+  defer
+  crossorigin="anonymous"
+  src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=335701763968445&autoLogAppEvents=1"
+></script>
+<!-- Your customer chat code -->
+<div
+  class="fb-customerchat"
+  attribution="setup_tool"
+  page_id="853158181415439"
+  theme_color="#D4AC5C"
+  logged_in_greeting="Nhấn nút tiếp tục bên dưới để trò chuyện!"
+  logged_out_greeting="Nhấn nút tiếp tục bên dưới để trò chuyện!"
+></div>
+<header>
+  <nav class="navbar navbar-light navbar-expand-md">
+    <div class="container-fluid">
+      <img class="logo" src="/assets/img/shop-whey-da-nang.png" /><a
+        class="navbar-brand text-truncate text-myColor ml-3"
+        href="/"
+        style="font-size: 12px;"
+        >SHOPWHEYDANANG.COM</a
+      >
+      <button
+        data-toggle="collapse"
+        class="navbar-toggler text-white"
+        data-target=".multi-collapse"
+        style="background-color: #ffffff;"
+      >
+        <span class="text-white sr-only">Toggle navigation</span
+        ><span class="navbar-toggler-icon text-white"></span>
+      </button>
+      <div class="collapse navbar-collapse multi-collapse" id="navcol-1">
+        <a class="text-myColor" href="/" style="font-size: 12px;"
+          >113 PHAN CHÂU TRINH, PHƯỚC NINH, HẢI CHÂU, ĐÀ NẴNG |&nbsp;0905 586
+          577 - 0773 502 200</a
+        >
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item" role="presentation">
+            <div class="form-inline">
+              <div class="input-group input-group-sm">
+                <input
+                  id="input-search"
+                  class="form-control"
+                  type="text"
+                  placeholder="Tên sản phẩm"
+                  style="border-radius: 0px;outline: none;"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-light"
+                    type="button"
+                    style="border-radius: 0px;"
+                  >
+                    Tìm Kiếm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-light navbar-expand-md p-0">
+    <div class="container-fluid">
+      <div
+        id="products-search"
+        class="row justify-content-center p-0 m-0 w-100"
+      >
+        <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-1 p-2">
+          <a href="duong-dan" target="_parent">
+            <div class="bg-dark p-3">
+              <img class="w-100" src="duong-dan-hinh-anh" />
+              <div class="productBasis">
+                <p class="text-center p-0 m-0 text-myColor">san-pham</p>
+                <h6 class="text-center text-white">gia</h6>
+                <h6
+                  class="text-center text-secondary"
+                  style="text-decoration: line-through;"
+                >
+                  gia-gach
+                </h6>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-expand-md p-0">
+    <button
+      data-toggle="collapse"
+      class="m-0 p-0 navbar-toggler"
+      style="background-color: transparent;border: none;"
+      data-target="#brand-collapse"
+    ></button>
+    <div></div>
+    <div class="collapse m-0 multi-collapse" id="brand-collapse">
+      <div class="container row" id="categories-navbar">
+        <a
+          class="col-6 col-sm-4 col-md-3 col-lg-2 list-group-item list-group-item-action border rounded-0 categoryClick pl-3"
+          href="/?category=duong-dan#present-filter"
+          ><span>danh-muc</span></a
+        >
+      </div>
+    </div>
+  </nav>
+</header>

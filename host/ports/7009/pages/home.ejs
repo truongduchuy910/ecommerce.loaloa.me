@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html style="font-size: 14px;">
+  <head>
+    <title>Shop Whey Đà Nẵng | Dinh Dưỡng Thể Thao</title>
+    <% include ../partials/head %>
+  </head>
+
+  <body
+    class="text-white bg-dark w-100 m-0 p-0"
+    style="background-color: #343a40;"
+  >
+    <% include ../partials/header %>
+    <main>
+      <% include ../partials/banner %>
+      <section class="mb-4">
+        <div class="container-fluid">
+          <div class="row ow-eq-height m-0 p-0 w-100">
+            <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0 col-xs-4">
+              <h6 class="mt-4 ml-3 text-myColor">DANH MỤC</h6>
+              <div class="list-group" id="category">
+                <% if (data.allCategories) { data.allCategories.forEach(c => {
+                %>
+                <a
+                  class="list-group-item list-group-item-action border rounded-0 categoryClick"
+                  href="?category=<%=c.name%>#present-filter"
+                  ><span><%=c.name%></span></a
+                >
+                <%})}%>
+              </div>
+              <h6 class="mt-4 ml-3 text-myColor">THƯƠNG HIỆU</h6>
+              <div id="brands" class="list-group">
+                <% if (data.allBrands) { data.allBrands.forEach(b => { %>
+
+                <a
+                  class="list-group-item list-group-item-action border rounded-0 brandClick"
+                  href="?brand=<%=b.name%>#present-filter"
+                  ><span><%=b.name%></span></a
+                >
+                <%})}%>
+              </div>
+            </div>
+            <div
+              class="col-8 col-sm-9 col-md-10 col-lg-10 col-xl-10 p-0 col-xs-4"
+            >
+              <div class="bg-dark">
+                <h5
+                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
+                >
+                  sản phẩm bán chạy
+                </h5>
+                <div class="text-center px-2 py-0 mb-4">
+                  <div id="bestSeller-products" class="row justify-content-center p-0 m-0">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
+                      <a href="duong-dan" target="_parent">
+                        <div class="bg-dark p-3">
+                          <img class="w-100" src="duong-dan-hinh-anh" />
+                          <div class="productBasis">
+                            <p class="text-center p-0 m-0 text-myColor">
+                              san-pham
+                            </p>
+                            <h6 class="text-center text-white">gia</h6>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-dark">
+                <h5
+                  id="present-filter"
+                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
+                >
+                  VITAMIN &amp; KHOÁNG CHẤT
+                </h5>
+                <div class="text-center px-2 py-0 mb-4">
+                  <div
+                    id="products-main"
+                    class="row justify-content-center p-0 m-0"
+                  >
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
+                      <a href="duong-dan" target="_parent">
+                        <div class="bg-dark p-3">
+                          <img class="w-100" src="duong-dan-hinh-anh" />
+                          <div class="productBasis">
+                            <p class="text-center p-0 m-0 text-myColor">
+                              san-pham
+                            </p>
+                            <h6 class="text-center text-white">gia</h6>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-dark">
+                <h5
+                  class="text-uppercase text-center m-0 text-myColor pt-4 pb-3"
+                >
+                  HÀNG MỚI VỀ
+                </h5>
+                <div class="text-center px-2 py-0 mb-4">
+                  <div id="new-products" class="row justify-content-center p-0 m-0">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 p-2">
+                      <a href="duong-dan">
+                        <div class="bg-dark p-3">
+                          <img
+                            class="w-100"
+                            src="duong-dan-hinh-anh"
+                          />
+                          <div class="productBasis">
+                            <p class="text-center p-0 m-0 text-myColor">
+                             san-pham 
+                            </p>
+                            <h6 class="text-center text-white">gia</h6>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <% include ../partials/footer %>
+  </body>
+</html>
