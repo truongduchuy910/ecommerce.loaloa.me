@@ -6,7 +6,7 @@ let {
   Decimal,
 } = require("@keystonejs/fields");
 let { DateTimeUtc } = require("@keystonejs/fields-datetime-utc");
-let { own, public, ownSeller } = require("./config/access");
+let { own, public, ownSeller, publicOrownSeller } = require("./config/access");
 
 module.exports = {
   ref: "OrderItem",
@@ -55,6 +55,6 @@ module.exports = {
       },
     },
     label: "Thêm vào đơn",
-    access: ownSeller,
+    access: publicOrownSeller,
   },
 };
