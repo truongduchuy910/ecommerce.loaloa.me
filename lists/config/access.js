@@ -24,6 +24,17 @@ function ownSeller({ authentication: { item: user } }) {
   }
   return false;
 }
+function publicOrOwnSeller({ authentication: { item: user } }) {
+  if (user) {
+    if (user.isAdmin) return true;
+    if (user.isSeller)
+      return {
+        OR: [{ ofSeller: { id: user.id } }, { seller: { id: user.id } }],
+      };
+    return { seller: { id: user.id } };
+  }
+  return true;
+}
 
 function user({ authentication: { item: user } }) {
   if (user) {
@@ -62,4 +73,10 @@ module.exports.ownSeller = {
   update: own,
   delete: own,
   read: ownSeller,
+};
+module.exports.publicOrownSeller = {
+  create: true,
+  update: true,
+  delete: true,
+  read: publicOrOwnSeller,
 };

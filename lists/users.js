@@ -45,7 +45,7 @@ module.exports = {
           if (user.isAdmin) return true;
           if (user.isSeller) return { id: user.id };
           return true;
-        } else return false;
+        } else return { isSeller: true };
       },
     },
   },

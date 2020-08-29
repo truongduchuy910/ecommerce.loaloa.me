@@ -1,5 +1,5 @@
 let { Text, Relationship, Checkbox } = require("@keystonejs/fields");
-const { public, admin, own, ownSeller } = require("./config/access");
+const { publicOrownSeller, admin, own, ownSeller } = require("./config/access");
 module.exports = {
   ref: "Customer",
   config: {
@@ -37,6 +37,6 @@ module.exports = {
       },
     },
     label: "Khách hàng",
-    access: ownSeller,
+    access: publicOrownSeller,
   },
 };
