@@ -33,7 +33,7 @@ module.exports = {
         return resolvedData;
       },
     },
-    label: "Thuộc tính",
+    label: "Nhóm thuộc tính",
     labelfields: "name",
     access: public,
   },

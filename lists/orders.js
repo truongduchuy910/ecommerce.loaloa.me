@@ -52,7 +52,7 @@ module.exports = {
         return resolvedData;
       },
     },
-    label: "Đơn (new)",
+    label: "Đơn",
     access: publicOrownSeller,
   },
 };

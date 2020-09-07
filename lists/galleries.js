@@ -42,7 +42,7 @@ module.exports = {
         return resolvedData;
       },
     },
-    label: "Ảnh sản phẩm",
+    label: "Ảnh",
     access: public,
   },
 };

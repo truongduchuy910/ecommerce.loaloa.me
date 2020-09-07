@@ -54,7 +54,6 @@ module.exports = {
         return resolvedData;
       },
     },
-    label: "Thêm vào đơn",
     access: publicOrownSeller,
   },
 };
