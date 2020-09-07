@@ -48,7 +48,7 @@ module.exports = {
         ref: "Post.hashtags",
         many: true,
       },
-      author: {
+      seller: {
         type: Relationship,
         adminConfig: {
           isReadOnly: true,

@@ -70,7 +70,7 @@ module.exports = {
         },
         from: "title",
       },
-      author: {
+      seller: {
         type: Relationship,
         adminConfig: {
           isReadOnly: true,
