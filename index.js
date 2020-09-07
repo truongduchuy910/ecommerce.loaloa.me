@@ -45,9 +45,9 @@ module.exports = {
     new GraphQLApp(),
     new AdminUIApp({
       authStrategy,
-      enableDefaultRoute: false,
+      enableDefaultRoute: true,
     }),
-    new NextApp({ dir: "app" }),
+    // new NextApp({ dir: "app" }),
   ],
   configureExpress: (app) => {
     let path = require("path");
