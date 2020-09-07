@@ -48,6 +48,7 @@ module.exports = {
       }) => {
         if (authedItem) resolvedData.seller = authedItem.id;
         resolvedData.time = new Date();
+
         return resolvedData;
       },
     },
