@@ -1,0 +1,8 @@
+POST http://localhost:1234/messenger/send HTTP/1.1
+Content-Type: application/json
+
+{
+    "tag":"CONFIRMED_EVENT_UPDATE",
+    "psid": "3539785372754332",
+    "text":"hello"
+}
